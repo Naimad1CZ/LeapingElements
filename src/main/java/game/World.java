@@ -18,14 +18,18 @@ public class World {
         gameObjects = new GameObjects(gc, map);
     }
 
-    public Hero getHero() {
+    public Hero getHero1() {
         return gameObjects.getHero1();
+    }
+
+    public Hero getHero2() {
+        return gameObjects.getHero2();
     }
 
     public void updateAndDraw(double delta) {
         gameObjects.update(delta, this);
 
-        var heroPosAvg = gameObjects.getHeroPositionsAverage();
+        var heroPosAvg = gameObjects.getHeroPositionsOptimalCenter();
 
         int leftLabel = (int)(heroPosAvg.x - Game.WIDTH / 2);
         int topLabel = (int)(heroPosAvg.y - Game.HEIGHT / 2);

@@ -9,9 +9,9 @@ public class Hero extends GameObject{
     private boolean moveRight = false;
     private boolean moveLeft = false;
 
-    public Hero() {
-        super(new Image(Hero.class.getClassLoader().getResourceAsStream("other/Ice_hero.png")),
-                100,0, 300);
+    public Hero(String pathToImage) {
+        super(new Image(Hero.class.getClassLoader().getResourceAsStream(pathToImage)),
+                100, 0, 300, 330);
     }
 
     public Point2D.Double getPosition() {
@@ -34,6 +34,19 @@ public class Hero extends GameObject{
         moveRight = false;
     }
 
+    public void jump() {
+        if (onGround) {
+            speedY -= jumpForce;
+            onGround = false;
+        }
+    }
+
+    public void respawn() {
+        alive = true;
+        posX = START_POS_X;
+        posY = START_POS_Y;
+    }
+
     private int updateWithOtherObjects(GameObjects gameObjects) {
         return 0;
     }
@@ -41,17 +54,19 @@ public class Hero extends GameObject{
     public int update(double delta, World world) {
         // y movement
         speedY += World.GRAVITY * delta;
+        if (speedY > World.GRAVITY * 1.5) {
+            // max falling speed (caused by air resistance or something)
+            speedY = World.GRAVITY * 1.5;
+        }
         posY += speedY * delta;
 
         // x movement
-        if (moveRight == true) {
-            posX += MOVEMENT_SPEED * delta;
+        if (moveRight) {
+            posX += movementSpeed * delta;
         }
-        if (moveLeft == true) {
-            posX -= MOVEMENT_SPEED * delta;
+        if (moveLeft) {
+            posX -= movementSpeed * delta;
         }
-
-        //System.out.println(posX + " " + posY);
 
         int died = collideWithTerrain(world.getTerrain());
         if (died > 0) {
@@ -59,8 +74,6 @@ public class Hero extends GameObject{
             alive = false;
             return died;
         }
-
-        //System.out.println(posX + " " + posY);
 
         died = updateWithOtherObjects(world.getGameObjects());
 
