@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.2" tiledversion="1.3.4" orientation="orthogonal" renderorder="right-down" width="30" height="8" tilewidth="128" tileheight="128" infinite="0" nextlayerid="3" nextobjectid="1">
+ <editorsettings>
+  <export target="bezjmena.gzip.tmx" format="tmx"/>
+ </editorsettings>
+ <tileset firstgid="1" name="tileset1" tilewidth="128" tileheight="128" tilecount="18" columns="3">
+  <image source="tileset1.png" width="384" height="768"/>
+ </tileset>
+ <imagelayer id="2" name="Background">
+  <image source="winter/BG/BG.png" width="1800" height="893"/>
+ </imagelayer>
+ <layer id="1" name="Vrstva dlaždic 1" width="30" height="8">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACmNgGAVDCTACMRMQM9PZXhYgZgViNjrYBfMjOxBzkGgvTC8+DAo7QSwY5kdkTKy92PRiM0sIC6bEXgBjKcqIwAMAAA==
+  </data>
+ </layer>
+</map>
