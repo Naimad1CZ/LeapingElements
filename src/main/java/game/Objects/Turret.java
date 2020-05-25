@@ -15,13 +15,14 @@ public class Turret extends GameObject {
     protected String type;
     protected Image projectileImage;
 
-    public Turret(Image image, double positionX, double positionY, double shootingAngle, double shootingInterval, double shootingSpeed, String turretType, Image bulletImage) {
+    public Turret(Image image, double positionX, double positionY, double shootingAngle, String turretType, double shootingInterval, double shootingSpeed, Image bulletImage) {
         super(image, positionX, positionY);
         angle = shootingAngle;
+        type = turretType;
         interval = shootingInterval;
         timeUntilShoot = interval;
         speed = shootingSpeed;
-        type = turretType;
+
         projectileImage = bulletImage;
     }
 

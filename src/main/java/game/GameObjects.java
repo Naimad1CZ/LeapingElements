@@ -3,7 +3,6 @@ package game;
 import game.Objects.*;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import org.mapeditor.core.Map;
 import org.mapeditor.core.ObjectGroup;
 import org.mapeditor.core.Properties;
 import utils.LoggingUtils;
@@ -12,14 +11,14 @@ import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
 import static java.lang.Double.parseDouble;
+import static java.lang.Integer.parseInt;
 
 public class GameObjects {
-    private final GraphicsContext gc;
+    private final ArrayList<GameObject> gameObjects = new ArrayList<>();
 
     private Hero hero1;
     private Hero hero2;
-
-    private ArrayList<GameObject> gameObjects = new ArrayList<>();
+    private GraphicsContext gc;
 
     /**
      * camereModes - works only when 2 players are alive.
@@ -47,17 +46,17 @@ public class GameObjects {
                     double movSpeed;
                     double jmpSpeed;
                     double swimSpeed;
-                    if (type.equals("FireHero")) {
+                    if (type.equals("fire")) {
                         movSpeed = movementSpeed == null ? 300 : parseDouble(movementSpeed);
                         jmpSpeed = jumpSpeed == null ? 380 : parseDouble(jumpSpeed);
                         swimSpeed = swimmingSpeed == null ? 0 : parseDouble(swimmingSpeed);
-                    } else if (type.equals("IceHero")) {
+                    } else if (type.equals("ice")) {
                         movSpeed = movementSpeed == null ? 250 : parseDouble(movementSpeed);
                         jmpSpeed = jumpSpeed == null ? 320 : parseDouble(jumpSpeed);
                         swimSpeed = swimmingSpeed == null ? 120 : parseDouble(swimmingSpeed);
                     } else {
-                        movSpeed = movementSpeed == null ? 0 : parseDouble(movementSpeed);
-                        jmpSpeed = jumpSpeed == null ? 0 : parseDouble(jumpSpeed);
+                        movSpeed = movementSpeed == null ? 300 : parseDouble(movementSpeed);
+                        jmpSpeed = jumpSpeed == null ? 330 : parseDouble(jumpSpeed);
                         swimSpeed = swimmingSpeed == null ? 0 : parseDouble(swimmingSpeed);
                     }
 
@@ -75,25 +74,42 @@ public class GameObjects {
                     SimpleEnemy se = new SimpleEnemy(img, x, y, rtLength);
                     gameObjects.add(se);
                 } else if (cls.equals("Turret")) {
+                    String shootingAngle = p.getProperty("shootingAngle");
+                    String type = p.getProperty("type");
+                    String shootingInterval = p.getProperty("shootingInterval");
+                    String shootingSpeed = p.getProperty("shootingSpeed");
+                    String pathToBulletImage = p.getProperty("pathToBulletImage");
 
+                    // shootingAngle is essential as well as type
+                    double shAngle = parseDouble(shootingAngle);
+                    double shInterval = shootingInterval == null ? 2d : parseDouble(shootingInterval);
+                    double shSpeed = shootingSpeed == null ? 400 : parseDouble(shootingSpeed);
+
+                    if (type.equals("fire")) {
+                        pathToBulletImage = pathToBulletImage == null ? "MyResources/TurretFire" : pathToBulletImage;
+                    } else if (type.equals("ice")) {
+                        pathToBulletImage = pathToBulletImage == null ? "MyResources/TurretIce" : pathToBulletImage;
+                    } else if (type.equals("combined")) {
+                        pathToBulletImage = pathToBulletImage == null ? "MyResources/TurretCombined" : pathToBulletImage;
+                    }
+
+                    Image bulletImage = new Image(GameObjects.class.getClassLoader().getResourceAsStream(pathToBulletImage));
+                    Turret t = new Turret(img, x, y, shAngle, type, shInterval, shSpeed, bulletImage);
+                    gameObjects.add(t);
                 } else if (cls.equals("Star")) {
+                    String value = p.getProperty("value");
+                    int val = value == null ? 1 : parseInt(value);
 
+                    Star s = new Star(img, x, y, val);
+                    gameObjects.add(s);
                 } else {
                     LoggingUtils.logInfo("Cannot recognize object with class " + cls);
                 }
-
-
-
-                double x = o.getX();
-                double tt = 1;
-
-            /*Image i = o getImage(1);
-            o.getImageSource()*/
             } catch (Exception e) {
                 LoggingUtils.logError("Error while getting object: " + e.getMessage() + ", " + e.toString());
             }
         }
-
+        gc = g;
     }
 
     public Hero getHero1() {

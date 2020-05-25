@@ -1,19 +1,17 @@
 package game.Objects;
 
-import game.GameObjects;
 import game.Terrain;
 import game.World;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
 public abstract class Creature extends GameObject {
-    protected double movementSpeed = 300;
-    protected double jumpForce = 330;
+    protected double movementSpeed;
+    protected double jumpForce;
 
-    protected double swimSpeed = 0;
+    protected double swimSpeed;
     protected boolean isSwimming = false;
 
     protected boolean alive = true;
@@ -26,12 +24,8 @@ public abstract class Creature extends GameObject {
     public Creature(Image image, double positionX, double positionY, double movSpeed, double jumpSpeed, double swimmingSpeed) {
         super(image, positionX, positionY);
 
-        if (movSpeed > 0) {
-            movementSpeed = movSpeed;
-        }
-        if (jumpSpeed > 0) {
-            jumpForce = jumpSpeed;
-        }
+        movementSpeed = movSpeed;
+        jumpForce = jumpSpeed;
         swimSpeed = swimmingSpeed;
     }
 

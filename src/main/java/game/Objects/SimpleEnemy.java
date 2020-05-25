@@ -1,19 +1,17 @@
 package game.Objects;
 
-import game.Objects.Enemy;
 import javafx.scene.image.Image;
 
 import java.util.ArrayList;
 
 public class SimpleEnemy extends Enemy {
-    private double routeLength;
+    private final double routeLength;
 
     /**
-     *
      * @param image
      * @param positionX
      * @param positionY
-     * @param lengthOfRoute essential, tells mow much should the enemy go to the right before going back
+     * @param lengthOfRoute tells mow much should the enemy go to the right before going back
      */
     public SimpleEnemy(Image image, double positionX, double positionY, double lengthOfRoute) {
         super(image, positionX, positionY, 350, 0, 150);

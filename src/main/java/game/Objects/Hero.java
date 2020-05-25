@@ -1,6 +1,5 @@
 package game.Objects;
 
-import game.Objects.Creature;
 import javafx.scene.image.Image;
 
 import java.util.ArrayList;
@@ -30,7 +29,6 @@ public class Hero extends Creature {
         // getting/killing a star!
         // if type == ice then get klled by fire hero
 
-        System.out.println("FireHero");
         return 0;
     }
 
