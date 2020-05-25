@@ -1,9 +1,14 @@
 package game;
 
+import game.Objects.Creature;
+import game.Objects.GameObject;
 import javafx.scene.canvas.GraphicsContext;
 import org.mapeditor.core.ImageLayer;
 import org.mapeditor.core.Map;
+import org.mapeditor.core.ObjectGroup;
 import org.mapeditor.core.TileLayer;
+
+import java.util.ArrayList;
 
 public class World {
     public static final double GRAVITY = 400;
@@ -15,15 +20,19 @@ public class World {
     public World(GraphicsContext gc, Map map) {
         background = new Background(gc, (ImageLayer)map.getLayer(0));
         terrain = new Terrain(gc, (TileLayer)map.getLayer(1), map);
-        gameObjects = new GameObjects(gc, map);
+        gameObjects = new GameObjects(gc, (ObjectGroup) map.getLayer(2));
     }
 
-    public Hero getHero1() {
+    public Creature getHero1() {
         return gameObjects.getHero1();
     }
 
-    public Hero getHero2() {
+    public Creature getHero2() {
         return gameObjects.getHero2();
+    }
+
+    public void changeCameraMode() {
+        gameObjects.changeCameraMode();
     }
 
     public void updateAndDraw(double delta) {
@@ -55,7 +64,11 @@ public class World {
         return terrain;
     }
 
-    public GameObjects getGameObjects() {
-        return gameObjects;
+    public ArrayList<GameObject> getGameObjects() {
+        return gameObjects.getGameObjects();
+    }
+
+    public void addGameObject(GameObject go) {
+        gameObjects.addGameObject(go);
     }
 }

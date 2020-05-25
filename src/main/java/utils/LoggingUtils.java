@@ -1,4 +1,4 @@
-package game;
+package utils;
 import java.io.IOException;
 import java.util.logging.FileHandler;
 import java.util.logging.Handler;

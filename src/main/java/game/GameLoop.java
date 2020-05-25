@@ -1,11 +1,9 @@
 package game;
 
+import game.Objects.Creature;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.input.KeyCode;
-
-import static javafx.scene.input.KeyCode.RIGHT;
 
 public class GameLoop extends AnimationTimer {
 
@@ -26,53 +24,94 @@ public class GameLoop extends AnimationTimer {
         myMap = new MyMap(null);
         myWorld = myMap.loadWorld(gc);
 
-        Hero hero1 = myWorld.getHero1();
-        Hero hero2 = myWorld.getHero2();
+        Creature hero1 = myWorld.getHero1();
+        Creature hero2 = myWorld.getHero2();
 
         scene = sc;
-        scene.setOnKeyPressed(e -> {
-            switch (e.getCode()) {
-                case RIGHT:
-                    hero1.startMovingRight();
-                    break;
-                case LEFT:
-                    hero1.startMovingLeft();
-                    break;
-                case UP:
-                    hero1.jump();
-                    break;
-                case D:
-                    hero2.startMovingRight();
-                    break;
-                case A:
-                    hero2.startMovingLeft();
-                    break;
-                case W:
-                    hero2.jump();
-                    break;
-                case R:
-                    hero1.respawn();
-                    hero2.respawn();
 
-            }
-        } );
+        if (hero2 == null) {
+            scene.setOnKeyPressed(e -> {
+                switch (e.getCode()) {
+                    case RIGHT:
+                        hero1.startMovingRight();
+                        break;
+                    case LEFT:
+                        hero1.startMovingLeft();
+                        break;
+                    case UP:
+                        hero1.startMovingUp();
+                        break;
+                    case R:
+                        hero1.respawn();
+                }
+            } );
 
-        scene.setOnKeyReleased(e -> {
-            switch (e.getCode()) {
-                case RIGHT:
-                    hero1.stopMovingRight();
-                    break;
-                case LEFT:
-                    hero1.stopMovingLeft();
-                    break;
-                case D:
-                    hero2.stopMovingRight();
-                    break;
-                case A:
-                    hero2.stopMovingLeft();
-                    break;
-            }
-        } );
+            scene.setOnKeyReleased(e -> {
+                switch (e.getCode()) {
+                    case RIGHT:
+                        hero1.stopMovingRight();
+                        break;
+                    case LEFT:
+                        hero1.stopMovingLeft();
+                        break;
+                    case UP:
+                        hero1.stopMovingUp();
+                        break;
+                }
+            } );
+        } else {
+            scene.setOnKeyPressed(e -> {
+                switch (e.getCode()) {
+                    case RIGHT:
+                        hero1.startMovingRight();
+                        break;
+                    case LEFT:
+                        hero1.startMovingLeft();
+                        break;
+                    case UP:
+                        hero1.startMovingUp();
+                        break;
+                    case D:
+                        hero2.startMovingRight();
+                        break;
+                    case A:
+                        hero2.startMovingLeft();
+                        break;
+                    case W:
+                        hero2.startMovingUp();
+                        break;
+                    case R:
+                        hero1.respawn();
+                        hero2.respawn();
+                    case C:
+                        myWorld.changeCameraMode();
+
+                }
+            } );
+
+            scene.setOnKeyReleased(e -> {
+                switch (e.getCode()) {
+                    case RIGHT:
+                        hero1.stopMovingRight();
+                        break;
+                    case LEFT:
+                        hero1.stopMovingLeft();
+                        break;
+                    case UP:
+                        hero1.stopMovingUp();
+                        break;
+                    case D:
+                        hero2.stopMovingRight();
+                        break;
+                    case A:
+                        hero2.stopMovingLeft();
+                        break;
+                    case W:
+                        hero2.stopMovingUp();
+                        break;
+                }
+            } );
+        }
     }
 
     @Override
@@ -80,8 +119,8 @@ public class GameLoop extends AnimationTimer {
         double delta = ((double) (now - previousTime)) / NANOS_IN_SECOND;
         previousTime = now;
 
-        if (delta > 0.1) {
-            delta = 0.1;
+        if (delta > 0.05) {
+            delta = 0.05;
         }
 
         gc.clearRect(0, 0, Game.WIDTH, Game.HEIGHT);
