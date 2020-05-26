@@ -39,12 +39,15 @@ public class Turret extends GameObject {
         }
     }
 
-    protected Projectile shoot() {
-        return new Projectile(projectileImage, posX + width / 2, posY + height / 2, angle, speed, type, this);
+    public String getType() {
+        return type;
     }
 
-    @Override
-    public int update(double delta, World world) {
+    protected Projectile shoot() {
+        return new Projectile(projectileImage, posX + width / 2 - projectileImage.getWidth() / 2, posY + height / 2 - projectileImage.getHeight() / 2, angle, speed, type, this);
+    }
+
+    public int updatePosition(double delta, World world) {
         timeUntilShoot -= delta;
         if (timeUntilShoot <= 0) {
             Projectile p = shoot();
@@ -53,4 +56,9 @@ public class Turret extends GameObject {
         }
         return 0;
     }
+
+    public int updateWithOtherObjects(World world) {
+        return 0;
+    }
+
 }

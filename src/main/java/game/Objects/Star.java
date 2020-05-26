@@ -20,13 +20,15 @@ public class Star extends GameObject {
         return value;
     }
 
-    @Override
     public String getName() {
         return "A star";
     }
 
-    @Override
-    public int update(double delta, World world) {
+    public int updatePosition(double delta, World world) {
+        return 0;
+    }
+
+    public int updateWithOtherObjects(World world) {
         if (lives == false) {
             // getting claimed
             return 201;

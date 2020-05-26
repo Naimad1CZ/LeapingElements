@@ -52,7 +52,10 @@ public class Projectile extends GameObject {
         String leftType = terrain.getTileType(lefterXBlock, middleYBlock);
         String rightType = terrain.getTileType(righterXBlock, middleYBlock);
 
-        if (!upType.equals("air") || !lowType.equals("air") || !leftType.equals("air") || !rightType.equals("air")) {
+        if (upType.equals("out") || lowType.equals("out") || leftType.equals("out") || rightType.equals("out")) {
+            // fly out of the world
+            return 106;
+        } else if (!upType.equals("air") || !lowType.equals("air") || !leftType.equals("air") || !rightType.equals("air")) {
             // hit something and get destroyed by terrain
             return 101;
         }
@@ -60,13 +63,21 @@ public class Projectile extends GameObject {
         return 0;
     }
 
-    protected int collideWithOtherObjects(ArrayList<GameObject> gameObjects) {
+    public int updatePosition(double delta, World world) {
+        posX += speedX * delta;
+        posY += speedY * delta;
+
+        return collideWithTerrain(world.getTerrain());
+    }
+
+    public int updateWithOtherObjects(World world) {
+        ArrayList<GameObject> gameObjects = world.getGameObjects();
         for (var gameObject : gameObjects) {
             if (gameObject != this && gameObject != creator) {
                 if (getBoundingBox().intersects(gameObject.getBoundingBox())) {
-                    if (gameObject instanceof Hero) {
+                    if (gameObject instanceof Hero && ((Hero) gameObject).isAlive()) {
                         return 102;
-                    } else if (gameObject instanceof Enemy) {
+                    } else if (gameObject instanceof Enemy && ((Enemy) gameObject).isAlive()) {
                         return 103;
                     } else if (gameObject instanceof Turret) {
                         return 104;
@@ -78,20 +89,5 @@ public class Projectile extends GameObject {
         }
 
         return 0;
-    }
-
-    @Override
-    public int update(double delta, World world) {
-        posX += speedX;
-        posY += speedY;
-
-        int x = collideWithTerrain(world.getTerrain());
-        if (x > 0) {
-            return x;
-        }
-
-        x = collideWithOtherObjects(world.getGameObjects());
-
-        return x;
     }
 }

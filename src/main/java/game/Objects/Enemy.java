@@ -17,14 +17,12 @@ public abstract class Enemy extends Creature {
      */
     protected abstract void doLogic(double delta);
 
-    @Override
     public String getName() {
         return "An enemy";
     }
 
-    @Override
-    public int update(double delta, World world) {
+    public int updatePosition(double delta, World world) {
         doLogic(delta);
-        return super.update(delta, world);
+        return super.updatePosition(delta, world);
     }
 }

@@ -13,14 +13,14 @@ public class SimpleEnemy extends Enemy {
      * @param lengthOfRoute tells mow much should the enemy go to the right before going back
      */
     public SimpleEnemy(Image image, double positionX, double positionY, double lengthOfRoute) {
-        super(image, positionX, positionY, 350, 0, 150);
+        super(image, positionX, positionY, 200, 0, 100);
         routeLength = lengthOfRoute;
     }
 
     @Override
     protected void doLogic(double delta) {
         if (state == 0) {
-            if (posY >= START_POS_Y + routeLength) {
+            if (posX >= START_POS_X + routeLength) {
                 stopMovingRight();
                 state = 1;
                 doLogic(delta);
@@ -28,7 +28,7 @@ public class SimpleEnemy extends Enemy {
                 startMovingRight();
             }
         } else if (state == 1) {
-            if (posY <= START_POS_Y) {
+            if (posX <= START_POS_X) {
                 stopMovingLeft();
                 state = 0;
                 doLogic(delta);
@@ -49,8 +49,7 @@ public class SimpleEnemy extends Enemy {
      * @param world
      * @return 0
      */
-    @Override
-    protected int collideWithOtherObjects(World world) {
+    public int updateWithOtherObjects(World world) {
         return 0;
     }
 }

@@ -65,6 +65,10 @@ public abstract class Creature extends GameObject {
         return alive;
     }
 
+    public void kill() {
+        alive = false;
+    }
+
     public void respawn() {
         alive = true;
         posX = START_POS_X;
@@ -166,7 +170,7 @@ public abstract class Creature extends GameObject {
                     speedY = swimSpeed * 1.5;
                 }
             } else {
-                if (!(lowerLeftType.equals("water") || lowerRightType.equals("water"))) {
+                if (lefterLowType.equals("water") || righterLowType.equals("water")) {
                     // if not just touching the water slightly
                     // drooown
                     return 2;
@@ -179,9 +183,7 @@ public abstract class Creature extends GameObject {
         return 0;
     }
 
-    protected abstract int collideWithOtherObjects(World world);
-
-    public int update(double delta, World world) {
+    public int updatePosition(double delta, World world) {
         // change of position because of movement triggered by keyboard
         if (isSwimming) {
             if (moveUp) {
@@ -212,18 +214,7 @@ public abstract class Creature extends GameObject {
         // change the position based on speed
         posY += speedY * delta;
 
-        int died = collideWithTerrain(world.getTerrain());
-        if (died > 0) {
-            alive = false;
-            return died;
-        }
-
-        died = collideWithOtherObjects(world);
-
-        if (died > 0) {
-            alive = false;
-        }
-        return died;
+        return collideWithTerrain(world.getTerrain());
     }
 
 }

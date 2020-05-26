@@ -16,9 +16,10 @@ import static java.lang.Double.parseDouble;
 import static java.lang.Integer.parseInt;
 
 public class GameObjects {
-    private GraphicsContext gc;
+    private final GraphicsContext gc;
 
     private final ArrayList<GameObject> gameObjects = new ArrayList<>();
+    private final ArrayList<GameObject> objectsToAdd = new ArrayList<>();
     private Hero hero1;
     private Hero hero2;
 
@@ -49,7 +50,8 @@ public class GameObjects {
                 Image img = SwingFXUtils.toFXImage(o.getTile().getImage(), null);
                 //Image img = new Image(GameObjects.class.getClassLoader().getResourceAsStream(o.getImageSource()));
                 double x = o.getX();
-                double y = o.getY();
+                // subtracting height because Tiled sets coordinates for the lower left point, not upper left
+                double y = o.getY() - o.getHeight();
 
                 String cls = getProperty("class");
                 if (cls.equals("Hero")) {
@@ -101,15 +103,15 @@ public class GameObjects {
 
                     // shootingAngle is essential as well as type
                     double shAngle = parseDouble(shootingAngle);
-                    double shInterval = shootingInterval == null ? 2d : parseDouble(shootingInterval);
+                    double shInterval = shootingInterval == null ? 1d : parseDouble(shootingInterval);
                     double shSpeed = shootingSpeed == null ? 400 : parseDouble(shootingSpeed);
 
                     if (type.equals("fire")) {
-                        pathToBulletImage = pathToBulletImage == null ? "Objects/BulletFire" : pathToBulletImage;
+                        pathToBulletImage = pathToBulletImage == null ? "Objects/BulletFire.png" : pathToBulletImage;
                     } else if (type.equals("ice")) {
-                        pathToBulletImage = pathToBulletImage == null ? "Objects/BulletIce" : pathToBulletImage;
+                        pathToBulletImage = pathToBulletImage == null ? "Objects/BulletIce.png" : pathToBulletImage;
                     } else if (type.equals("combined")) {
-                        pathToBulletImage = pathToBulletImage == null ? "Objects/BulletCombined" : pathToBulletImage;
+                        pathToBulletImage = pathToBulletImage == null ? "Objects/BulletCombined.png" : pathToBulletImage;
                     }
 
                     Image bulletImage = new Image(GameObjects.class.getClassLoader().getResourceAsStream(pathToBulletImage));
@@ -128,7 +130,6 @@ public class GameObjects {
                 LoggingUtils.logError("Error while getting object: " + e.getMessage() + ", " + e.toString());
             }
         }
-        gc = g;
     }
 
     private String getProperty(String name) {
@@ -158,7 +159,7 @@ public class GameObjects {
     }
 
     public void addGameObject(GameObject go) {
-        gameObjects.add(go);
+        objectsToAdd.add(go);
     }
 
     public Point2D.Double getHeroPositionsOptimalCenter() {
@@ -214,24 +215,24 @@ public class GameObjects {
      * @param world
      */
     public void update(double delta, World world) {
+        gameObjects.addAll(objectsToAdd);
+        objectsToAdd.clear();
+
         ArrayList<GameObject> toDelete = new ArrayList<>();
+
         for (var go : gameObjects) {
-            if (go instanceof Creature) {
-                if (((Creature) go).isAlive()) {
-                    int deathCode = go.update(delta, world);
-                    if (deathCode > 0) {
-                        System.out.println(DeathMessages.getDeathMessage(go, deathCode));
-                    }
-                    if (go instanceof Hero) {
-                        ((Hero) go).looseLife();
-                        if (((Hero) go).getCurrentLives() > 0) {
-                            System.out.println("Resurrecting: " + ((Hero) go).getCurrentLives());
-                            ((Hero) go).respawn();
-                        }
-                    }
+            if (!(go instanceof Creature) || ((Creature) go).isAlive()) {
+                int deathCode = go.updatePosition(delta, world);
+                if (deathCode > 0) {
+                    toDelete.add(go);
+                    System.out.println(DeathMessages.getDeathMessage(go, deathCode));
                 }
-            } else {
-                int deathCode = go.update(delta, world);
+            }
+        }
+
+        for (var go : gameObjects) {
+            if (!(go instanceof Creature) || ((Creature) go).isAlive()) {
+                int deathCode = go.updateWithOtherObjects(world);
                 if (deathCode > 0) {
                     toDelete.add(go);
                     System.out.println(DeathMessages.getDeathMessage(go, deathCode));
@@ -240,6 +241,17 @@ public class GameObjects {
         }
 
         for (var item : toDelete) {
+            if (item instanceof Creature) {
+                ((Creature) item).kill();
+                if (item instanceof Hero) {
+                    ((Hero) item).looseLife();
+                    if (((Hero) item).getCurrentLives() > 0) {
+                        System.out.println("Resurrecting: " + ((Hero) item).getCurrentLives());
+                        ((Hero) item).respawn();
+                        continue;
+                    }
+                }
+            }
             gameObjects.remove(item);
         }
     }

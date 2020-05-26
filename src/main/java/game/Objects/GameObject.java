@@ -52,7 +52,9 @@ public abstract class GameObject {
 
     public abstract String getName();
 
-    public abstract int update(double delta, World world);
+    public abstract int updatePosition(double delta, World world);
+
+    public abstract int updateWithOtherObjects(World world);
 
     public void draw(GraphicsContext gc, int leftLabel, int topLabel) {
         if (getSkinBoundingBox().intersects(new BoundingBox(leftLabel, topLabel, Game.WIDTH, Game.HEIGHT))) {

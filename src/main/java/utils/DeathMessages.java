@@ -5,7 +5,7 @@ import game.Objects.GameObject;
 public class DeathMessages {
     public static String getDeathMessage(GameObject go, int deathCode) {
         String start = go.getName() + " ";
-        String end = "";
+        String end;
         switch (deathCode) {
             case 1:
                 end = "fell out of the world";
@@ -60,6 +60,9 @@ public class DeathMessages {
                 break;
             case 105:
                 end = "collided with another projectile";
+                break;
+            case 106:
+                end = "flied out of the world";
                 break;
             case 201:
                 end = "was claimed";

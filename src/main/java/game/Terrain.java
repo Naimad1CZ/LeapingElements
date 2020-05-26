@@ -2,19 +2,12 @@ package game;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.image.WritableImage;
-import org.mapeditor.core.ImageLayer;
+import org.mapeditor.core.Map;
 import org.mapeditor.core.Tile;
 import org.mapeditor.core.TileLayer;
-import org.mapeditor.core.Map;
-
-import java.awt.*;
-import java.awt.geom.Point2D;
-import java.awt.image.BufferedImage;
-import java.util.HashMap;
-import java.util.HashSet;
-
 import utils.SwingFXUtils;
+
+import java.util.HashMap;
 
 public class Terrain {
     private final GraphicsContext gc;
@@ -25,8 +18,8 @@ public class Terrain {
     public final int WIDTH;
     public final int HEIGHT;
 
-    private Tile[][] tiles;
-    private HashMap<Tile, Image> images = new HashMap<>();
+    private final Tile[][] tiles;
+    private final HashMap<Tile, Image> images = new HashMap<>();
 
     public Terrain(GraphicsContext g, TileLayer l, Map map) {
         gc = g;
@@ -61,7 +54,7 @@ public class Terrain {
     }
 
     public String getTileType(int x, int y) {
-        if (y >= tiles[0].length) {
+        if (y >= tiles[0].length || y < -5 || x > tiles.length + 5 || x < -5) {
             return "out";
         } else if (x < 0 || x >= tiles.length || y < 0 || tiles[x][y] == null) {
             return "air";

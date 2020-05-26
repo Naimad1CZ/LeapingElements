@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.3.4" orientation="orthogonal" renderorder="right-down" width="36" height="20" tilewidth="64" tileheight="64" infinite="0" nextlayerid="6" nextobjectid="38">
+<map version="1.2" tiledversion="1.3.4" orientation="orthogonal" renderorder="right-down" width="36" height="20" tilewidth="64" tileheight="64" infinite="0" nextlayerid="6" nextobjectid="40">
  <tileset firstgid="1" name="Tileset1" tilewidth="64" tileheight="64" tilecount="18" columns="3">
   <image source="tileset1.png" width="192" height="384"/>
   <tile id="0">
@@ -193,12 +193,12 @@
 </data>
  </layer>
  <objectgroup id="5" name="Vrstva objektů 1">
-  <object id="24" gid="38" x="576" y="864" width="34" height="33"/>
-  <object id="25" gid="38" x="640" y="800" width="34" height="33"/>
-  <object id="26" gid="38" x="704" y="736" width="34" height="33"/>
-  <object id="27" gid="38" x="768" y="672" width="34" height="33"/>
-  <object id="30" gid="29" x="528" y="1024" width="54" height="58"/>
-  <object id="31" gid="30" x="1344" y="960" width="44" height="58"/>
+  <object id="24" gid="38" x="592" y="880" width="34" height="33"/>
+  <object id="25" gid="38" x="656" y="816" width="34" height="33"/>
+  <object id="26" gid="38" x="720" y="752" width="34" height="33"/>
+  <object id="27" gid="38" x="784" y="688" width="34" height="33"/>
+  <object id="30" gid="29" x="64" y="1216" width="54" height="58"/>
+  <object id="31" gid="30" x="1280" y="1024" width="44" height="58"/>
   <object id="35" gid="31" x="640" y="1216" width="50" height="55">
    <properties>
     <property name="routeLength" value="180"/>
@@ -206,7 +206,17 @@
   </object>
   <object id="36" gid="31" x="1024" y="1152" width="50" height="55">
    <properties>
-    <property name="routeLength" value="200"/>
+    <property name="routeLength" value="120"/>
+   </properties>
+  </object>
+  <object id="38" gid="32" x="1536" y="1152" width="57" height="64">
+   <properties>
+    <property name="shootingAngle" value="180"/>
+   </properties>
+  </object>
+  <object id="39" gid="33" x="1728" y="960" width="57" height="64">
+   <properties>
+    <property name="shootingAngle" value="90"/>
    </properties>
   </object>
  </objectgroup>
