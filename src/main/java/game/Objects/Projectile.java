@@ -25,14 +25,27 @@ public class Projectile extends GameObject {
         return type;
     }
 
-    protected int collideWithTerrain(Terrain terrain) {
-        int upperYBlock = (int)posY / terrain.TILE_HEIGHT;
-        int middleYBlock = (int) (posY + height / 2) / terrain.TILE_HEIGHT;
-        int lowerYBlock = (int)(posY + height - 1) / terrain.TILE_HEIGHT;
+    @Override
+    public String getName() {
+        if (type.equals("fire")) {
+            return "A fire projectile";
+        } else if (type.equals("ice")) {
+            return "An ice projectile";
+        } else if (type.equals("combined")) {
+            return "A combined projectile";
+        } else {
+            return "A projectile";
+        }
+    }
 
-        int lefterXBlock = (int)posX / terrain.TILE_WIDTH;
-        int middleXBlock = (int)(posX + width / 2) / terrain.TILE_WIDTH;
-        int righterXBlock = (int)(posX + width - 1) / terrain.TILE_WIDTH;
+    protected int collideWithTerrain(Terrain terrain) {
+        int upperYBlock = (int) posY / terrain.TILE_HEIGHT;
+        int middleYBlock = (int) (posY + height / 2) / terrain.TILE_HEIGHT;
+        int lowerYBlock = (int) (posY + height - 1) / terrain.TILE_HEIGHT;
+
+        int lefterXBlock = (int) posX / terrain.TILE_WIDTH;
+        int middleXBlock = (int) (posX + width / 2) / terrain.TILE_WIDTH;
+        int righterXBlock = (int) (posX + width - 1) / terrain.TILE_WIDTH;
 
         String upType = terrain.getTileType(middleXBlock, upperYBlock);
         String lowType = terrain.getTileType(middleXBlock, lowerYBlock);

@@ -5,7 +5,9 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import org.mapeditor.core.ObjectGroup;
 import org.mapeditor.core.Properties;
+import utils.DeathMessages;
 import utils.LoggingUtils;
+import utils.SwingFXUtils;
 
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
@@ -14,14 +16,23 @@ import static java.lang.Double.parseDouble;
 import static java.lang.Integer.parseInt;
 
 public class GameObjects {
-    private final ArrayList<GameObject> gameObjects = new ArrayList<>();
-
-    private Hero hero1;
-    private Hero hero2;
     private GraphicsContext gc;
 
+    private final ArrayList<GameObject> gameObjects = new ArrayList<>();
+    private Hero hero1;
+    private Hero hero2;
+
     /**
-     * camereModes - works only when 2 players are alive.
+     * general properties of object tile
+     */
+    private Properties prop1;
+    /**
+     * specific properties of object
+     */
+    private Properties prop2;
+
+    /**
+     * cameraModes - works only when 2 players are alive.
      * mode 0 - auto - put camera between players, if too big difference in their position, put camera on the player behind
      * mode 1 - focus hero1
      * mode 2 - focus hero2
@@ -32,35 +43,43 @@ public class GameObjects {
         gc = g;
         for (var o : og) {
             try {
-                Image img = new Image(GameObjects.class.getClassLoader().getResourceAsStream(o.getImageSource()));
+                prop1 = o.getTile().getProperties();
+                prop2 = o.getProperties();
+
+                Image img = SwingFXUtils.toFXImage(o.getTile().getImage(), null);
+                //Image img = new Image(GameObjects.class.getClassLoader().getResourceAsStream(o.getImageSource()));
                 double x = o.getX();
                 double y = o.getY();
 
-                Properties p = o.getProperties();
-                String cls = p.getProperty("class");
+                String cls = getProperty("class");
                 if (cls.equals("Hero")) {
-                    String type = p.getProperty("type");
-                    String movementSpeed = p.getProperty("movementSpeed");
-                    String jumpSpeed = p.getProperty("jumpSpeed");
-                    String swimmingSpeed = p.getProperty("swimmingSpeed");
+                    String type = getProperty("type");
+                    String movementSpeed = getProperty("movementSpeed");
+                    String jumpSpeed = getProperty("jumpSpeed");
+                    String swimmingSpeed = getProperty("swimmingSpeed");
+                    String lives = getProperty("lives");
                     double movSpeed;
                     double jmpSpeed;
                     double swimSpeed;
+                    int liv;
                     if (type.equals("fire")) {
                         movSpeed = movementSpeed == null ? 300 : parseDouble(movementSpeed);
                         jmpSpeed = jumpSpeed == null ? 380 : parseDouble(jumpSpeed);
                         swimSpeed = swimmingSpeed == null ? 0 : parseDouble(swimmingSpeed);
+                        liv = lives == null ? 3 : parseInt(lives);
                     } else if (type.equals("ice")) {
                         movSpeed = movementSpeed == null ? 250 : parseDouble(movementSpeed);
                         jmpSpeed = jumpSpeed == null ? 320 : parseDouble(jumpSpeed);
                         swimSpeed = swimmingSpeed == null ? 120 : parseDouble(swimmingSpeed);
+                        liv = lives == null ? 4 : parseInt(lives);
                     } else {
                         movSpeed = movementSpeed == null ? 300 : parseDouble(movementSpeed);
                         jmpSpeed = jumpSpeed == null ? 330 : parseDouble(jumpSpeed);
                         swimSpeed = swimmingSpeed == null ? 0 : parseDouble(swimmingSpeed);
+                        liv = lives == null ? 3 : parseInt(lives);
                     }
 
-                    Hero h = new Hero(img, x, y, type, movSpeed, jmpSpeed, swimSpeed);
+                    Hero h = new Hero(img, x, y, type, movSpeed, jmpSpeed, swimSpeed, liv);
                     gameObjects.add(h);
                     if (hero1 == null) {
                         hero1 = h;
@@ -68,17 +87,17 @@ public class GameObjects {
                         hero2 = h;
                     }
                 } else if (cls.equals("SimpleEnemy")) {
-                    String routeLength = p.getProperty("routeLength");
+                    String routeLength = getProperty("routeLength");
                     double rtLength = parseDouble(routeLength);
 
                     SimpleEnemy se = new SimpleEnemy(img, x, y, rtLength);
                     gameObjects.add(se);
                 } else if (cls.equals("Turret")) {
-                    String shootingAngle = p.getProperty("shootingAngle");
-                    String type = p.getProperty("type");
-                    String shootingInterval = p.getProperty("shootingInterval");
-                    String shootingSpeed = p.getProperty("shootingSpeed");
-                    String pathToBulletImage = p.getProperty("pathToBulletImage");
+                    String shootingAngle = getProperty("shootingAngle");
+                    String type = getProperty("type");
+                    String shootingInterval = getProperty("shootingInterval");
+                    String shootingSpeed = getProperty("shootingSpeed");
+                    String pathToBulletImage = getProperty("pathToBulletImage");
 
                     // shootingAngle is essential as well as type
                     double shAngle = parseDouble(shootingAngle);
@@ -86,18 +105,18 @@ public class GameObjects {
                     double shSpeed = shootingSpeed == null ? 400 : parseDouble(shootingSpeed);
 
                     if (type.equals("fire")) {
-                        pathToBulletImage = pathToBulletImage == null ? "MyResources/TurretFire" : pathToBulletImage;
+                        pathToBulletImage = pathToBulletImage == null ? "Objects/BulletFire" : pathToBulletImage;
                     } else if (type.equals("ice")) {
-                        pathToBulletImage = pathToBulletImage == null ? "MyResources/TurretIce" : pathToBulletImage;
+                        pathToBulletImage = pathToBulletImage == null ? "Objects/BulletIce" : pathToBulletImage;
                     } else if (type.equals("combined")) {
-                        pathToBulletImage = pathToBulletImage == null ? "MyResources/TurretCombined" : pathToBulletImage;
+                        pathToBulletImage = pathToBulletImage == null ? "Objects/BulletCombined" : pathToBulletImage;
                     }
 
                     Image bulletImage = new Image(GameObjects.class.getClassLoader().getResourceAsStream(pathToBulletImage));
                     Turret t = new Turret(img, x, y, shAngle, type, shInterval, shSpeed, bulletImage);
                     gameObjects.add(t);
                 } else if (cls.equals("Star")) {
-                    String value = p.getProperty("value");
+                    String value = getProperty("value");
                     int val = value == null ? 1 : parseInt(value);
 
                     Star s = new Star(img, x, y, val);
@@ -110,6 +129,16 @@ public class GameObjects {
             }
         }
         gc = g;
+    }
+
+    private String getProperty(String name) {
+        String s1 = prop1.getProperty(name);
+        String s2 = prop2.getProperty(name);
+        if (s2 != null) {
+            return s2;
+        } else {
+            return s1;
+        }
     }
 
     public Hero getHero1() {
@@ -167,7 +196,7 @@ public class GameObjects {
                 return new Point2D.Double(0, 0);
             }
         } else {
-            if (hero1.isAlive()){
+            if (hero1.isAlive()) {
                 var pos1 = hero1.getPosition();
                 return new Point2D.Double(pos1.x + (Game.WIDTH / 10), pos1.y);
             } else {
@@ -176,28 +205,54 @@ public class GameObjects {
         }
     }
 
-    // tadyyyyyyyyyk
+    /**
+     * Updates all game objects.
+     * For non-creatures deletes them if they died.
+     * For heroes respawns them if they have any lives left.
+     *
+     * @param delta
+     * @param world
+     */
     public void update(double delta, World world) {
-        if (!hero1.isAlive()) {
-            hero1.respawn();
-        }
-        hero1.update(delta, world);
-
-        if (hero2 != null) {
-            if (!hero2.isAlive()) {
-                hero2.respawn();
+        ArrayList<GameObject> toDelete = new ArrayList<>();
+        for (var go : gameObjects) {
+            if (go instanceof Creature) {
+                if (((Creature) go).isAlive()) {
+                    int deathCode = go.update(delta, world);
+                    if (deathCode > 0) {
+                        System.out.println(DeathMessages.getDeathMessage(go, deathCode));
+                    }
+                    if (go instanceof Hero) {
+                        ((Hero) go).looseLife();
+                        if (((Hero) go).getCurrentLives() > 0) {
+                            System.out.println("Resurrecting: " + ((Hero) go).getCurrentLives());
+                            ((Hero) go).respawn();
+                        }
+                    }
+                }
+            } else {
+                int deathCode = go.update(delta, world);
+                if (deathCode > 0) {
+                    toDelete.add(go);
+                    System.out.println(DeathMessages.getDeathMessage(go, deathCode));
+                }
             }
-            hero2.update(delta, world);
+        }
+
+        for (var item : toDelete) {
+            gameObjects.remove(item);
         }
     }
 
-    // tadyyyyyyk
     public void draw(int leftLabel, int topLabel) {
-        if (hero1.isAlive()) {
-            hero1.draw(gc, leftLabel, topLabel);
-        }
-        if (hero2 != null && hero2.isAlive()) {
-            hero2.draw(gc, leftLabel, topLabel);
+        for (var go : gameObjects) {
+            if (go instanceof Creature) {
+                if (((Creature) go).isAlive()) {
+                    go.draw(gc, leftLabel, topLabel);
+                }
+            } else {
+                go.draw(gc, leftLabel, topLabel);
+            }
         }
     }
 }

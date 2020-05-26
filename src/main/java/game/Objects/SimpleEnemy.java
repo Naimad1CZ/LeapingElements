@@ -1,8 +1,7 @@
 package game.Objects;
 
+import game.World;
 import javafx.scene.image.Image;
-
-import java.util.ArrayList;
 
 public class SimpleEnemy extends Enemy {
     private final double routeLength;
@@ -39,13 +38,19 @@ public class SimpleEnemy extends Enemy {
         }
     }
 
+    @Override
+    public String getName() {
+        return "A simple enemy";
+    }
+
     /**
      * Simple enemy doesn't die or anything if it encounters anything
-     * @param gameObjects
+     *
+     * @param world
      * @return 0
      */
     @Override
-    protected int collideWithOtherObjects(ArrayList<GameObject> gameObjects) {
+    protected int collideWithOtherObjects(World world) {
         return 0;
     }
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.3.4" orientation="orthogonal" renderorder="right-down" width="36" height="20" tilewidth="64" tileheight="64" infinite="0" nextlayerid="6" nextobjectid="24">
+<map version="1.2" tiledversion="1.3.4" orientation="orthogonal" renderorder="right-down" width="36" height="20" tilewidth="64" tileheight="64" infinite="0" nextlayerid="6" nextobjectid="38">
  <tileset firstgid="1" name="Tileset1" tilewidth="64" tileheight="64" tilecount="18" columns="3">
   <image source="tileset1.png" width="192" height="384"/>
   <tile id="0">
@@ -93,8 +93,79 @@
    </properties>
   </tile>
  </tileset>
- <tileset firstgid="19" source="ObjectSet.tmx"/>
- <imagelayer id="2" name="Background">
+ <tileset firstgid="19" name="Objects" tilewidth="57" tileheight="64" tilecount="10" columns="0">
+  <grid orientation="orthogonal" width="1" height="1"/>
+  <tile id="10">
+   <properties>
+    <property name="class" value="Hero"/>
+    <property name="type" value="ice"/>
+   </properties>
+   <image width="54" height="58" source="Objects/HeroIce.png"/>
+  </tile>
+  <tile id="11">
+   <properties>
+    <property name="class" value="Hero"/>
+    <property name="type" value="fire"/>
+   </properties>
+   <image width="44" height="58" source="Objects/HeroFire.png"/>
+  </tile>
+  <tile id="12">
+   <properties>
+    <property name="class" value="SimpleEnemy"/>
+    <property name="routeLength" value=""/>
+   </properties>
+   <image width="50" height="55" source="Objects/EnemySimple.png"/>
+  </tile>
+  <tile id="13">
+   <properties>
+    <property name="class" value="Turret"/>
+    <property name="shootingAngle" value=""/>
+    <property name="type" value="ice"/>
+   </properties>
+   <image width="57" height="64" source="Objects/TurretIce.png"/>
+  </tile>
+  <tile id="14">
+   <properties>
+    <property name="class" value="Turret"/>
+    <property name="shootingAngle" value=""/>
+    <property name="type" value="fire"/>
+   </properties>
+   <image width="57" height="64" source="Objects/TurretFire.png"/>
+  </tile>
+  <tile id="15">
+   <properties>
+    <property name="class" value="Turret"/>
+    <property name="shootingAngle" value=""/>
+    <property name="type" value="combined"/>
+   </properties>
+   <image width="57" height="64" source="Objects/TurretCombined.png"/>
+  </tile>
+  <tile id="16">
+   <properties>
+    <property name="class" value=""/>
+   </properties>
+   <image width="20" height="20" source="Objects/BulletIce.png"/>
+  </tile>
+  <tile id="17">
+   <properties>
+    <property name="class" value=""/>
+   </properties>
+   <image width="20" height="20" source="Objects/BulletFire.png"/>
+  </tile>
+  <tile id="18">
+   <properties>
+    <property name="class" value=""/>
+   </properties>
+   <image width="20" height="20" source="Objects/BulletCombined.png"/>
+  </tile>
+  <tile id="19">
+   <properties>
+    <property name="class" value="Star"/>
+   </properties>
+   <image width="34" height="33" source="Objects/StarSmall.png"/>
+  </tile>
+ </tileset>
+ <imagelayer id="2" name="Background" visible="0">
   <image source="winter/BG/BG.png" width="1799" height="893"/>
  </imagelayer>
  <layer id="1" name="Vrstva dlaždic 1" width="36" height="20">
@@ -122,6 +193,21 @@
 </data>
  </layer>
  <objectgroup id="5" name="Vrstva objektů 1">
-  <object id="23" gid="48" x="179" y="216" width="34" height="33"/>
+  <object id="24" gid="38" x="576" y="864" width="34" height="33"/>
+  <object id="25" gid="38" x="640" y="800" width="34" height="33"/>
+  <object id="26" gid="38" x="704" y="736" width="34" height="33"/>
+  <object id="27" gid="38" x="768" y="672" width="34" height="33"/>
+  <object id="30" gid="29" x="528" y="1024" width="54" height="58"/>
+  <object id="31" gid="30" x="1344" y="960" width="44" height="58"/>
+  <object id="35" gid="31" x="640" y="1216" width="50" height="55">
+   <properties>
+    <property name="routeLength" value="180"/>
+   </properties>
+  </object>
+  <object id="36" gid="31" x="1024" y="1152" width="50" height="55">
+   <properties>
+    <property name="routeLength" value="200"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>

@@ -26,6 +26,19 @@ public class Turret extends GameObject {
         projectileImage = bulletImage;
     }
 
+    @Override
+    public String getName() {
+        if (type.equals("fire")) {
+            return "A fire turret";
+        } else if (type.equals("ice")) {
+            return "An ice turret";
+        } else if (type.equals("combined")) {
+            return "A combined turret";
+        } else {
+            return "A turret";
+        }
+    }
+
     protected Projectile shoot() {
         return new Projectile(projectileImage, posX + width / 2, posY + height / 2, angle, speed, type, this);
     }

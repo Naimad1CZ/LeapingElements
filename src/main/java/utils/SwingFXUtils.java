@@ -1,32 +1,50 @@
+/*
+ * Copyright (c) 2012, 2014, Oracle and/or its affiliates. All rights reserved.
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * This code is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License version 2 only, as
+ * published by the Free Software Foundation.  Oracle designates this
+ * particular file as subject to the "Classpath" exception as provided
+ * by Oracle in the LICENSE file that accompanied this code.
+ *
+ * This code is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+ * version 2 for more details (a copy is included in the LICENSE file that
+ * accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version
+ * 2 along with this work; if not, write to the Free Software Foundation,
+ * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * Please contact Oracle, 500 Oracle Parkway, Redwood Shores, CA 94065 USA
+ * or visit www.oracle.com if you need additional information or have any
+ * questions.
+ */
+
 package utils;
 
-import java.awt.AlphaComposite;
-import java.awt.EventQueue;
-import java.awt.Graphics2D;
-import java.awt.SecondaryLoop;
-import java.awt.image.BufferedImage;
-import java.nio.IntBuffer;
-import java.nio.ByteOrder;
-import java.security.AccessController;
-import java.security.PrivilegedAction;
-import java.util.Set;
-import java.util.HashSet;
-import java.util.concurrent.atomic.AtomicBoolean;
-import javafx.application.Platform;
-import javafx.scene.image.Image;
-import javafx.scene.image.PixelFormat;
-import javafx.scene.image.PixelReader;
-import javafx.scene.image.PixelWriter;
-import javafx.scene.image.WritableImage;
-import javafx.scene.image.WritablePixelFormat;
+import com.sun.glass.ui.Pixels;
 import com.sun.javafx.application.PlatformImpl;
 import com.sun.javafx.tk.Toolkit;
-import com.sun.glass.ui.Pixels;
+import javafx.application.Platform;
+import javafx.scene.image.Image;
+import javafx.scene.image.*;
 import sun.awt.AWTAccessor;
 import sun.awt.FwDispatcher;
 import sun.awt.image.IntegerComponentRaster;
 
 import javax.swing.*;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.nio.ByteOrder;
+import java.nio.IntBuffer;
+import java.security.AccessController;
+import java.security.PrivilegedAction;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * This class provides utility methods for converting data types between
@@ -93,7 +111,7 @@ public class SwingFXUtils {
             if (iw < bw || ih < bh) {
                 wimg = null;
             } else if (bw < iw || bh < ih) {
-                int empty[] = new int[iw];
+                int[] empty = new int[iw];
                 PixelWriter pw = wimg.getPixelWriter();
                 PixelFormat<IntBuffer> pf = PixelFormat.getIntArgbPreInstance();
                 if (bw < iw) {
@@ -109,7 +127,7 @@ public class SwingFXUtils {
         }
         PixelWriter pw = wimg.getPixelWriter();
         IntegerComponentRaster icr = (IntegerComponentRaster) bimg.getRaster();
-        int data[] = icr.getDataStorage();
+        int[] data = icr.getDataStorage();
         int offset = icr.getDataOffset(0);
         int scan = icr.getScanlineStride();
         PixelFormat<IntBuffer> pf = (bimg.isAlphaPremultiplied() ?
@@ -159,13 +177,11 @@ public class SwingFXUtils {
      * @return
      */
     private static int
-    getBestBufferedImageType(PixelFormat<?> fxFormat, BufferedImage bimg)
-    {
+    getBestBufferedImageType(PixelFormat<?> fxFormat, BufferedImage bimg) {
         if (bimg != null) {
             int bimgType = bimg.getType();
             if (bimgType == BufferedImage.TYPE_INT_ARGB ||
-                    bimgType == BufferedImage.TYPE_INT_ARGB_PRE)
-            {
+                    bimgType == BufferedImage.TYPE_INT_ARGB_PRE) {
                 // We will allow the caller to give us a BufferedImage
                 // that has an alpha channel, but we might not otherwise
                 // construct one ourselves.
@@ -202,8 +218,7 @@ public class SwingFXUtils {
      * @return
      */
     private static WritablePixelFormat<IntBuffer>
-    getAssociatedPixelFormat(BufferedImage bimg)
-    {
+    getAssociatedPixelFormat(BufferedImage bimg) {
         switch (bimg.getType()) {
             // We lie here for xRGB, but we vetted that the src data was opaque
             // so we can ignore the alpha.  We use ArgbPre instead of Argb
@@ -275,7 +290,7 @@ public class SwingFXUtils {
         IntegerComponentRaster icr = (IntegerComponentRaster) bimg.getRaster();
         int offset = icr.getDataOffset(0);
         int scan = icr.getScanlineStride();
-        int data[] = icr.getDataStorage();
+        int[] data = icr.getDataStorage();
         WritablePixelFormat<IntBuffer> pf = getAssociatedPixelFormat(bimg);
         pr.getPixels(0, 0, iw, ih, pf, data, offset, scan);
         return bimg;

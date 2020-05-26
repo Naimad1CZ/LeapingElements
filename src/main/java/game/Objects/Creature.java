@@ -5,7 +5,6 @@ import game.World;
 import javafx.scene.image.Image;
 
 import java.awt.geom.Point2D;
-import java.util.ArrayList;
 
 public abstract class Creature extends GameObject {
     protected double movementSpeed;
@@ -180,7 +179,7 @@ public abstract class Creature extends GameObject {
         return 0;
     }
 
-    protected abstract int collideWithOtherObjects(ArrayList<GameObject> gameObjects);
+    protected abstract int collideWithOtherObjects(World world);
 
     public int update(double delta, World world) {
         // change of position because of movement triggered by keyboard
@@ -215,15 +214,13 @@ public abstract class Creature extends GameObject {
 
         int died = collideWithTerrain(world.getTerrain());
         if (died > 0) {
-            System.out.println("You died");
             alive = false;
             return died;
         }
 
-        died = collideWithOtherObjects(world.getGameObjects());
+        died = collideWithOtherObjects(world);
 
         if (died > 0) {
-            System.out.println("You died");
             alive = false;
         }
         return died;

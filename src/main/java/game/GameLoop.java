@@ -1,6 +1,6 @@
 package game;
 
-import game.Objects.Creature;
+import game.Objects.Hero;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
@@ -9,109 +9,122 @@ public class GameLoop extends AnimationTimer {
 
     private static final long NANOS_IN_SECOND = 1_000_000_000L;
     private long previousTime = System.nanoTime();
-    private GraphicsContext gc;
+    private final GraphicsContext gc;
 
-    private boolean startScreen = false;
+    private final boolean startScreen = false;
 
-    private Scene scene;
+    private final Scene scene;
 
-    MyMap myMap;
-    World myWorld;
+    private MyMap myMap;
+    private World myWorld;
+    private Hero hero1;
+    private Hero hero2;
 
     public GameLoop(GraphicsContext gc, Scene sc) {
         this.gc = gc;
 
-        myMap = new MyMap(null);
-        myWorld = myMap.loadWorld(gc);
-
-        Creature hero1 = myWorld.getHero1();
-        Creature hero2 = myWorld.getHero2();
+        loadLevel(null);
 
         scene = sc;
 
-        if (hero2 == null) {
-            scene.setOnKeyPressed(e -> {
-                switch (e.getCode()) {
-                    case RIGHT:
+        scene.setOnKeyPressed(e -> {
+            switch (e.getCode()) {
+                case RIGHT:
+                    if (hero1 != null) {
                         hero1.startMovingRight();
-                        break;
-                    case LEFT:
+                    }
+                    break;
+                case LEFT:
+                    if (hero1 != null) {
                         hero1.startMovingLeft();
-                        break;
-                    case UP:
+                    }
+                    break;
+                case UP:
+                    if (hero1 != null) {
                         hero1.startMovingUp();
-                        break;
-                    case R:
-                        hero1.respawn();
-                }
-            } );
-
-            scene.setOnKeyReleased(e -> {
-                switch (e.getCode()) {
-                    case RIGHT:
-                        hero1.stopMovingRight();
-                        break;
-                    case LEFT:
-                        hero1.stopMovingLeft();
-                        break;
-                    case UP:
-                        hero1.stopMovingUp();
-                        break;
-                }
-            } );
-        } else {
-            scene.setOnKeyPressed(e -> {
-                switch (e.getCode()) {
-                    case RIGHT:
-                        hero1.startMovingRight();
-                        break;
-                    case LEFT:
-                        hero1.startMovingLeft();
-                        break;
-                    case UP:
-                        hero1.startMovingUp();
-                        break;
-                    case D:
+                    }
+                    break;
+                case D:
+                    if (hero2 != null) {
                         hero2.startMovingRight();
-                        break;
-                    case A:
+                    }
+                    break;
+                case A:
+                    if (hero2 != null) {
                         hero2.startMovingLeft();
-                        break;
-                    case W:
+                    }
+                    break;
+                case W:
+                    if (hero2 != null) {
                         hero2.startMovingUp();
-                        break;
-                    case R:
-                        hero1.respawn();
-                        hero2.respawn();
-                    case C:
+                    }
+                    break;
+                case R:
+                    reloadLevel();
+                    break;
+                case C:
+                    if (myWorld != null) {
                         myWorld.changeCameraMode();
+                    }
+                    break;
+            }
+        });
 
-                }
-            } );
-
-            scene.setOnKeyReleased(e -> {
-                switch (e.getCode()) {
-                    case RIGHT:
+        scene.setOnKeyReleased(e -> {
+            switch (e.getCode()) {
+                case RIGHT:
+                    if (hero1 != null) {
                         hero1.stopMovingRight();
-                        break;
-                    case LEFT:
+                    }
+                    break;
+                case LEFT:
+                    if (hero1 != null) {
                         hero1.stopMovingLeft();
-                        break;
-                    case UP:
+                    }
+                    break;
+                case UP:
+                    if (hero1 != null) {
                         hero1.stopMovingUp();
-                        break;
-                    case D:
+                    }
+                    break;
+                case D:
+                    if (hero2 != null) {
                         hero2.stopMovingRight();
-                        break;
-                    case A:
+                    }
+                    break;
+                case A:
+                    if (hero2 != null) {
                         hero2.stopMovingLeft();
-                        break;
-                    case W:
+                    }
+                    break;
+                case W:
+                    if (hero2 != null) {
                         hero2.stopMovingUp();
-                        break;
-                }
-            } );
+                    }
+                    break;
+            }
+        });
+    }
+
+    private void loadLevel(String path) {
+        myMap = new MyMap(path);
+        reloadLevel();
+    }
+
+    private void reloadLevel() {
+        if (myMap != null) {
+            myWorld = myMap.loadWorld(gc);
+
+            hero1 = myWorld.getHero1();
+            hero2 = myWorld.getHero2();
         }
+    }
+
+    private void disposeLevel() {
+        myMap = null;
+        myWorld = null;
+        hero1 = null;
+        hero2 = null;
     }
 
     @Override
@@ -130,4 +143,6 @@ public class GameLoop extends AnimationTimer {
             myWorld.updateAndDraw(delta);
         }
     }
+
+
 }

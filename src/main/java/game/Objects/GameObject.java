@@ -1,14 +1,10 @@
 package game.Objects;
 
 import game.Game;
-import game.GameObjects;
-import game.Terrain;
 import game.World;
 import javafx.geometry.BoundingBox;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-
-import java.util.ArrayList;
 
 public abstract class GameObject {
     protected final double START_POS_X;
@@ -53,6 +49,8 @@ public abstract class GameObject {
     private BoundingBox getSkinBoundingBox() {
         return new BoundingBox(posX, posY, width, height);
     }
+
+    public abstract String getName();
 
     public abstract int update(double delta, World world);
 
