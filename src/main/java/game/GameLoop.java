@@ -8,13 +8,10 @@ import javafx.scene.canvas.GraphicsContext;
 public class GameLoop extends AnimationTimer {
 
     private static final long NANOS_IN_SECOND = 1_000_000_000L;
-    private long previousTime = System.nanoTime();
     private final GraphicsContext gc;
-
     private final boolean startScreen = false;
-
     private final Scene scene;
-
+    private long previousTime = System.nanoTime();
     private MyMap myMap;
     private World myWorld;
     private Hero hero1;

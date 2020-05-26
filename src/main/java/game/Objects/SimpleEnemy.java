@@ -13,7 +13,7 @@ public class SimpleEnemy extends Enemy {
      * @param lengthOfRoute tells mow much should the enemy go to the right before going back
      */
     public SimpleEnemy(Image image, double positionX, double positionY, double lengthOfRoute) {
-        super(image, positionX, positionY, 200, 0, 100);
+        super(image, positionX, positionY, 150, 0, 100);
         routeLength = lengthOfRoute;
     }
 

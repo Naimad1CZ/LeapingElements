@@ -90,7 +90,6 @@ public class Hero extends Creature {
                             return 44;
                         }
                     } else if (gameObject instanceof Projectile) {
-                        System.out.println("Ahoj");
                         if (((Projectile) gameObject).getType().equals("fire")) {
                             // fire heroes are resistant to fire bullets
                             if (type.equals("fire")) {

@@ -10,14 +10,11 @@ import utils.SwingFXUtils;
 import java.util.HashMap;
 
 public class Terrain {
-    private final GraphicsContext gc;
-
     public final int TILE_HEIGHT;
     public final int TILE_WIDTH;
-
     public final int WIDTH;
     public final int HEIGHT;
-
+    private final GraphicsContext gc;
     private final Tile[][] tiles;
     private final HashMap<Tile, Image> images = new HashMap<>();
 

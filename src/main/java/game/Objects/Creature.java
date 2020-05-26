@@ -77,24 +77,25 @@ public abstract class Creature extends GameObject {
 
     /**
      * Check collisions with terrain and corrects position of GameObject to not be inside solid terrain and to be integers.
+     *
      * @param terrain
      * @return cause of death, 0 if object didn't die
      */
     protected int collideWithTerrain(Terrain terrain) {
         boolean inWater = false;
 
-        posX = (int)posX;
-        posY = (int)posY;
+        posX = (int) posX;
+        posY = (int) posY;
 
-        int upperYBlock = (int)posY / terrain.TILE_HEIGHT;
+        int upperYBlock = (int) posY / terrain.TILE_HEIGHT;
         int upYBlock = (int) (posY + height / 6) / terrain.TILE_HEIGHT;
         int lowYBlock = (int) (posY + 5 * height / 6) / terrain.TILE_HEIGHT;
-        int lowerYBlock = (int)(posY + height - 1) / terrain.TILE_HEIGHT;
+        int lowerYBlock = (int) (posY + height - 1) / terrain.TILE_HEIGHT;
 
-        int lefterXBlock = (int)posX / terrain.TILE_WIDTH;
-        int leftXBlock = (int)(posX + width / 6) / terrain.TILE_WIDTH;
-        int rightXBlock = (int)(posX + 5 * width / 6) / terrain.TILE_WIDTH;
-        int righterXBlock = (int)(posX + width - 1) / terrain.TILE_WIDTH;
+        int lefterXBlock = (int) posX / terrain.TILE_WIDTH;
+        int leftXBlock = (int) (posX + width / 6) / terrain.TILE_WIDTH;
+        int rightXBlock = (int) (posX + 5 * width / 6) / terrain.TILE_WIDTH;
+        int righterXBlock = (int) (posX + width - 1) / terrain.TILE_WIDTH;
 
         String upperLeftType = terrain.getTileType(leftXBlock, upperYBlock);
         String upperRightType = terrain.getTileType(rightXBlock, upperYBlock);
@@ -111,7 +112,7 @@ public abstract class Creature extends GameObject {
             speedX = 0;
 
             // recalculate
-            rightXBlock = (int)(posX + 5 * width / 6) / terrain.TILE_WIDTH;
+            rightXBlock = (int) (posX + 5 * width / 6) / terrain.TILE_WIDTH;
             upperRightType = terrain.getTileType(rightXBlock, upperYBlock);
             lowerRightType = terrain.getTileType(rightXBlock, lowerYBlock);
         } else if (righterUpType.equals("water") || righterLowType.equals("water")) {
@@ -123,7 +124,7 @@ public abstract class Creature extends GameObject {
             speedX = 0;
 
             // recalculate
-            leftXBlock = (int)(posX + width / 6) / terrain.TILE_WIDTH;
+            leftXBlock = (int) (posX + width / 6) / terrain.TILE_WIDTH;
             upperLeftType = terrain.getTileType(leftXBlock, upperYBlock);
             lowerLeftType = terrain.getTileType(leftXBlock, lowerYBlock);
         } else if (lefterUpType.equals("water") || lefterLowType.equals("water")) {
@@ -137,8 +138,7 @@ public abstract class Creature extends GameObject {
             onGround = true;
         } else if (lowerLeftType.equals("water") || lowerRightType.equals("water")) {
             inWater = true;
-        }
-        else if (lowerLeftType.equals("out") || lowerRightType.equals("out")) {
+        } else if (lowerLeftType.equals("out") || lowerRightType.equals("out")) {
             // dieeeeeee (by falling out of the world)
             return 1;
         } else if (speedY < 0) {

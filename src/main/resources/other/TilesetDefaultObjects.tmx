@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tileset version="1.2" tiledversion="1.3.4" name="Objects" tilewidth="57" tileheight="64" tilecount="7" columns="0">
+ <grid orientation="orthogonal" width="1" height="1"/>
+ <tile id="10">
+  <properties>
+   <property name="class" value="Hero"/>
+   <property name="type" value="ice"/>
+  </properties>
+  <image width="54" height="58" source="../Objects/HeroIce.png"/>
+ </tile>
+ <tile id="11">
+  <properties>
+   <property name="class" value="Hero"/>
+   <property name="type" value="fire"/>
+  </properties>
+  <image width="44" height="58" source="../Objects/HeroFire.png"/>
+ </tile>
+ <tile id="12">
+  <properties>
+   <property name="class" value="SimpleEnemy"/>
+   <property name="routeLength" value=""/>
+  </properties>
+  <image width="50" height="55" source="../Objects/EnemySimple.png"/>
+ </tile>
+ <tile id="13">
+  <properties>
+   <property name="class" value="Turret"/>
+   <property name="shootingAngle" value=""/>
+   <property name="type" value="ice"/>
+  </properties>
+  <image width="57" height="64" source="../Objects/TurretIce.png"/>
+ </tile>
+ <tile id="14">
+  <properties>
+   <property name="class" value="Turret"/>
+   <property name="shootingAngle" value=""/>
+   <property name="type" value="fire"/>
+  </properties>
+  <image width="57" height="64" source="../Objects/TurretFire.png"/>
+ </tile>
+ <tile id="15">
+  <properties>
+   <property name="class" value="Turret"/>
+   <property name="shootingAngle" value=""/>
+   <property name="type" value="combined"/>
+  </properties>
+  <image width="57" height="64" source="../Objects/TurretCombined.png"/>
+ </tile>
+ <tile id="19">
+  <properties>
+   <property name="class" value="Star"/>
+  </properties>
+  <image width="34" height="33" source="../Objects/StarSmall.png"/>
+ </tile>
+</tileset>

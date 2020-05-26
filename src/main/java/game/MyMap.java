@@ -1,14 +1,13 @@
 package game;
 
-import utils.LoggingUtils;
-
 import javafx.scene.canvas.GraphicsContext;
-
 import org.mapeditor.core.Map;
 import org.mapeditor.io.TMXMapReader;
+import utils.LoggingUtils;
 
 public class MyMap {
     private Map map;
+
     public MyMap(String location) {
         if (location == null) {
             location = "src/main/resources/bezjmena3.tmx";

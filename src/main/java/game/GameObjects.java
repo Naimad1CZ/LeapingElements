@@ -190,7 +190,7 @@ public class GameObjects {
             } else if (hero1.isAlive()) {
                 var pos1 = hero1.getPosition();
                 return new Point2D.Double(pos1.x + (Game.WIDTH / 10), pos1.y);
-            } else if (hero2.isAlive()){
+            } else if (hero2.isAlive()) {
                 var pos2 = hero2.getPosition();
                 return new Point2D.Double(pos2.x + (Game.WIDTH / 10), pos2.y);
             } else {
@@ -225,7 +225,9 @@ public class GameObjects {
                 int deathCode = go.updatePosition(delta, world);
                 if (deathCode > 0) {
                     toDelete.add(go);
-                    System.out.println(DeathMessages.getDeathMessage(go, deathCode));
+                    if (go instanceof Hero) {
+                        System.out.println(DeathMessages.getDeathMessage(go, deathCode));
+                    }
                 }
             }
         }
@@ -235,7 +237,9 @@ public class GameObjects {
                 int deathCode = go.updateWithOtherObjects(world);
                 if (deathCode > 0) {
                     toDelete.add(go);
-                    System.out.println(DeathMessages.getDeathMessage(go, deathCode));
+                    if (go instanceof Hero) {
+                        System.out.println(DeathMessages.getDeathMessage(go, deathCode));
+                    }
                 }
             }
         }
@@ -246,7 +250,6 @@ public class GameObjects {
                 if (item instanceof Hero) {
                     ((Hero) item).looseLife();
                     if (((Hero) item).getCurrentLives() > 0) {
-                        System.out.println("Resurrecting: " + ((Hero) item).getCurrentLives());
                         ((Hero) item).respawn();
                         continue;
                     }

@@ -22,7 +22,6 @@ public abstract class GameObject {
     protected int height;
 
     /**
-     *
      * @param image
      * @param positionX
      * @param positionY
@@ -33,13 +32,14 @@ public abstract class GameObject {
         posX = positionX;
         posY = positionY;
         img = image;
-        width = (int)image.getWidth();
-        height = (int)image.getHeight();
+        width = (int) image.getWidth();
+        height = (int) image.getHeight();
     }
 
     /**
      * we get bounding boxes smaller than the actual object because objects usually doesn't have 100% of their size
      * filled with skin
+     *
      * @return
      */
     public BoundingBox getBoundingBox() {
