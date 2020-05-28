@@ -43,6 +43,17 @@ public class HUD {
         messageTimeLeft = time;
     }
 
+    /**
+     * @return Message that is displayed
+     */
+    public String getMessage() {
+        if (message == null || messageTimeLeft <= 0) {
+            return "";
+        } else {
+            return message;
+        }
+    }
+
     public void draw(double delta) {
         // draw hero1 bar
         if (world.getHero1() != null) {
@@ -114,7 +125,6 @@ public class HUD {
             gc.setFill(textColor);
             gc.setFont(messageFont);
             gc.fillText(message, (Game.WIDTH - messageWidth) / 2, 64 + 33);
-
         }
     }
 }

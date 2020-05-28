@@ -66,19 +66,19 @@ public class GameObjects {
                     int liv;
                     if (type.equals("fire")) {
                         movSpeed = movementSpeed == null ? 280 : parseDouble(movementSpeed);
-                        jmpSpeed = jumpSpeed == null ? 390 : parseDouble(jumpSpeed);
+                        jmpSpeed = jumpSpeed == null ? 400 : parseDouble(jumpSpeed);
                         swimSpeed = swimmingSpeed == null ? 0 : parseDouble(swimmingSpeed);
                         liv = lives == null ? 3 : parseInt(lives);
                         HUDImageSource = HUDImageSource == null ? "Objects/HeroFireSmall.png" : HUDImageSource;
                     } else if (type.equals("ice")) {
                         movSpeed = movementSpeed == null ? 250 : parseDouble(movementSpeed);
-                        jmpSpeed = jumpSpeed == null ? 330 : parseDouble(jumpSpeed);
+                        jmpSpeed = jumpSpeed == null ? 340 : parseDouble(jumpSpeed);
                         swimSpeed = swimmingSpeed == null ? 120 : parseDouble(swimmingSpeed);
                         liv = lives == null ? 4 : parseInt(lives);
                         HUDImageSource = HUDImageSource == null ? "Objects/HeroIceSmall.png" : HUDImageSource;
                     } else {
                         movSpeed = movementSpeed == null ? 300 : parseDouble(movementSpeed);
-                        jmpSpeed = jumpSpeed == null ? 330 : parseDouble(jumpSpeed);
+                        jmpSpeed = jumpSpeed == null ? 340 : parseDouble(jumpSpeed);
                         swimSpeed = swimmingSpeed == null ? 0 : parseDouble(swimmingSpeed);
                         liv = lives == null ? 3 : parseInt(lives);
                     }
@@ -89,6 +89,11 @@ public class GameObjects {
                         hero1 = h;
                     } else if (hero2 == null) {
                         hero2 = h;
+                    } else if (hero2.getType().equals("ice") && hero1.getType().equals("fire")) {
+                        // ice is the first hero if we have both ice and fire heroes
+                        Hero tmp = hero2;
+                        hero2 = hero1;
+                        hero1 = tmp;
                     }
                 } else if (cls.equals("SimpleEnemy")) {
                     String routeLength = getProperty("routeLength");

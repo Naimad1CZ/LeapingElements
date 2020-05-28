@@ -18,10 +18,9 @@ public class World {
     private final Terrain terrain;
     private final GameObjects gameObjects;
     private final HUD hud;
-
-    private int score = 0;
     private final int maxScore;
-    private final boolean completed = false;
+    private int score = 0;
+    private boolean completed = false;
 
     public World(GraphicsContext gc, Map map) {
         background = new Background(gc, (ImageLayer) map.getLayer(0));
@@ -89,6 +88,7 @@ public class World {
         score += value;
         if (score == maxScore) {
             setMessage("Level completed!", 4);
+            completed = true;
         }
     }
 
@@ -100,7 +100,6 @@ public class World {
         return maxScore;
     }
 
-
     public void setMessage(String message, double length) {
         if (gameObjects.getTotalCurrentLives() == 0) {
             hud.setMessage("You lost. Press R to restart level.", 10);
@@ -109,7 +108,16 @@ public class World {
         }
     }
 
+    public String getMessage() {
+        return hud.getMessage();
+    }
+
+    /**
+     * If the level is completed
+     *
+     * @return true if level is completed and the "Level completed!" message already disappeared.
+     */
     public boolean isCompleted() {
-        return completed;
+        return completed && !getMessage().equals("Level completed!");
     }
 }

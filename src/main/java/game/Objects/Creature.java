@@ -20,6 +20,8 @@ public abstract class Creature extends GameObject {
     private boolean moveLeft = false;
     private boolean moveUp = false;
 
+    private boolean waitingForJump = false;
+
     public Creature(Image image, double positionX, double positionY, double movSpeed, double jumpSpeed, double swimmingSpeed) {
         super(image, positionX, positionY);
 
@@ -52,8 +54,7 @@ public abstract class Creature extends GameObject {
         moveUp = true;
         // if on ground, jump
         if (onGround) {
-            speedY -= jumpForce;
-            onGround = false;
+            waitingForJump = true;
         }
     }
 
@@ -203,6 +204,13 @@ public abstract class Creature extends GameObject {
                 posX -= swimSpeed * delta;
             }
         } else {
+            // if is supposed to jump, then jump
+            if (waitingForJump) {
+                speedY -= jumpForce;
+                onGround = false;
+                waitingForJump = false;
+            }
+
             // change speed by gravity
             speedY += World.GRAVITY * delta;
             if (speedY > World.GRAVITY * 1.5) {
@@ -211,10 +219,22 @@ public abstract class Creature extends GameObject {
             }
 
             if (moveRight) {
-                posX += movementSpeed * delta;
+                if (onGround) {
+                    posX += movementSpeed * delta;
+                } else {
+                    // move slower when in air
+                    posX += movementSpeed * delta * 2 / 3;
+                }
+
             }
             if (moveLeft) {
-                posX -= movementSpeed * delta;
+                if (onGround) {
+                    posX -= movementSpeed * delta;
+                } else {
+                    // move slower when in air
+                    posX -= movementSpeed * delta * 2 / 3;
+                }
+
             }
         }
 

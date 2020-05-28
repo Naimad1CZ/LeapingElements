@@ -94,7 +94,7 @@
   </tile>
  </tileset>
  <tileset firstgid="19" source="Other/TilesetDefaultObjects.tmx"/>
- <imagelayer id="2" name="Background" visible="0">
+ <imagelayer id="2" name="Background">
   <image source="winter/BG/BG.png" width="1799" height="893"/>
  </imagelayer>
  <layer id="1" name="Vrstva dlaždic 1" width="36" height="20">
