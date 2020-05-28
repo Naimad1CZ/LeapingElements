@@ -17,13 +17,18 @@ public class World {
     private final Background background;
     private final Terrain terrain;
     private final GameObjects gameObjects;
+    private final HUD hud;
 
     private int score = 0;
+    private final int maxScore;
+    private final boolean completed = false;
 
     public World(GraphicsContext gc, Map map) {
         background = new Background(gc, (ImageLayer) map.getLayer(0));
         terrain = new Terrain(gc, (TileLayer) map.getLayer(1), map);
         gameObjects = new GameObjects(gc, (ObjectGroup) map.getLayer(2));
+        maxScore = gameObjects.getCurrentObtainableScore();
+        hud = new HUD(gc, this);
     }
 
     public Hero getHero1() {
@@ -62,6 +67,7 @@ public class World {
             background.draw(leftLabel, topLabel, terrain.HEIGHT);
             terrain.draw(leftLabel, topLabel);
             gameObjects.draw(leftLabel, topLabel);
+            hud.draw(delta);
         } catch (Exception e) {
             LoggingUtils.logError("Error when updating and drawing: " + e.getMessage() + ", " + e.toString());
         }
@@ -81,9 +87,29 @@ public class World {
 
     public void addScore(int value) {
         score += value;
+        if (score == maxScore) {
+            setMessage("Level completed!", 4);
+        }
     }
 
     public int getScore() {
         return score;
+    }
+
+    public int getMaxScore() {
+        return maxScore;
+    }
+
+
+    public void setMessage(String message, double length) {
+        if (gameObjects.getTotalCurrentLives() == 0) {
+            hud.setMessage("You lost. Press R to restart level.", 10);
+        } else {
+            hud.setMessage(message, length);
+        }
+    }
+
+    public boolean isCompleted() {
+        return completed;
     }
 }

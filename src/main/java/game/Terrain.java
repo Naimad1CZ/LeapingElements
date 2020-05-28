@@ -51,9 +51,9 @@ public class Terrain {
     }
 
     public String getTileType(int x, int y) {
-        if (y >= tiles[0].length || y < -5 || x > tiles.length + 5 || x < -5) {
+        if (y >= tiles[0].length || y < -5 || x >= tiles.length + 5 || x < -5) {
             return "out";
-        } else if (x < 0 || x >= tiles.length || y < 0 || tiles[x][y] == null) {
+        } else if (y < 0 || x >= tiles.length || x < 0 || tiles[x][y] == null) {
             return "air";
         } else {
             return tiles[x][y].getProperties().getProperty("kind");

@@ -84,18 +84,25 @@ public abstract class Creature extends GameObject {
     protected int collideWithTerrain(Terrain terrain) {
         boolean inWater = false;
 
-        posX = (int) posX;
-        posY = (int) posY;
+        int intPosX = (int) posX;
+        if (intPosX < 0) {
+            // for calculating block types
+            intPosX -= terrain.TILE_WIDTH;
+        }
+        int intPosY = (int) posY;
+        if (intPosY < 0) {
+            intPosY -= terrain.TILE_WIDTH;
+        }
 
-        int upperYBlock = (int) posY / terrain.TILE_HEIGHT;
-        int upYBlock = (int) (posY + height / 6) / terrain.TILE_HEIGHT;
-        int lowYBlock = (int) (posY + 5 * height / 6) / terrain.TILE_HEIGHT;
-        int lowerYBlock = (int) (posY + height - 1) / terrain.TILE_HEIGHT;
+        int upperYBlock = intPosY / terrain.TILE_HEIGHT;
+        int upYBlock = (intPosY + height / 6) / terrain.TILE_HEIGHT;
+        int lowYBlock = (intPosY + 5 * height / 6) / terrain.TILE_HEIGHT;
+        int lowerYBlock = (intPosY + height - 1) / terrain.TILE_HEIGHT;
 
-        int lefterXBlock = (int) posX / terrain.TILE_WIDTH;
-        int leftXBlock = (int) (posX + width / 6) / terrain.TILE_WIDTH;
-        int rightXBlock = (int) (posX + 5 * width / 6) / terrain.TILE_WIDTH;
-        int righterXBlock = (int) (posX + width - 1) / terrain.TILE_WIDTH;
+        int lefterXBlock = intPosX / terrain.TILE_WIDTH;
+        int leftXBlock = (intPosX + width / 6) / terrain.TILE_WIDTH;
+        int rightXBlock = (intPosX + 5 * width / 6) / terrain.TILE_WIDTH;
+        int righterXBlock = (intPosX + width - 1) / terrain.TILE_WIDTH;
 
         String upperLeftType = terrain.getTileType(leftXBlock, upperYBlock);
         String upperRightType = terrain.getTileType(rightXBlock, upperYBlock);
@@ -141,7 +148,7 @@ public abstract class Creature extends GameObject {
         } else if (lowerLeftType.equals("out") || lowerRightType.equals("out")) {
             // dieeeeeee (by falling out of the world)
             return 1;
-        } else if (speedY < 0) {
+        } else if (speedY > World.GRAVITY / 20 || speedY < 0) {
             onGround = false;
         }
 
@@ -158,7 +165,7 @@ public abstract class Creature extends GameObject {
                 isSwimming = true;
                 if (upperLeftType.equals("water") || upperRightType.equals("water")) {
                     // go up;
-                    speedY = -swimSpeed * 3 / 4;//-swimSpeed;
+                    speedY = -swimSpeed * 3 / 4;
                 } else if (lefterUpType.equals("water") || righterUpType.equals("water")) {
                     // stay floating
                     speedY = 0;

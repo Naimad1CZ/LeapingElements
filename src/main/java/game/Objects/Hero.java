@@ -9,6 +9,7 @@ public class Hero extends Creature {
     private final String type;
     protected int maxLives;
     protected int currentLives;
+    protected String HUDImageSource;
 
     /**
      * @param image
@@ -19,11 +20,12 @@ public class Hero extends Creature {
      * @param jumpSpeed     put 0 to get default value (330)
      * @param swimmingSpeed put 0 to drown when in water, otherwise positive
      */
-    public Hero(Image image, double positionX, double positionY, String heroType, double movSpeed, double jumpSpeed, double swimmingSpeed, int lives) {
+    public Hero(Image image, double positionX, double positionY, String heroType, double movSpeed, double jumpSpeed, double swimmingSpeed, int lives, String HUDImgSource) {
         super(image, positionX, positionY, movSpeed, jumpSpeed, swimmingSpeed);
         type = heroType;
         maxLives = lives;
         currentLives = maxLives;
+        HUDImageSource = HUDImgSource;
     }
 
     public int getMaxLives() {
@@ -40,6 +42,10 @@ public class Hero extends Creature {
 
     public Image getImage() {
         return img;
+    }
+
+    public String getHUDImageSource() {
+        return HUDImageSource;
     }
 
     public String getType() {

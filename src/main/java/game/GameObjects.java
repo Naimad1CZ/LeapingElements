@@ -48,7 +48,6 @@ public class GameObjects {
                 prop2 = o.getProperties();
 
                 Image img = SwingFXUtils.toFXImage(o.getTile().getImage(), null);
-                //Image img = new Image(GameObjects.class.getClassLoader().getResourceAsStream(o.getImageSource()));
                 double x = o.getX();
                 // subtracting height because Tiled sets coordinates for the lower left point, not upper left
                 double y = o.getY() - o.getHeight();
@@ -60,20 +59,23 @@ public class GameObjects {
                     String jumpSpeed = getProperty("jumpSpeed");
                     String swimmingSpeed = getProperty("swimmingSpeed");
                     String lives = getProperty("lives");
+                    String HUDImageSource = getProperty("HUDImageSource");
                     double movSpeed;
                     double jmpSpeed;
                     double swimSpeed;
                     int liv;
                     if (type.equals("fire")) {
-                        movSpeed = movementSpeed == null ? 300 : parseDouble(movementSpeed);
-                        jmpSpeed = jumpSpeed == null ? 380 : parseDouble(jumpSpeed);
+                        movSpeed = movementSpeed == null ? 280 : parseDouble(movementSpeed);
+                        jmpSpeed = jumpSpeed == null ? 390 : parseDouble(jumpSpeed);
                         swimSpeed = swimmingSpeed == null ? 0 : parseDouble(swimmingSpeed);
                         liv = lives == null ? 3 : parseInt(lives);
+                        HUDImageSource = HUDImageSource == null ? "Objects/HeroFireSmall.png" : HUDImageSource;
                     } else if (type.equals("ice")) {
                         movSpeed = movementSpeed == null ? 250 : parseDouble(movementSpeed);
-                        jmpSpeed = jumpSpeed == null ? 320 : parseDouble(jumpSpeed);
+                        jmpSpeed = jumpSpeed == null ? 330 : parseDouble(jumpSpeed);
                         swimSpeed = swimmingSpeed == null ? 120 : parseDouble(swimmingSpeed);
                         liv = lives == null ? 4 : parseInt(lives);
+                        HUDImageSource = HUDImageSource == null ? "Objects/HeroIceSmall.png" : HUDImageSource;
                     } else {
                         movSpeed = movementSpeed == null ? 300 : parseDouble(movementSpeed);
                         jmpSpeed = jumpSpeed == null ? 330 : parseDouble(jumpSpeed);
@@ -81,7 +83,7 @@ public class GameObjects {
                         liv = lives == null ? 3 : parseInt(lives);
                     }
 
-                    Hero h = new Hero(img, x, y, type, movSpeed, jmpSpeed, swimSpeed, liv);
+                    Hero h = new Hero(img, x, y, type, movSpeed, jmpSpeed, swimSpeed, liv, HUDImageSource);
                     gameObjects.add(h);
                     if (hero1 == null) {
                         hero1 = h;
@@ -162,6 +164,27 @@ public class GameObjects {
         objectsToAdd.add(go);
     }
 
+    public int getCurrentObtainableScore() {
+        int res = 0;
+        for (var go : gameObjects) {
+            if (go instanceof Star) {
+                res += ((Star) go).getValue();
+            }
+        }
+        return res;
+    }
+
+    public int getTotalCurrentLives() {
+        int lifeCount = 0;
+        if (getHero1() != null) {
+            lifeCount += getHero1().getCurrentLives();
+        }
+        if (getHero2() != null) {
+            lifeCount += getHero2().getCurrentLives();
+        }
+        return lifeCount;
+    }
+
     public Point2D.Double getHeroPositionsOptimalCenter() {
         if (hero2 != null) {
             if (hero1.isAlive() && hero2.isAlive()) {
@@ -220,13 +243,15 @@ public class GameObjects {
 
         ArrayList<GameObject> toDelete = new ArrayList<>();
 
+        String deathMessage = null;
+
         for (var go : gameObjects) {
             if (!(go instanceof Creature) || ((Creature) go).isAlive()) {
                 int deathCode = go.updatePosition(delta, world);
                 if (deathCode > 0) {
                     toDelete.add(go);
                     if (go instanceof Hero) {
-                        System.out.println(DeathMessages.getDeathMessage(go, deathCode));
+                        deathMessage = DeathMessages.getDeathMessage(go, deathCode);
                     }
                 }
             }
@@ -238,7 +263,7 @@ public class GameObjects {
                 if (deathCode > 0) {
                     toDelete.add(go);
                     if (go instanceof Hero) {
-                        System.out.println(DeathMessages.getDeathMessage(go, deathCode));
+                        deathMessage = DeathMessages.getDeathMessage(go, deathCode);
                     }
                 }
             }
@@ -256,6 +281,10 @@ public class GameObjects {
                 }
             }
             gameObjects.remove(item);
+        }
+
+        if (deathMessage != null) {
+            world.setMessage(deathMessage, 3);
         }
     }
 

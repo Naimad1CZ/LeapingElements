@@ -58,7 +58,7 @@ public abstract class GameObject {
 
     public void draw(GraphicsContext gc, int leftLabel, int topLabel) {
         if (getSkinBoundingBox().intersects(new BoundingBox(leftLabel, topLabel, Game.WIDTH, Game.HEIGHT))) {
-            gc.drawImage(img, posX - leftLabel, posY - topLabel);
+            gc.drawImage(img, (int) (posX - leftLabel), (int) (posY - topLabel));
         }
     }
 }

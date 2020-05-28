@@ -140,12 +140,12 @@
   </object>
   <object id="38" gid="32" x="1536" y="1152" width="57" height="64">
    <properties>
-    <property name="shootingAngle" value="180"/>
+    <property name="shootingAngle" value="270"/>
    </properties>
   </object>
   <object id="39" gid="33" x="1728" y="960" width="57" height="64">
    <properties>
-    <property name="shootingAngle" value="90"/>
+    <property name="shootingAngle" value="180"/>
    </properties>
   </object>
  </objectgroup>

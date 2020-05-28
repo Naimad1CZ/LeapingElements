@@ -24,6 +24,10 @@ public class Star extends GameObject {
         return "A star";
     }
 
+    public int getValue() {
+        return value;
+    }
+
     public int updatePosition(double delta, World world) {
         return 0;
     }
