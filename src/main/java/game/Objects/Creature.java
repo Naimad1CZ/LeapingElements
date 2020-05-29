@@ -60,6 +60,7 @@ public abstract class Creature extends GameObject {
 
     public void stopMovingUp() {
         moveUp = false;
+        waitingForJump = false;
     }
 
     public boolean isAlive() {
@@ -115,28 +116,31 @@ public abstract class Creature extends GameObject {
         String lefterUpType = terrain.getTileType(lefterXBlock, upYBlock);
         String lefterLowType = terrain.getTileType(lefterXBlock, lowYBlock);
 
-        if (speedX >= 0 && (righterUpType.equals("solid") || righterLowType.equals("solid"))) {
-            posX = righterXBlock * terrain.TILE_WIDTH - width;
-            speedX = 0;
+        // if I'm in solid from both side, don't do right and left correction
+        if (!(righterLowType.equals("solid") && lefterLowType.equals("solid"))) {
+            if (speedX >= 0 && (righterUpType.equals("solid") || righterLowType.equals("solid"))) {
+                posX = righterXBlock * terrain.TILE_WIDTH - width;
+                speedX = 0;
 
-            // recalculate
-            rightXBlock = (int) (posX + 5 * width / 6) / terrain.TILE_WIDTH;
-            upperRightType = terrain.getTileType(rightXBlock, upperYBlock);
-            lowerRightType = terrain.getTileType(rightXBlock, lowerYBlock);
-        } else if (righterUpType.equals("water") || righterLowType.equals("water")) {
-            inWater = true;
-        }
+                // recalculate
+                rightXBlock = (int) (posX + 5 * width / 6) / terrain.TILE_WIDTH;
+                upperRightType = terrain.getTileType(rightXBlock, upperYBlock);
+                lowerRightType = terrain.getTileType(rightXBlock, lowerYBlock);
+            } else if (righterUpType.equals("water") || righterLowType.equals("water")) {
+                inWater = true;
+            }
 
-        if (speedX <= 0 && (lefterUpType.equals("solid") || lefterLowType.equals("solid"))) {
-            posX = (lefterXBlock + 1) * terrain.TILE_WIDTH;
-            speedX = 0;
+            if (speedX <= 0 && (lefterUpType.equals("solid") || lefterLowType.equals("solid"))) {
+                posX = (lefterXBlock + 1) * terrain.TILE_WIDTH;
+                speedX = 0;
 
-            // recalculate
-            leftXBlock = (int) (posX + width / 6) / terrain.TILE_WIDTH;
-            upperLeftType = terrain.getTileType(leftXBlock, upperYBlock);
-            lowerLeftType = terrain.getTileType(leftXBlock, lowerYBlock);
-        } else if (lefterUpType.equals("water") || lefterLowType.equals("water")) {
-            inWater = true;
+                // recalculate
+                leftXBlock = (int) (posX + width / 6) / terrain.TILE_WIDTH;
+                upperLeftType = terrain.getTileType(leftXBlock, upperYBlock);
+                lowerLeftType = terrain.getTileType(leftXBlock, lowerYBlock);
+            } else if (lefterUpType.equals("water") || lefterLowType.equals("water")) {
+                inWater = true;
+            }
         }
 
         if (speedY >= 0 && (lowerLeftType.equals("solid") || lowerRightType.equals("solid"))) {
@@ -153,7 +157,7 @@ public abstract class Creature extends GameObject {
             onGround = false;
         }
 
-        if (speedY <= 0 && (upperLeftType.equals("solid") || upperRightType.equals("solid"))) {
+        if (speedY < 0 && (upperLeftType.equals("solid") || upperRightType.equals("solid"))) {
             // if we hit some solid with out head, get down so we are not stuck inside
             posY = (upperYBlock + 1) * terrain.TILE_HEIGHT;
             speedY = 0;
@@ -175,7 +179,7 @@ public abstract class Creature extends GameObject {
                     speedY = swimSpeed * 3 / 4;
                 } else {
                     // go down a lot
-                    speedY = swimSpeed * 1.5;
+                    speedY = swimSpeed * 1;
                 }
             } else {
                 if (lefterLowType.equals("water") || righterLowType.equals("water")) {
