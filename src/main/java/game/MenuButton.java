@@ -59,12 +59,12 @@ public class MenuButton extends Button {
 
     private void setButtonPressedStyle() {
         setStyle(buttonPressedStyle);
-        setLayoutY(getLayoutY() + 2);
+        setTranslateY(getTranslateY() + 1);
     }
 
-    private void setButtonReleasedStyle() {
+    protected void setButtonReleasedStyle() {
         setStyle(buttonReleasedStyle);
-        setLayoutY(getLayoutY() -2);
+        setTranslateY(getTranslateY() - 1);
     }
 
     private void initializeButtonListeners() {

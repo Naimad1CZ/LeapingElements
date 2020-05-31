@@ -1,18 +1,22 @@
 package game;
 
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Button;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
+import java.util.ArrayList;
 
 public class Game extends Application {
     public static final int WIDTH = 1472;
@@ -28,7 +32,7 @@ public class Game extends Application {
 
         Group mainSceneGroup = new Group();
         Scene mainScene = new Scene(mainSceneGroup, WIDTH, HEIGHT);
-        initializeMainScene(mainSceneGroup);
+        var buttonsToFurtherInitialize = initializeMainScene(mainSceneGroup);
 
         Group gameSceneGroup = new Group();
         Scene gameScene = new Scene(gameSceneGroup, WIDTH, HEIGHT);
@@ -37,11 +41,11 @@ public class Game extends Application {
         GraphicsContext gc = gameCanvas.getGraphicsContext2D();
 
         stage.setScene(mainScene);
-        new GameLoop(gc, stage, mainScene, gameScene).start();
+        new GameLoop(gc, stage, mainScene, gameScene, buttonsToFurtherInitialize).start();
         stage.show();
     }
 
-    private void initializeMainScene(Group mainSceneGroup) {
+    private ArrayList<MenuButton> initializeMainScene(Group mainSceneGroup) {
         // background
         Canvas background = new Canvas(WIDTH, HEIGHT);
         GraphicsContext backgroundGC = background.getGraphicsContext2D();
@@ -50,25 +54,24 @@ public class Game extends Application {
 
         // main menu
         GridPane mainMenu = new GridPane();
-        String gridPaneStyle = "-fx-background-color: transparent;" +
+        String mainMenuStyle = "-fx-background-color: transparent;" +
                 "-fx-background-image: url('Other/Main_menu.png'); " +
                 "-fx-background-repeat: no-repeat;" +
                 "-fx-background-position: center;";
-        mainMenu.setStyle(gridPaneStyle);
+        mainMenu.setStyle(mainMenuStyle);
         mainMenu.setPrefWidth(545);
         mainMenu.setPrefHeight(750);
         mainMenu.setTranslateX(Game.WIDTH / 2 - 545 / 2);
         mainMenu.setTranslateY(10);
         mainSceneGroup.getChildren().add(mainMenu);
 
-
-        Button b1 = new MenuButton("1");
-        Button b2 = new MenuButton("2");
-        Button b3 = new MenuButton("3");
-        Button b4 = new MenuButton("4");
-        Button b5 = new MenuButton("5");
-        Button loadLevel = new MenuButton("Load Level");
-        Button credits = new MenuButton("Credits");
+        MenuButton b1 = new MenuButton("1");
+        MenuButton b2 = new MenuButton("2");
+        MenuButton b3 = new MenuButton("3");
+        MenuButton b4 = new MenuButton("4");
+        MenuButton b5 = new MenuButton("5");
+        MenuButton loadLevelButton = new MenuButton("Load Level");
+        MenuButton creditsButton = new MenuButton("Credits");
 
         // add buttons to their respective horizontal boxes
         HBox hBox1 = new HBox();
@@ -86,12 +89,48 @@ public class Game extends Application {
         vbox.setPadding(new Insets(190, 50, 50, 90));
         vbox.setSpacing(30);
         vbox.setAlignment(Pos.CENTER);
-        vbox.getChildren().addAll(hBox1, hBox2, loadLevel, credits);
+        vbox.getChildren().addAll(hBox1, hBox2, loadLevelButton, creditsButton);
 
         // add vertical box to the main menu
         mainMenu.getChildren().add(vbox);
+
+        // credits image
+        GridPane credits = new GridPane();
+        String creditsStyle = "-fx-background-color: transparent;" +
+                "-fx-background-image: url('Other/Credits.png'); " +
+                "-fx-background-repeat: no-repeat;" +
+                "-fx-background-position: center;";
+        credits.setStyle(creditsStyle);
+        credits.setPrefWidth(420);
+        credits.setPrefHeight(490);
+        credits.setTranslateX(Game.WIDTH / 2 - 420 / 2);
+        credits.setTranslateY(-500);
+        mainSceneGroup.getChildren().add(credits);
+
+        // set credits button to show credits
+        creditsButton.setOnMouseReleased(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (event.getButton().equals(MouseButton.PRIMARY)) {
+                    if (credits.getTranslateY() < 0) {
+                        credits.setTranslateY(85);
+                    } else {
+                        credits.setTranslateY(-500);
+                    }
+                    creditsButton.setButtonReleasedStyle();
+                }
+            }
+        });
+
+        // return level buttons + load level button because thy need to be initialize later
+        ArrayList<MenuButton> res = new ArrayList<>();
+        res.add(b1);
+        res.add(b2);
+        res.add(b3);
+        res.add(b4);
+        res.add(b5);
+        res.add(loadLevelButton);
+
+        return res;
     }
-
-
-
 }

@@ -12,7 +12,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="MyJavaGame" options="" />
+      <module name="MyJavaGame" options="--add-exports java.desktop/sun.awt=ALL-UNNAMED --add-exports java.desktop/sun.awt.image=ALL-UNNAMED" />
     </option>
   </component>
 </project>
