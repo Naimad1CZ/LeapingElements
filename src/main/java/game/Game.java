@@ -18,6 +18,10 @@ public class Game extends Application {
     public static final int WIDTH = 1472;
     public static final int HEIGHT = 768;
 
+    public static void main(String[] args) {
+        launch(args);
+    }
+
     @Override
     public void start(Stage stage) {
         stage.setTitle("My Java Game");

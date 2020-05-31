@@ -11,7 +11,7 @@ public class MyMap {
 
     public MyMap(String location) {
         if (location == null) {
-            location = "src/main/resources/Levels/Level1.tmx";
+            location = System.getProperty("user.dir").replace("\\", "/") + "/src/main/resources/Levels/Level1.tmx";
         }
         try {
             TMXMapReader mapReader = new TMXMapReader();

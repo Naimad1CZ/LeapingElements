@@ -4,6 +4,8 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import org.mapeditor.core.ImageLayer;
 
+import java.nio.file.Paths;
+
 public class Background {
     private final GraphicsContext gc;
 
@@ -13,7 +15,9 @@ public class Background {
 
     public Background(GraphicsContext g, ImageLayer l) {
         gc = g;
-        backgroundImg = new Image(Background.class.getClassLoader().getResourceAsStream("Objects/" + l.getImage().getSource()));
+
+        String path = Paths.get("Objects/" + l.getImage().getSource()).normalize().toString().replace("\\", "/");
+        backgroundImg = new Image(Background.class.getClassLoader().getResourceAsStream(path));
         backgroundWidth = (int) backgroundImg.getWidth();
         backgroundHeight = (int) backgroundImg.getHeight();
     }

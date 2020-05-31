@@ -27,16 +27,37 @@
         </dependency>
     </dependencies>
 
+
+
     <build>
+        <!--<resources>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+        </resources>-->
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+            <resource>
+                <directory>${basedir}/src/main/resources</directory>
+                <includes>
+                    <include>**/*</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/main/resources/Objects</directory>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <configuration>
-                    <finalName>ServiceCreate</finalName>
+                    <finalName>MyJavaGame</finalName>
                     <appendAssemblyId>false</appendAssemblyId>
                     <archive>
                         <manifest>
-                            <mainClass>game.Game</mainClass>
+                            <mainClass>game.NewMain</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
@@ -57,7 +78,7 @@
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>0.0.4</version>
                 <configuration>
-                    <mainClass>game.Game</mainClass>
+                    <mainClass>game.NewMain</mainClass>
                 </configuration>
             </plugin>
         </plugins>

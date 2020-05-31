@@ -30,7 +30,7 @@ public final class LoggingUtils {
         try (FileWriter fileWriter = new FileWriter(errorFile, true)) {
             LocalDateTime dateTime = LocalDateTime.now();
             String s = dateTime.format(formatter);
-            fileWriter.append("[" + s + "] " + msg);
+            fileWriter.append("[" + s + "] " + msg + "\n");
         } catch (Exception e) { }
     }
 
@@ -38,7 +38,7 @@ public final class LoggingUtils {
         try (FileWriter fileWriter = new FileWriter(infoFile, true)) {
             LocalDateTime dateTime = LocalDateTime.now();
             String s = dateTime.format(formatter);
-            fileWriter.append("[" + s + "] " + msg);
+            fileWriter.append("[" + s + "] " + msg + "\n");
         } catch (Exception e) { }
     }
 }
