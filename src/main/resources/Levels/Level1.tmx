@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.2" tiledversion="1.3.4" orientation="orthogonal" renderorder="right-down" width="36" height="13" tilewidth="64" tileheight="64" infinite="0" nextlayerid="4" nextobjectid="21">
+ <tileset firstgid="1" source="../Objects/DefaultObjects.tsx"/>
+ <tileset firstgid="8" source="../Objects/DefaultTileset.tsx"/>
+ <imagelayer id="2" name="Obrázková vrstva 1">
+  <image source="../Objects/BG.png" width="1799" height="893"/>
+ </imagelayer>
+ <layer id="1" name="Vrstva dlaždic 1" width="36" height="13">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,28,29,30,31,31,31,32,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,28,29,32,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,28,29,30,31,31,31,31,32,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,28,29,30,31,31,31,32,0,0,0,0,0,9,10,10,10,10,10,10,11,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,19,15,15,15,15,15,15,21,11,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,19,15,15,15,15,15,15,15,15,21,11,0,0,0,0,0,0,
+9,10,10,10,10,10,10,10,33,33,33,33,33,33,33,33,10,18,19,15,15,15,15,15,15,15,15,15,15,21,22,10,10,10,10,11,
+23,24,24,24,24,24,24,24,36,36,36,36,36,36,36,36,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,27
+</data>
+ </layer>
+ <objectgroup id="3" name="Vrstva objektů 1">
+  <object id="1" gid="7" x="1344" y="320" width="57" height="64">
+   <properties>
+    <property name="shootingAngle" value="0"/>
+   </properties>
+  </object>
+  <object id="2" gid="6" x="1472" y="320" width="57" height="64">
+   <properties>
+    <property name="shootingAngle" value="0"/>
+   </properties>
+  </object>
+  <object id="3" gid="5" x="1600" y="320" width="57" height="64">
+   <properties>
+    <property name="shootingAngle" value="0"/>
+   </properties>
+  </object>
+  <object id="4" gid="4" x="784" y="752" width="34" height="33"/>
+  <object id="5" gid="4" x="912" y="240" width="34" height="33"/>
+  <object id="6" gid="4" x="336" y="368" width="34" height="33"/>
+  <object id="7" gid="7" x="1856" y="128" width="57" height="64">
+   <properties>
+    <property name="shootingAngle" value="0"/>
+   </properties>
+  </object>
+  <object id="8" gid="7" x="1920" y="128" width="57" height="64">
+   <properties>
+    <property name="shootingAngle" value="0"/>
+   </properties>
+  </object>
+  <object id="9" gid="7" x="1984" y="128" width="57" height="64">
+   <properties>
+    <property name="shootingAngle" value="0"/>
+   </properties>
+  </object>
+  <object id="10" gid="7" x="2048" y="128" width="57" height="64">
+   <properties>
+    <property name="shootingAngle" value="0"/>
+   </properties>
+  </object>
+  <object id="11" gid="4" x="2256" y="368" width="34" height="33"/>
+  <object id="12" gid="4" x="2256" y="688" width="34" height="33"/>
+  <object id="13" gid="1" x="1920" y="704" width="50" height="55">
+   <properties>
+    <property name="routeLength" value="320"/>
+   </properties>
+  </object>
+  <object id="14" gid="1" x="576" y="256" width="50" height="55">
+   <properties>
+    <property name="routeLength" value="256"/>
+   </properties>
+  </object>
+  <object id="17" gid="2" x="48" y="704" width="44" height="58"/>
+  <object id="18" gid="3" x="144" y="704" width="54" height="58"/>
+  <object id="19" gid="7" x="2112" y="128" width="57" height="64">
+   <properties>
+    <property name="shootingAngle" value="0"/>
+   </properties>
+  </object>
+  <object id="20" gid="7" x="2176" y="128" width="57" height="64">
+   <properties>
+    <property name="shootingAngle" value="0"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>

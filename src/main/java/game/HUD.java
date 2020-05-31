@@ -101,7 +101,7 @@ public class HUD {
         double textWidth = scoreText.getLayoutBounds().getWidth();
 
         gc.setFill(textColor);
-        gc.setImageSmoothing(true);
+        //gc.setImageSmoothing(true);
         gc.setFont(scoreFont);
         gc.fillText(scoreToDisplay, (Game.WIDTH - (textWidth + 12 + star.getWidth())) / 2, OBJECT_HEIGHT);
         gc.drawImage(star, (Game.WIDTH - (textWidth + 12 + star.getWidth())) / 2 + textWidth + 12, 10);

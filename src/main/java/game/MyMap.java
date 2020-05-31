@@ -1,6 +1,7 @@
 package game;
 
 import javafx.scene.canvas.GraphicsContext;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.mapeditor.core.Map;
 import org.mapeditor.io.TMXMapReader;
 import utils.LoggingUtils;
@@ -10,14 +11,14 @@ public class MyMap {
 
     public MyMap(String location) {
         if (location == null) {
-            location = "src/main/resources/bezjmena3.tmx";
+            location = "src/main/resources/Levels/Level1.tmx";
         }
         try {
             TMXMapReader mapReader = new TMXMapReader();
             map = mapReader.readMap(location);
 
         } catch (Exception e) {
-            LoggingUtils.logError("Error while reading the map:\n" + e.getMessage());
+            LoggingUtils.logError("Error while reading the map:\n" + ExceptionUtils.getStackTrace(e));
             return;
         }
     }

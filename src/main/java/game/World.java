@@ -3,10 +3,8 @@ package game;
 import game.Objects.GameObject;
 import game.Objects.Hero;
 import javafx.scene.canvas.GraphicsContext;
-import org.mapeditor.core.ImageLayer;
-import org.mapeditor.core.Map;
-import org.mapeditor.core.ObjectGroup;
-import org.mapeditor.core.TileLayer;
+import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.mapeditor.core.*;
 import utils.LoggingUtils;
 
 import java.util.ArrayList;
@@ -14,18 +12,30 @@ import java.util.ArrayList;
 public class World {
     public static final double GRAVITY = 400;
 
-    private final Background background;
-    private final Terrain terrain;
-    private final GameObjects gameObjects;
+    private Background background;
+    private Terrain terrain;
+    private GameObjects gameObjects;
     private final HUD hud;
     private final int maxScore;
     private int score = 0;
     private boolean completed = false;
 
     public World(GraphicsContext gc, Map map) {
-        background = new Background(gc, (ImageLayer) map.getLayer(0));
-        terrain = new Terrain(gc, (TileLayer) map.getLayer(1), map);
-        gameObjects = new GameObjects(gc, (ObjectGroup) map.getLayer(2));
+        for (int i = 0; i <= map.getLayerCount(); ++i) {
+            MapLayer tmp = map.getLayer(i);
+            if (tmp != null) {
+                if (tmp instanceof ImageLayer) {
+                    background = new Background(gc, (ImageLayer) tmp);
+                } else if (tmp instanceof TileLayer) {
+                    terrain = new Terrain(gc, (TileLayer) tmp, map);
+                } else if (tmp instanceof ObjectGroup) {
+                    gameObjects = new GameObjects(gc, (ObjectGroup) tmp);
+                }
+
+            }
+        }
+
+
         maxScore = gameObjects.getCurrentObtainableScore();
         hud = new HUD(gc, this);
     }
@@ -68,7 +78,7 @@ public class World {
             gameObjects.draw(leftLabel, topLabel);
             hud.draw(delta);
         } catch (Exception e) {
-            LoggingUtils.logError("Error when updating and drawing: " + e.getMessage() + ", " + e.toString());
+            LoggingUtils.logError("Error when updating and drawing:\n" + ExceptionUtils.getStackTrace(e));
         }
     }
 

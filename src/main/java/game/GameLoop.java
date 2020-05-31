@@ -4,27 +4,43 @@ import game.Objects.Hero;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.stage.Stage;
 
 public class GameLoop extends AnimationTimer {
-
     private static final long NANOS_IN_SECOND = 1_000_000_000L;
-    private final GraphicsContext gc;
-    private final boolean startScreen = false;
-    private final Scene scene;
     private long previousTime = System.nanoTime();
+
+    private final Stage stage;
+
+    private final Scene mainScene;
+
+    private final Scene gameScene;
+    private final GraphicsContext gameGC;
+
+    private boolean startScreen = true;
+
     private MyMap myMap;
     private World myWorld;
     private Hero hero1;
     private Hero hero2;
 
-    public GameLoop(GraphicsContext gc, Scene sc) {
-        this.gc = gc;
+    public GameLoop(GraphicsContext gc, Stage stg, Scene main, Scene game) {
+        gameGC = gc;
+        stage = stg;
+        mainScene = main;
+        gameScene = game;
 
         loadLevel(null);
 
-        scene = sc;
+        mainScene.setOnKeyPressed(e -> {
+            switch (e.getCode()) {
+                case T:
+                    startScreen = false;
+                    break;
+            }
+        });
 
-        scene.setOnKeyPressed(e -> {
+        gameScene.setOnKeyPressed(e -> {
             switch (e.getCode()) {
                 case RIGHT:
                     if (hero1 != null) {
@@ -64,10 +80,13 @@ public class GameLoop extends AnimationTimer {
                         myWorld.changeCameraMode();
                     }
                     break;
+                case ESCAPE:
+                    startScreen = true;
+                    break;
             }
         });
 
-        scene.setOnKeyReleased(e -> {
+        gameScene.setOnKeyReleased(e -> {
             switch (e.getCode()) {
                 case RIGHT:
                     if (hero1 != null) {
@@ -110,7 +129,7 @@ public class GameLoop extends AnimationTimer {
 
     private void reloadLevel() {
         if (myMap != null) {
-            myWorld = myMap.loadWorld(gc);
+            myWorld = myMap.loadWorld(gameGC);
 
             hero1 = myWorld.getHero1();
             hero2 = myWorld.getHero2();
@@ -133,10 +152,21 @@ public class GameLoop extends AnimationTimer {
             delta = 0.05;
         }
 
-        gc.clearRect(0, 0, Game.WIDTH, Game.HEIGHT);
+        gameGC.clearRect(0, 0, Game.WIDTH, Game.HEIGHT);
         if (startScreen) {
+            if (stage.getScene() != mainScene) {
+                //stage.hide();
+                stage.setScene(mainScene);
+                //stage.show();
+            }
             // if some button then map -> load map etc.
         } else {
+            if (stage.getScene() != gameScene) {
+                //stage.hide();
+                stage.setScene(gameScene);
+                //stage.show();
+            }
+
             myWorld.updateAndDraw(delta);
         }
     }

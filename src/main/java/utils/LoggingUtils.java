@@ -1,39 +1,44 @@
 package utils;
 
-import java.util.logging.FileHandler;
-import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public final class LoggingUtils {
-    private static final Logger errorLogger = Logger.getLogger("errorLogger");
-    private static final Logger infoLogger = Logger.getLogger("infoLogger");
-    private static FileHandler errorHandler;
-    private static FileHandler infoHandler;
+    private static File errorFile;
+    private static File infoFile;
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd hh:mm:ss");
 
     static {
         try {
-            errorHandler = new FileHandler("logs/Error.txt", true);
-            infoHandler = new FileHandler("logs/Info.txt", true);
-            errorLogger.addHandler(errorHandler);
-            infoLogger.addHandler(infoHandler);
-            SimpleFormatter formatter = new SimpleFormatter();
-            errorHandler.setFormatter(formatter);
-            infoHandler.setFormatter(formatter);
-            errorLogger.setUseParentHandlers(false);
-            infoLogger.setUseParentHandlers(false);
-
-        } catch (Exception e) {
-            System.out.println("No log file found.");
+            File dir = new File(System.getProperty("user.dir"), "logs");
+            dir.mkdirs();
+            errorFile = new File(dir, "Error.txt");
+            errorFile.createNewFile();
+            infoFile = new File(dir, "Info.txt");
+            infoFile.createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
     private LoggingUtils() {/* do nothing */}
 
     public static void logError(String msg) {
-        errorLogger.severe(msg);
+        try (FileWriter fileWriter = new FileWriter(errorFile, true)) {
+            LocalDateTime dateTime = LocalDateTime.now();
+            String s = dateTime.format(formatter);
+            fileWriter.append("[" + s + "] " + msg);
+        } catch (Exception e) { }
     }
 
     public static void logInfo(String msg) {
-        infoLogger.info(msg);
+        try (FileWriter fileWriter = new FileWriter(infoFile, true)) {
+            LocalDateTime dateTime = LocalDateTime.now();
+            String s = dateTime.format(formatter);
+            fileWriter.append("[" + s + "] " + msg);
+        } catch (Exception e) { }
     }
 }

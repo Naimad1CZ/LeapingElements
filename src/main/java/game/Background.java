@@ -13,7 +13,7 @@ public class Background {
 
     public Background(GraphicsContext g, ImageLayer l) {
         gc = g;
-        backgroundImg = new Image(Background.class.getClassLoader().getResourceAsStream(l.getImage().getSource()));
+        backgroundImg = new Image(Background.class.getClassLoader().getResourceAsStream("Objects/" + l.getImage().getSource()));
         backgroundWidth = (int) backgroundImg.getWidth();
         backgroundHeight = (int) backgroundImg.getHeight();
     }

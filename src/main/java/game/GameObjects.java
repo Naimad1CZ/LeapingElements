@@ -3,6 +3,7 @@ package game;
 import game.Objects.*;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.mapeditor.core.ObjectGroup;
 import org.mapeditor.core.Properties;
 import utils.DeathMessages;
@@ -89,11 +90,12 @@ public class GameObjects {
                         hero1 = h;
                     } else if (hero2 == null) {
                         hero2 = h;
-                    } else if (hero2.getType().equals("ice") && hero1.getType().equals("fire")) {
-                        // ice is the first hero if we have both ice and fire heroes
-                        Hero tmp = hero2;
-                        hero2 = hero1;
-                        hero1 = tmp;
+                        if (hero2.getType().equals("ice") && hero1.getType().equals("fire")) {
+                            // ice is the first hero if we have both ice and fire heroes
+                            Hero tmp = hero2;
+                            hero2 = hero1;
+                            hero1 = tmp;
+                        }
                     }
                 } else if (cls.equals("SimpleEnemy")) {
                     String routeLength = getProperty("routeLength");
@@ -110,7 +112,7 @@ public class GameObjects {
 
                     // shootingAngle is essential as well as type
                     double shAngle = parseDouble(shootingAngle);
-                    double shInterval = shootingInterval == null ? 1d : parseDouble(shootingInterval);
+                    double shInterval = shootingInterval == null ? 1.5d : parseDouble(shootingInterval);
                     double shSpeed = shootingSpeed == null ? 400 : parseDouble(shootingSpeed);
 
                     if (type.equals("fire")) {
@@ -134,7 +136,7 @@ public class GameObjects {
                     LoggingUtils.logInfo("Cannot recognize object with class " + cls);
                 }
             } catch (Exception e) {
-                LoggingUtils.logError("Error while getting object: " + e.getMessage() + ", " + e.toString());
+                LoggingUtils.logError("Error while getting object:\n" + ExceptionUtils.getStackTrace(e));
             }
         }
     }
@@ -225,7 +227,7 @@ public class GameObjects {
                 return new Point2D.Double(0, 0);
             }
         } else {
-            if (hero1.isAlive()) {
+            if (hero1 != null && hero1.isAlive()) {
                 var pos1 = hero1.getPosition();
                 return new Point2D.Double(pos1.x + (Game.WIDTH / 10), pos1.y);
             } else {
