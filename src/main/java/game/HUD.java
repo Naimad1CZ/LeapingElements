@@ -54,6 +54,10 @@ public class HUD {
         }
     }
 
+    public double getMessageTimeLeft() {
+        return messageTimeLeft;
+    }
+
     public void draw(double delta) {
         // draw hero1 bar
         if (world.getHero1() != null) {

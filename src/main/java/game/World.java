@@ -128,6 +128,6 @@ public class World {
      * @return true if level is completed and the "Level completed!" message already disappeared.
      */
     public boolean isCompleted() {
-        return completed && !getMessage().equals("Level completed!");
+        return completed && !getMessage().equals("Level completed!") && hud.getMessageTimeLeft() <= 0;
     }
 }
