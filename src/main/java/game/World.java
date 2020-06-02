@@ -97,7 +97,7 @@ public class World {
 
     public void addScore(int value) {
         score += value;
-        if (score == maxScore) {
+        if (score >= maxScore) {
             setMessage("Level completed!", 4);
             completed = true;
         }
