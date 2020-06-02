@@ -13,6 +13,16 @@ public class Projectile extends GameObject {
     protected String type;
     protected GameObject creator;
 
+    /**
+     *
+     * @param image skin of the object
+     * @param positionX default position X
+     * @param positionY default position Y
+     * @param angle angle at which the Projectile is shot
+     * @param speed speed
+     * @param projectileType type of projectile
+     * @param source turret that shot this projectile
+     */
     public Projectile(Image image, double positionX, double positionY, double angle, double speed, String projectileType, GameObject source) {
         super(image, positionX, positionY);
         speedX = Math.sin(Math.toRadians(angle)) * speed;
@@ -21,11 +31,18 @@ public class Projectile extends GameObject {
         creator = source;
     }
 
+    /**
+     *
+     * @return type of turret
+     */
     public String getType() {
         return type;
     }
 
-    @Override
+    /**
+     *
+     * @return name of projectile
+     */
     public String getName() {
         if (type.equals("fire")) {
             return "A fire projectile";
@@ -38,6 +55,11 @@ public class Projectile extends GameObject {
         }
     }
 
+    /**
+     * Check if not colliding with terrain, die if colliding
+     * @param terrain world's terrain
+     * @return death code
+     */
     protected int collideWithTerrain(Terrain terrain) {
         int upperYBlock = (int) posY / terrain.TILE_HEIGHT;
         int middleYBlock = (int) (posY + height / 2) / terrain.TILE_HEIGHT;
@@ -63,6 +85,12 @@ public class Projectile extends GameObject {
         return 0;
     }
 
+    /**
+     *
+     * @param delta time in seconds since the last update
+     * @param world world in which the creature is
+     * @return death code
+     */
     public int updatePosition(double delta, World world) {
         posX += speedX * delta;
         posY += speedY * delta;
@@ -70,6 +98,11 @@ public class Projectile extends GameObject {
         return collideWithTerrain(world.getTerrain());
     }
 
+    /**
+     *
+     * @param world world in which the creature is
+     * @return death code
+     */
     public int updateWithOtherObjects(World world) {
         ArrayList<GameObject> gameObjects = world.getGameObjects();
         for (GameObject gameObject : gameObjects) {

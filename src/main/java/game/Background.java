@@ -13,6 +13,11 @@ public class Background {
     private final int backgroundWidth;
     private final int backgroundHeight;
 
+    /**
+     *
+     * @param g Graphics context
+     * @param l ImageLayer with the background image
+     */
     public Background(GraphicsContext g, ImageLayer l) {
         gc = g;
 

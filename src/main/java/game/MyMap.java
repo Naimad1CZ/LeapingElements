@@ -9,6 +9,11 @@ import utils.LoggingUtils;
 public class MyMap {
     private Map map;
 
+    /**
+     *
+     * @param location path to the level (might be relative to the resources dir or absolute)
+     * @param absolute if the path is absolute
+     */
     public MyMap(String location, boolean absolute) {
         try {
             if (!absolute) {
@@ -23,6 +28,11 @@ public class MyMap {
         }
     }
 
+    /**
+     * Loads the world
+     * @param gc Graphics context
+     * @return loaded World
+     */
     public World loadWorld(GraphicsContext gc) {
         return new World(gc, map);
     }

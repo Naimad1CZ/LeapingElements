@@ -7,9 +7,9 @@ public class SimpleEnemy extends Enemy {
     private final double routeLength;
 
     /**
-     * @param image
-     * @param positionX
-     * @param positionY
+     * @param image skin of SimpleEnemys
+     * @param positionX default position X
+     * @param positionY default position Y
      * @param lengthOfRoute tells mow much should the enemy go to the right before going back
      */
     public SimpleEnemy(Image image, double positionX, double positionY, double lengthOfRoute) {
@@ -17,7 +17,10 @@ public class SimpleEnemy extends Enemy {
         routeLength = lengthOfRoute;
     }
 
-    @Override
+    /**
+     * Move right if not lengthOfRoute distance from original position Y
+     * @param delta time in seconds since the last update
+     */
     protected void doLogic(double delta) {
         if (state == 0) {
             if (posX >= START_POS_X + routeLength) {
@@ -38,6 +41,10 @@ public class SimpleEnemy extends Enemy {
         }
     }
 
+    /**
+     *
+     * @return name
+     */
     @Override
     public String getName() {
         return "A simple enemy";

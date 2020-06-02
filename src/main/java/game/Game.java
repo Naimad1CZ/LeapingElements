@@ -22,10 +22,18 @@ public class Game extends Application {
     public static final int WIDTH = 1472;
     public static final int HEIGHT = 768;
 
+    /**
+     * Launch the game
+     * @param args args, don't put anything here
+     */
     public static void main(String[] args) {
         launch(args);
     }
 
+    /**
+     * Initialize stuff and start a GameLoop
+     * @param stage Stage in which the game happens
+     */
     @Override
     public void start(Stage stage) {
         stage.setTitle("My Java Game");
@@ -45,6 +53,11 @@ public class Game extends Application {
         stage.show();
     }
 
+    /**
+     * Initialize objects on main scene
+     * @param mainSceneGroup Group to which we add containers
+     * @return level buttons + load level button because they need to be initialize later
+     */
     private ArrayList<MenuButton> initializeMainScene(Group mainSceneGroup) {
         // background
         Canvas background = new Canvas(WIDTH, HEIGHT);
@@ -122,7 +135,7 @@ public class Game extends Application {
             }
         });
 
-        // return level buttons + load level button because thy need to be initialize later
+        // return level buttons + load level button because they need to be initialize later
         ArrayList<MenuButton> res = new ArrayList<>();
         res.add(b1);
         res.add(b2);

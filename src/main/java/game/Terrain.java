@@ -18,6 +18,12 @@ public class Terrain {
     private final Tile[][] tiles;
     private final HashMap<Tile, Image> images = new HashMap<>();
 
+    /**
+     *
+     * @param g Graphics context
+     * @param l Tile layer with the tiles to be load
+     * @param map Map from which we are loading
+     */
     public Terrain(GraphicsContext g, TileLayer l, Map map) {
         gc = g;
         TILE_WIDTH = map.getTileWidth();
@@ -39,6 +45,11 @@ public class Terrain {
         }
     }
 
+    /**
+     * Draws a terrain in the speicfied coordinates
+     * @param leftLabel X coordinate which is currently on the most left part of the screen
+     * @param topLabel Y coordinate which is currently on the most top part of the screen
+     */
     public void draw(int leftLabel, int topLabel) {
         for (int i = leftLabel / TILE_WIDTH; i <= (leftLabel + Game.WIDTH) / TILE_WIDTH; ++i) {
             for (int j = topLabel / TILE_HEIGHT; j <= (topLabel + Game.HEIGHT) / TILE_HEIGHT; ++j) {
@@ -50,6 +61,12 @@ public class Terrain {
         }
     }
 
+    /**
+     *
+     * @param x index X (first index) of the Tile array
+     * @param y index Y (second index) of the Tile array
+     * @return type of tile that lays in the specified position in Tile array
+     */
     public String getTileType(int x, int y) {
         if (y >= tiles[0].length || y < -5 || x >= tiles.length + 5 || x < -5) {
             return "out";

@@ -24,12 +24,23 @@ public final class LoggingUtils {
         }
     }
 
+    /**
+     * private constructor because it's a static class
+     */
     private LoggingUtils() {/* do nothing */}
 
+    /**
+     * Logs error to the error output
+     * @param msg
+     */
     public static void logError(String msg) {
         System.err.println(msg);
     }
 
+    /**
+     * Logs a info message to the standard output
+     * @param msg
+     */
     public static void logInfo(String msg) {
         System.out.println(msg);
     }

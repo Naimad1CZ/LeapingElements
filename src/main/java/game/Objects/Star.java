@@ -7,11 +7,22 @@ public class Star extends GameObject {
     protected boolean lives = true;
     protected int value;
 
+    /**
+     *
+     * @param image skin of star
+     * @param positionX default position X
+     * @param positionY default position Y
+     * @param score how much score points is got when claiming the star
+     */
     public Star(Image image, double positionX, double positionY, int score) {
         super(image, positionX, positionY);
         value = score;
     }
 
+    /**
+     * Claim the star
+     * @return amount of score points to be added
+     */
     public int claim() {
         if (lives == false) {
             return 0;
@@ -20,18 +31,37 @@ public class Star extends GameObject {
         return value;
     }
 
+    /**
+     *
+     * @return name
+     */
     public String getName() {
         return "A star";
     }
 
+    /**
+     *
+     * @return how much score points is got when claiming the star
+     */
     public int getValue() {
         return value;
     }
 
+    /**
+     * Don't do anything, but neede to be implemented
+     * @param delta time in seconds since the last update
+     * @param world world in which the creature is
+     * @return 0
+     */
     public int updatePosition(double delta, World world) {
         return 0;
     }
 
+    /**
+     *
+     * @param world world in which the creature is
+     * @return 201 if got claimed
+     */
     public int updateWithOtherObjects(World world) {
         if (lives == false) {
             // getting claimed

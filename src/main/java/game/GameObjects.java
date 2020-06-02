@@ -42,6 +42,11 @@ public class GameObjects {
      */
     private int cameraMode = 0;
 
+    /**
+     *
+     * @param g Graphics context
+     * @param og Tiled's ObjectGroup with all objects that will be processed and converted to (programming) objects
+     */
     public GameObjects(GraphicsContext g, ObjectGroup og) {
         gc = g;
         for (MapObject o : og) {
@@ -142,6 +147,11 @@ public class GameObjects {
         }
     }
 
+    /**
+     * Gets property of the object from the Tiled's ObjectGroup that we currently work with
+     * @param name name of the property
+     * @return value of the property
+     */
     private String getProperty(String name) {
         String s1 = prop1.getProperty(name);
         String s2 = prop2.getProperty(name);
@@ -152,26 +162,49 @@ public class GameObjects {
         }
     }
 
+    /**
+     *
+     * @return hero1
+     */
     public Hero getHero1() {
         return hero1;
     }
 
+    /**
+     *
+     * @return hero2
+     */
     public Hero getHero2() {
         return hero2;
     }
 
+    /**
+     * Change camera mode
+     */
     public void changeCameraMode() {
         cameraMode = (cameraMode + 1) % 3;
     }
 
+    /**
+     * Gets all game objects
+     * @return all game objects
+     */
     public ArrayList<GameObject> getGameObjects() {
         return gameObjects;
     }
 
+    /**
+     * Adds a game object
+     * @param go a game object to be added
+     */
     public void addGameObject(GameObject go) {
         objectsToAdd.add(go);
     }
 
+    /**
+     *
+     * @return sum of score from all the stars in game
+     */
     public int getCurrentObtainableScore() {
         int res = 0;
         for (GameObject go : gameObjects) {
@@ -182,6 +215,10 @@ public class GameObjects {
         return res;
     }
 
+    /**
+     *
+     * @return sum of current lives of both heroes
+     */
     public int getTotalCurrentLives() {
         int lifeCount = 0;
         if (getHero1() != null) {
@@ -193,6 +230,10 @@ public class GameObjects {
         return lifeCount;
     }
 
+    /**
+     * Calculates optimal coordinates of the center of the screen based on heroes positions
+     * @return coordinates of optimal center of the screen
+     */
     public Point2D.Double getHeroPositionsOptimalCenter() {
         if (hero2 != null) {
             if (hero1.isAlive() && hero2.isAlive()) {
@@ -242,8 +283,8 @@ public class GameObjects {
      * For non-creatures deletes them if they died.
      * For heroes respawns them if they have any lives left.
      *
-     * @param delta
-     * @param world
+     * @param delta time in seconds since the last update
+     * @param world world in which the objects are
      */
     public void update(double delta, World world) {
         gameObjects.addAll(objectsToAdd);
@@ -296,6 +337,11 @@ public class GameObjects {
         }
     }
 
+    /**
+     * Draw all alive game objects
+     * @param leftLabel X coordinate which is currently on the most left part of the screen
+     * @param topLabel Y coordinate which is currently on the most top part of the screen
+     */
     public void draw(int leftLabel, int topLabel) {
         for (GameObject go : gameObjects) {
             if (go instanceof Creature) {

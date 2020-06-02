@@ -21,6 +21,10 @@ public class MenuButton extends Button {
             "-fx-background-repeat: no-repeat;" +
             "-fx-background-position: center;";
 
+    /**
+     *
+     * @param text Text to be displayed on the button
+     */
     public MenuButton(String text) {
         setText(text);
         setAlignment(Pos.CENTER);
@@ -57,16 +61,25 @@ public class MenuButton extends Button {
         initializeButtonListeners();
     }
 
+    /**
+     * Set the style of the pressed button
+     */
     private void setButtonPressedStyle() {
         setStyle(buttonPressedStyle);
         setTranslateY(getTranslateY() + 1);
     }
 
+    /**
+     * Set the style of the released (normal) button
+     */
     protected void setButtonReleasedStyle() {
         setStyle(buttonReleasedStyle);
         setTranslateY(getTranslateY() - 1);
     }
 
+    /**
+     * Initialize behavior when the user hovers or clicks the button
+     */
     private void initializeButtonListeners() {
         setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override

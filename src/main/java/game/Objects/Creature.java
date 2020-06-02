@@ -22,6 +22,15 @@ public abstract class Creature extends GameObject {
 
     private boolean waitingForJump = false;
 
+    /**
+     *
+     * @param image skin of creature
+     * @param positionX default position X
+     * @param positionY default position Y
+     * @param movSpeed movement speed
+     * @param jumpSpeed jumping force
+     * @param swimmingSpeed swimming speed
+     */
     public Creature(Image image, double positionX, double positionY, double movSpeed, double jumpSpeed, double swimmingSpeed) {
         super(image, positionX, positionY);
 
@@ -30,26 +39,45 @@ public abstract class Creature extends GameObject {
         swimSpeed = swimmingSpeed;
     }
 
+    /**
+     * Get creature position
+     * @return creature position
+     */
     public Point2D.Double getPosition() {
         return new Point2D.Double(posX, posY);
     }
 
+    /**
+     * Start intentionally moving left
+     */
     public void startMovingLeft() {
         moveLeft = true;
     }
 
+    /**
+     * Stop intentionally moving left
+     */
     public void stopMovingLeft() {
         moveLeft = false;
     }
 
+    /**
+     * Start intentionally moving right
+     */
     public void startMovingRight() {
         moveRight = true;
     }
 
+    /**
+     * Stop intentionally moving right
+     */
     public void stopMovingRight() {
         moveRight = false;
     }
 
+    /**
+     * Start moving intentionally up, jump in on ground
+     */
     public void startMovingUp() {
         moveUp = true;
         // if on ground, jump
@@ -58,19 +86,32 @@ public abstract class Creature extends GameObject {
         }
     }
 
+    /**
+     * Stop intentionally moving up
+     */
     public void stopMovingUp() {
         moveUp = false;
         waitingForJump = false;
     }
 
+    /**
+     *
+     * @return if the creature is alive
+     */
     public boolean isAlive() {
         return alive;
     }
 
+    /**
+     * Kills the creature
+     */
     public void kill() {
         alive = false;
     }
 
+    /**
+     * Respawns the player in the place of default position
+     */
     public void respawn() {
         alive = true;
         speedX = 0;
@@ -197,6 +238,13 @@ public abstract class Creature extends GameObject {
         return 0;
     }
 
+    /**
+     * Updates coordinates depending on gravitation, presence in water, intentional moves, and corrections
+     * to not be stuck inside terrain.
+     * @param delta time in seconds since the last update
+     * @param world world in which the creature is
+     * @return death code
+     */
     public int updatePosition(double delta, World world) {
         // change of position because of movement triggered by keyboard
         if (isSwimming) {

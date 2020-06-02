@@ -28,30 +28,57 @@ public class Hero extends Creature {
         HUDImageSource = HUDImgSource;
     }
 
+    /**
+     *
+     * @return maximum possible lives
+     */
     public int getMaxLives() {
         return maxLives;
     }
 
+    /**
+     *
+     * @return current amount of lives
+     */
     public int getCurrentLives() {
         return currentLives;
     }
 
+    /**
+     * Loses life
+     */
     public void looseLife() {
         currentLives--;
     }
 
+    /**
+     *
+     * @return skin of the Hero
+     */
     public Image getImage() {
         return img;
     }
 
+    /**
+     *
+     * @return source of the (smaller) skin for HUD
+     */
     public String getHUDImageSource() {
         return HUDImageSource;
     }
 
+    /**
+     *
+     * @return Hero type
+     */
     public String getType() {
         return type;
     }
 
+    /**
+     *
+     * @return Hero name
+     */
     public String getName() {
         if (type.equals("fire")) {
             return "Fire hero";
@@ -62,6 +89,11 @@ public class Hero extends Creature {
         }
     }
 
+    /**
+     * Interacts with other objects, mostly die or claim a star
+     * @param world world in which the creature is
+     * @return death code
+     */
     public int updateWithOtherObjects(World world) {
         ArrayList<GameObject> gameObjects = world.getGameObjects();
 

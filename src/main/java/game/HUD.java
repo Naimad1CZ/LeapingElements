@@ -24,6 +24,11 @@ public class HUD {
     private String message;
     private double messageTimeLeft;
 
+    /**
+     *
+     * @param g Graphics context
+     * @param w World in which the level happens
+     */
     public HUD(GraphicsContext g, World w) {
         gc = g;
         world = w;
@@ -38,6 +43,11 @@ public class HUD {
         }
     }
 
+    /**
+     * Set a message to be displayed for specified time
+     * @param msg message
+     * @param time time (in second) how long the message will be displayed
+     */
     public void setMessage(String msg, double time) {
         message = msg;
         messageTimeLeft = time;
@@ -54,10 +64,18 @@ public class HUD {
         }
     }
 
+    /**
+     *
+     * @return how long (in seconds) the message will be displayed
+     */
     public double getMessageTimeLeft() {
         return messageTimeLeft;
     }
 
+    /**
+     * Draw whole HUD
+     * @param delta how long it's been since the last call of the method
+     */
     public void draw(double delta) {
         // draw hero1 bar
         if (world.getHero1() != null) {

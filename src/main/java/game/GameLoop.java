@@ -32,6 +32,14 @@ public class GameLoop extends AnimationTimer {
     private Hero hero1;
     private Hero hero2;
 
+    /**
+     * Initialize stuff
+     * @param gc Graphics Context of the canvas, on which the levels will be painted on
+     * @param stg game Stage
+     * @param main main scene
+     * @param game game scene
+     * @param buttonsToInitialize level buttons + load level button that needs to be initialized here
+     */
     public GameLoop(GraphicsContext gc, Stage stg, Scene main, Scene game, ArrayList<MenuButton> buttonsToInitialize) {
         gameGC = gc;
         stage = stg;
@@ -42,11 +50,19 @@ public class GameLoop extends AnimationTimer {
         initializeGameSceneKeyboardListeners();
     }
 
+    /**
+     * Loads a level
+     * @param path path to the level (might be relative to the resources dir or absolute)
+     * @param absolutePath if the path is absolute
+     */
     private void loadLevel(String path, boolean absolutePath) {
         myMap = new MyMap(path, absolutePath);
         reloadLevel();
     }
 
+    /**
+     * Reloads (resets) a level
+     */
     private void reloadLevel() {
         if (myMap != null) {
             myWorld = myMap.loadWorld(gameGC);
@@ -56,6 +72,9 @@ public class GameLoop extends AnimationTimer {
         }
     }
 
+    /**
+     * Disposes a level
+     */
     private void disposeLevel() {
         myMap = null;
         myWorld = null;
@@ -63,6 +82,11 @@ public class GameLoop extends AnimationTimer {
         hero2 = null;
     }
 
+    /**
+     * Calculate delta (time between current time and previous time when this method was called), sets the scene
+     * if neccessary, handle the level
+     * @param now current time in nanoseconds
+     */
     @Override
     public void handle(long now) {
         double delta = ((double) (now - previousTime)) / NANOS_IN_SECOND;
@@ -89,6 +113,10 @@ public class GameLoop extends AnimationTimer {
         }
     }
 
+    /**
+     * Initialize mouse listeners on level buttons and load button to load level on click
+     * @param buttons
+     */
     private void initializeMainSceneButtonListeners(ArrayList<MenuButton> buttons) {
         for (int i = 0; i < buttons.size() - 1; ++i) {
             MenuButton b = buttons.get(i);
@@ -133,6 +161,9 @@ public class GameLoop extends AnimationTimer {
         });
     }
 
+    /**
+     * Initialize keyboard hooks for controlling heroes and other controls
+     */
     private void initializeGameSceneKeyboardListeners() {
         gameScene.setOnKeyPressed(e -> {
             switch (e.getCode()) {

@@ -21,6 +21,11 @@ public class World {
     private int score = 0;
     private boolean completed = false;
 
+    /**
+     *
+     * @param gc Graphics context
+     * @param map Map from which all the data will be load
+     */
     public World(GraphicsContext gc, Map map) {
         for (int i = 0; i <= map.getLayerCount(); ++i) {
             MapLayer tmp = map.getLayer(i);
@@ -41,18 +46,34 @@ public class World {
         hud = new HUD(gc, this);
     }
 
+    /**
+     *
+     * @return hero1
+     */
     public Hero getHero1() {
         return gameObjects.getHero1();
     }
 
+    /**
+     *
+     * @return hero2
+     */
     public Hero getHero2() {
         return gameObjects.getHero2();
     }
 
+    /**
+     * Change camera mode
+     */
     public void changeCameraMode() {
         gameObjects.changeCameraMode();
     }
 
+    /**
+     * Updates and draws background, terrain, game objects and HUD. Also calculates coordinates of the part of the map
+     * that will be drawn.
+     * @param delta how long it's been since the last call of the method
+     */
     public void updateAndDraw(double delta) {
         try {
             gameObjects.update(delta, this);
@@ -83,18 +104,34 @@ public class World {
         }
     }
 
+    /**
+     *
+     * @return terrain
+     */
     public Terrain getTerrain() {
         return terrain;
     }
 
+    /**
+     *
+     * @return all game objects
+     */
     public ArrayList<GameObject> getGameObjects() {
         return gameObjects.getGameObjects();
     }
 
+    /**
+     * Add a GameOBject to the game
+     * @param go GameObject to be added
+     */
     public void addGameObject(GameObject go) {
         gameObjects.addGameObject(go);
     }
 
+    /**
+     * Adds score and handle the situation when the score has reached the maximum score
+     * @param value how much score to add
+     */
     public void addScore(int value) {
         score += value;
         if (score >= maxScore) {
@@ -103,14 +140,27 @@ public class World {
         }
     }
 
+    /**
+     *
+     * @return current score
+     */
     public int getScore() {
         return score;
     }
 
+    /**
+     *
+     * @return sum of the values of all stars in the game
+     */
     public int getMaxScore() {
         return maxScore;
     }
 
+    /**
+     * Set the message to be shown to player in HUD for specified time
+     * @param message message to be shown
+     * @param length how long (in seconds) the message will be displayed
+     */
     public void setMessage(String message, double length) {
         if (gameObjects.getTotalCurrentLives() == 0) {
             hud.setMessage("You lost. Press R to restart level.", 10);
@@ -119,6 +169,10 @@ public class World {
         }
     }
 
+    /**
+     *
+     * @return currently displayed message
+     */
     public String getMessage() {
         return hud.getMessage();
     }
