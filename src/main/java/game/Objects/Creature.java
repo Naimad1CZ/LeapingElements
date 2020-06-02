@@ -73,6 +73,8 @@ public abstract class Creature extends GameObject {
 
     public void respawn() {
         alive = true;
+        speedX = 0;
+        speedY = 0;
         posX = START_POS_X;
         posY = START_POS_Y;
     }
