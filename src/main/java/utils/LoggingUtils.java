@@ -1,9 +1,7 @@
 package utils;
 
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public final class LoggingUtils {
@@ -31,7 +29,8 @@ public final class LoggingUtils {
 
     /**
      * Logs error to the error output
-     * @param msg
+     *
+     * @param msg message
      */
     public static void logError(String msg) {
         System.err.println(msg);
@@ -39,7 +38,8 @@ public final class LoggingUtils {
 
     /**
      * Logs a info message to the standard output
-     * @param msg
+     *
+     * @param msg message
      */
     public static void logInfo(String msg) {
         System.out.println(msg);

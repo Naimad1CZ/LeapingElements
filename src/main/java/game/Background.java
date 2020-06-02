@@ -30,8 +30,9 @@ public class Background {
     /**
      * Draws a background image.
      *
-     * @param leftLabel position of most left x coordinate on the screen
-     * @param topLabel  position of most top y coordinate on the screen
+     * @param leftLabel     position of most left x coordinate on the screen
+     * @param topLabel      position of most top y coordinate on the screen
+     * @param terrainHeight absolute height of the terrain
      */
     public void draw(int leftLabel, int topLabel, int terrainHeight) {
         leftLabel /= 5;

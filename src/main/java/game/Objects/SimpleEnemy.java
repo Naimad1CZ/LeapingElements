@@ -53,7 +53,7 @@ public class SimpleEnemy extends Enemy {
     /**
      * Simple enemy doesn't die or anything if it encounters anything
      *
-     * @param world
+     * @param world world in which the creature is
      * @return 0
      */
     public int updateWithOtherObjects(World world) {

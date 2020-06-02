@@ -123,7 +123,7 @@ public abstract class Creature extends GameObject {
     /**
      * Check collisions with terrain and corrects position of GameObject to not be inside solid terrain and to be integers.
      *
-     * @param terrain
+     * @param terrain terrain of the world
      * @return cause of death, 0 if object didn't die
      */
     protected int collideWithTerrain(Terrain terrain) {
