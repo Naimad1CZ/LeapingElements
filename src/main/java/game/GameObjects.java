@@ -80,7 +80,7 @@ public class GameObjects {
                         HUDImageSource = HUDImageSource == null ? "Objects/HeroIceSmall.png" : HUDImageSource;
                     } else {
                         movSpeed = movementSpeed == null ? 300 : parseDouble(movementSpeed);
-                        jmpSpeed = jumpSpeed == null ? 340 : parseDouble(jumpSpeed);
+                        jmpSpeed = jumpSpeed == null ? 350 : parseDouble(jumpSpeed);
                         swimSpeed = swimmingSpeed == null ? 0 : parseDouble(swimmingSpeed);
                         liv = lives == null ? 3 : parseInt(lives);
                     }
