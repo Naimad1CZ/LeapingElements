@@ -73,8 +73,8 @@
     <property name="routeLength" value="256"/>
    </properties>
   </object>
-  <object id="17" gid="2" x="48" y="704" width="44" height="58"/>
-  <object id="18" gid="3" x="144" y="704" width="54" height="58"/>
+  <object id="17" gid="2" x="32" y="576" width="44" height="58"/>
+  <object id="18" gid="3" x="144" y="576" width="54" height="58"/>
   <object id="19" gid="7" x="2112" y="128" width="57" height="64">
    <properties>
     <property name="shootingAngle" value="0"/>

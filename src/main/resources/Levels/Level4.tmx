@@ -42,8 +42,8 @@
 </data>
  </layer>
  <objectgroup id="3" name="Vrstva objektů 1">
-  <object id="1" gid="32" x="384" y="1920" width="44" height="58"/>
-  <object id="2" gid="33" x="640" y="1920" width="54" height="58"/>
+  <object id="1" gid="32" x="384" y="1792" width="44" height="58"/>
+  <object id="2" gid="33" x="640" y="1792" width="54" height="58"/>
   <object id="3" gid="31" x="1280" y="1664" width="50" height="55">
    <properties>
     <property name="routeLength" value="330"/>

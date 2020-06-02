@@ -22,8 +22,8 @@
 </data>
  </layer>
  <objectgroup id="3" name="Vrstva objektů 1">
-  <object id="1" gid="32" x="16" y="640" width="44" height="58"/>
-  <object id="2" gid="33" x="96" y="640" width="54" height="58"/>
+  <object id="1" gid="32" x="16" y="512" width="44" height="58"/>
+  <object id="2" gid="33" x="96" y="512" width="54" height="58"/>
   <object id="3" gid="34" x="2704" y="240" width="34" height="33"/>
   <object id="4" gid="37" x="2752" y="192" width="57" height="64">
    <properties>
