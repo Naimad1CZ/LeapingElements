@@ -4,6 +4,7 @@ import game.Objects.*;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.mapeditor.core.MapObject;
 import org.mapeditor.core.ObjectGroup;
 import org.mapeditor.core.Properties;
 import utils.DeathMessages;
@@ -43,7 +44,7 @@ public class GameObjects {
 
     public GameObjects(GraphicsContext g, ObjectGroup og) {
         gc = g;
-        for (var o : og) {
+        for (MapObject o : og) {
             try {
                 prop1 = o.getTile().getProperties();
                 prop2 = o.getProperties();
@@ -173,7 +174,7 @@ public class GameObjects {
 
     public int getCurrentObtainableScore() {
         int res = 0;
-        for (var go : gameObjects) {
+        for (GameObject go : gameObjects) {
             if (go instanceof Star) {
                 res += ((Star) go).getValue();
             }
@@ -195,8 +196,8 @@ public class GameObjects {
     public Point2D.Double getHeroPositionsOptimalCenter() {
         if (hero2 != null) {
             if (hero1.isAlive() && hero2.isAlive()) {
-                var pos1 = hero1.getPosition();
-                var pos2 = hero2.getPosition();
+                Point2D.Double pos1 = hero1.getPosition();
+                Point2D.Double pos2 = hero2.getPosition();
 
                 if (cameraMode == 0) {
                     // if they are too far away, show the one more behind
@@ -218,17 +219,17 @@ public class GameObjects {
                     return new Point2D.Double(pos2.x + (Game.WIDTH / 10), pos2.y);
                 }
             } else if (hero1.isAlive()) {
-                var pos1 = hero1.getPosition();
+                Point2D.Double pos1 = hero1.getPosition();
                 return new Point2D.Double(pos1.x + (Game.WIDTH / 10), pos1.y);
             } else if (hero2.isAlive()) {
-                var pos2 = hero2.getPosition();
+                Point2D.Double pos2 = hero2.getPosition();
                 return new Point2D.Double(pos2.x + (Game.WIDTH / 10), pos2.y);
             } else {
                 return new Point2D.Double(0, 0);
             }
         } else {
             if (hero1 != null && hero1.isAlive()) {
-                var pos1 = hero1.getPosition();
+                Point2D.Double pos1 = hero1.getPosition();
                 return new Point2D.Double(pos1.x + (Game.WIDTH / 10), pos1.y);
             } else {
                 return new Point2D.Double(0, 0);
@@ -252,7 +253,7 @@ public class GameObjects {
 
         String deathMessage = null;
 
-        for (var go : gameObjects) {
+        for (GameObject go : gameObjects) {
             if (!(go instanceof Creature) || ((Creature) go).isAlive()) {
                 int deathCode = go.updatePosition(delta, world);
                 if (deathCode > 0) {
@@ -264,7 +265,7 @@ public class GameObjects {
             }
         }
 
-        for (var go : gameObjects) {
+        for (GameObject go : gameObjects) {
             if (!(go instanceof Creature) || ((Creature) go).isAlive()) {
                 int deathCode = go.updateWithOtherObjects(world);
                 if (deathCode > 0) {
@@ -276,7 +277,7 @@ public class GameObjects {
             }
         }
 
-        for (var item : toDelete) {
+        for (GameObject item : toDelete) {
             if (item instanceof Creature) {
                 ((Creature) item).kill();
                 if (item instanceof Hero) {
@@ -296,7 +297,7 @@ public class GameObjects {
     }
 
     public void draw(int leftLabel, int topLabel) {
-        for (var go : gameObjects) {
+        for (GameObject go : gameObjects) {
             if (go instanceof Creature) {
                 if (((Creature) go).isAlive()) {
                     go.draw(gc, leftLabel, topLabel);

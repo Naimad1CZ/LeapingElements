@@ -65,7 +65,7 @@ public class Hero extends Creature {
     public int updateWithOtherObjects(World world) {
         ArrayList<GameObject> gameObjects = world.getGameObjects();
 
-        for (var gameObject : gameObjects) {
+        for (GameObject gameObject : gameObjects) {
             if (gameObject != this) {
                 if (getBoundingBox().intersects(gameObject.getBoundingBox())) {
                     if (gameObject instanceof Hero && ((Hero) gameObject).isAlive()) {

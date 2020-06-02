@@ -7,6 +7,7 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.mapeditor.core.*;
 import utils.LoggingUtils;
 
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
 public class World {
@@ -56,7 +57,7 @@ public class World {
         try {
             gameObjects.update(delta, this);
 
-            var heroPosAvg = gameObjects.getHeroPositionsOptimalCenter();
+            Point2D.Double heroPosAvg = gameObjects.getHeroPositionsOptimalCenter();
 
             int leftLabel = (int) (heroPosAvg.x - Game.WIDTH / 2);
             int topLabel = (int) (heroPosAvg.y - Game.HEIGHT / 2);

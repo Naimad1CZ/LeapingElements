@@ -27,18 +27,10 @@ public final class LoggingUtils {
     private LoggingUtils() {/* do nothing */}
 
     public static void logError(String msg) {
-        try (FileWriter fileWriter = new FileWriter(errorFile, true)) {
-            LocalDateTime dateTime = LocalDateTime.now();
-            String s = dateTime.format(formatter);
-            fileWriter.append("[" + s + "] " + msg + "\n");
-        } catch (Exception e) { }
+        System.err.println(msg);
     }
 
     public static void logInfo(String msg) {
-        try (FileWriter fileWriter = new FileWriter(infoFile, true)) {
-            LocalDateTime dateTime = LocalDateTime.now();
-            String s = dateTime.format(formatter);
-            fileWriter.append("[" + s + "] " + msg + "\n");
-        } catch (Exception e) { }
+        System.out.println(msg);
     }
 }

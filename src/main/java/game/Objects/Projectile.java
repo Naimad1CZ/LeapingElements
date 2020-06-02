@@ -72,7 +72,7 @@ public class Projectile extends GameObject {
 
     public int updateWithOtherObjects(World world) {
         ArrayList<GameObject> gameObjects = world.getGameObjects();
-        for (var gameObject : gameObjects) {
+        for (GameObject gameObject : gameObjects) {
             if (gameObject != this && gameObject != creator) {
                 if (getBoundingBox().intersects(gameObject.getBoundingBox())) {
                     if (gameObject instanceof Hero && ((Hero) gameObject).isAlive()) {

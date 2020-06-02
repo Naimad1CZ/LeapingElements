@@ -11,7 +11,7 @@ public class MyMap {
 
     public MyMap(String location, boolean absolute) {
         try {
-            if (absolute == false) {
+            if (!absolute) {
                 location = System.getProperty("user.dir").replace("\\", "/") + "/src/main/resources/" + location;
             }
 
@@ -20,7 +20,6 @@ public class MyMap {
 
         } catch (Exception e) {
             LoggingUtils.logError("Error while reading the map:\n" + ExceptionUtils.getStackTrace(e));
-            return;
         }
     }
 

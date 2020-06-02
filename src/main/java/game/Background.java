@@ -32,8 +32,8 @@ public class Background {
         leftLabel /= 5;
         leftLabel = leftLabel % Game.WIDTH;
 
-        var backgroundHeightToTerrainHeightRatio = backgroundHeight / (double) terrainHeight;
-        var topLabelInBackgroundCoordinates = topLabel * backgroundHeightToTerrainHeightRatio;
+        double backgroundHeightToTerrainHeightRatio = backgroundHeight / (double) terrainHeight;
+        double topLabelInBackgroundCoordinates = topLabel * backgroundHeightToTerrainHeightRatio;
         if (topLabelInBackgroundCoordinates < 0) {
             topLabelInBackgroundCoordinates = 0;
         } else if (topLabelInBackgroundCoordinates + Game.HEIGHT > backgroundHeight) {

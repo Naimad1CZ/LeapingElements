@@ -32,7 +32,7 @@ public class Game extends Application {
 
         Group mainSceneGroup = new Group();
         Scene mainScene = new Scene(mainSceneGroup, WIDTH, HEIGHT);
-        var buttonsToFurtherInitialize = initializeMainScene(mainSceneGroup);
+        ArrayList<MenuButton> buttonsToFurtherInitialize = initializeMainScene(mainSceneGroup);
 
         Group gameSceneGroup = new Group();
         Scene gameScene = new Scene(gameSceneGroup, WIDTH, HEIGHT);
