@@ -5,7 +5,7 @@ import javafx.scene.image.Image;
 import org.mapeditor.core.Map;
 import org.mapeditor.core.Tile;
 import org.mapeditor.core.TileLayer;
-import utils.SwingFXUtils;
+import javafx.embed.swing.SwingFXUtils;
 
 import java.util.HashMap;
 

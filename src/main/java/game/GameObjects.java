@@ -9,7 +9,7 @@ import org.mapeditor.core.ObjectGroup;
 import org.mapeditor.core.Properties;
 import utils.DeathMessages;
 import utils.LoggingUtils;
-import utils.SwingFXUtils;
+import javafx.embed.swing.SwingFXUtils;
 
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
