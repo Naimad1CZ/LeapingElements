@@ -2,11 +2,13 @@ package game.Objects;
 
 import game.World;
 import javafx.scene.image.Image;
+import utils.Enums.HeroType;
+import utils.Enums.TurretAndProjectileType;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class Hero extends Creature {
-    private final String type;
+    private final HeroType type;
     protected int maxLives;
     protected int currentLives;
     protected String HUDImageSource;
@@ -22,7 +24,7 @@ public class Hero extends Creature {
      * @param lives         starting (and maximum) number of lives
      * @param HUDImgSource  source of image to be drawn on the top of the screen in HUD
      */
-    public Hero(Image image, double positionX, double positionY, String heroType, double movSpeed, double jumpSpeed, double swimmingSpeed, int lives, String HUDImgSource) {
+    public Hero(Image image, double positionX, double positionY, HeroType heroType, double movSpeed, double jumpSpeed, double swimmingSpeed, int lives, String HUDImgSource) {
         super(image, positionX, positionY, movSpeed, jumpSpeed, swimmingSpeed);
         type = heroType;
         maxLives = lives;
@@ -73,18 +75,15 @@ public class Hero extends Creature {
      *
      * @return Hero type
      */
-    public String getType() {
+    public HeroType getType() {
         return type;
     }
 
-    /**
-     *
-     * @return Hero name
-     */
+    @Override
     public String getName() {
-        if (type.equals("fire")) {
+        if (type == HeroType.fire) {
             return "Fire hero";
-        } else if (type.equals("ice")) {
+        } else if (type == HeroType.ice) {
             return "Ice hero";
         } else {
             return "Hero";
@@ -92,18 +91,18 @@ public class Hero extends Creature {
     }
 
     /**
-     * Interacts with other objects, mostly die or claim a star
+     * Interacts with other objects, mostly die or claim a star.
      * @param world world in which the creature is
      * @return death code
      */
     public int updateWithOtherObjects(World world) {
-        ArrayList<GameObject> gameObjects = world.getGameObjects();
+        List<GameObject> gameObjects = world.getGameObjects();
 
         for (GameObject gameObject : gameObjects) {
             if (gameObject != this) {
                 if (getBoundingBox().intersects(gameObject.getBoundingBox())) {
                     if (gameObject instanceof Hero && ((Hero) gameObject).isAlive()) {
-                        if (type.equals("ice") && ((Hero) gameObject).getType().equals("fire")) {
+                        if (type == HeroType.ice && ((Hero) gameObject).getType() == HeroType.fire) {
                             // die by melting
                             return 11;
                         }
@@ -116,35 +115,35 @@ public class Hero extends Creature {
                             return 22;
                         }
                     } else if (gameObject instanceof Turret) {
-                        if (((Turret) gameObject).getType().equals("fire")) {
+                        if (((Turret) gameObject).getType() == TurretAndProjectileType.fire) {
                             // get killed by fire turret
                             return 41;
-                        } else if (((Turret) gameObject).getType().equals("ice")) {
-                            // get killed by fire turret
+                        } else if (((Turret) gameObject).getType() == TurretAndProjectileType.ice) {
+                            // get killed by ice turret
                             return 42;
-                        } else if (((Turret) gameObject).getType().equals("combined")) {
-                            // get killed by fire turret
+                        } else if (((Turret) gameObject).getType() == TurretAndProjectileType.combined) {
+                            // get killed by combined turret
                             return 43;
                         } else {
                             // get killed by turret
                             return 44;
                         }
                     } else if (gameObject instanceof Projectile) {
-                        if (((Projectile) gameObject).getType().equals("fire")) {
+                        if (((Projectile) gameObject).getType() == TurretAndProjectileType.fire) {
                             // fire heroes are resistant to fire bullets
-                            if (type.equals("fire")) {
+                            if (type == HeroType.fire) {
                                 continue;
                             }
                             // killed by fire bullet
                             return 51;
-                        } else if (((Projectile) gameObject).getType().equals("ice")) {
+                        } else if (((Projectile) gameObject).getType() == TurretAndProjectileType.ice) {
                             // ice heroes are resistant ti ice bullets
-                            if (type.equals("ice")) {
+                            if (type == HeroType.ice) {
                                 continue;
                             }
                             // killed by ice bullet
                             return 52;
-                        } else if (((Projectile) gameObject).getType().equals("combined")) {
+                        } else if (((Projectile) gameObject).getType() == TurretAndProjectileType.combined) {
                             // nobody is resistant to combined bullets :(
                             // killed by combined bullet
                             return 53;

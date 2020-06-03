@@ -18,12 +18,12 @@ public class SimpleEnemy extends Enemy {
     }
 
     /**
-     * Move right if not lengthOfRoute distance from original position Y
+     * Move right if not lengthOfRoute distance from original position Y.
      * @param delta time in seconds since the last update
      */
     protected void doLogic(double delta) {
         if (state == 0) {
-            if (posX >= START_POS_X + routeLength) {
+            if (posX >= startPosX + routeLength) {
                 stopMovingRight();
                 state = 1;
                 doLogic(delta);
@@ -31,7 +31,7 @@ public class SimpleEnemy extends Enemy {
                 startMovingRight();
             }
         } else if (state == 1) {
-            if (posX <= START_POS_X) {
+            if (posX <= startPosX) {
                 stopMovingLeft();
                 state = 0;
                 doLogic(delta);
@@ -41,17 +41,13 @@ public class SimpleEnemy extends Enemy {
         }
     }
 
-    /**
-     *
-     * @return name
-     */
     @Override
     public String getName() {
         return "A simple enemy";
     }
 
     /**
-     * Simple enemy doesn't die or anything if it encounters anything
+     * Simple enemy doesn't die or anything if it encounters anything.
      *
      * @param world world in which the creature is
      * @return 0

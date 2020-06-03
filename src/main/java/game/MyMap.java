@@ -4,7 +4,6 @@ import javafx.scene.canvas.GraphicsContext;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.mapeditor.core.Map;
 import org.mapeditor.io.TMXMapReader;
-import utils.LoggingUtils;
 
 public class MyMap {
     private Map map;
@@ -24,12 +23,12 @@ public class MyMap {
             map = mapReader.readMap(location);
 
         } catch (Exception e) {
-            LoggingUtils.logError("Error while reading the map:\n" + ExceptionUtils.getStackTrace(e));
+            System.err.println("Error while reading the map:\n" + ExceptionUtils.getStackTrace(e));
         }
     }
 
     /**
-     * Loads the world
+     * Loads the world.
      * @param gc Graphics context
      * @return loaded World
      */

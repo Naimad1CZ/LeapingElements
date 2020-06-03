@@ -2,17 +2,14 @@ package game;
 
 import game.Objects.Hero;
 import javafx.animation.AnimationTimer;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import org.apache.commons.lang3.exception.ExceptionUtils;
-import utils.LoggingUtils;
 
 import java.awt.*;
-import java.util.ArrayList;
+import java.util.List;
 
 public class GameLoop extends AnimationTimer {
     private static final long NANOS_IN_SECOND = 1_000_000_000L;
@@ -33,7 +30,7 @@ public class GameLoop extends AnimationTimer {
     private Hero hero2;
 
     /**
-     * Initialize stuff
+     * Initialize stuff.
      * @param gc Graphics Context of the canvas, on which the levels will be painted on
      * @param stg game Stage
      * @param main main scene
@@ -51,7 +48,7 @@ public class GameLoop extends AnimationTimer {
     }
 
     /**
-     * Loads a level
+     * Loads a level.
      * @param path path to the level (might be relative to the resources dir or absolute)
      * @param absolutePath if the path is absolute
      */
@@ -61,7 +58,7 @@ public class GameLoop extends AnimationTimer {
     }
 
     /**
-     * Reloads (resets) a level
+     * Reloads (resets) a level.
      */
     private void reloadLevel() {
         if (myMap != null) {
@@ -73,7 +70,7 @@ public class GameLoop extends AnimationTimer {
     }
 
     /**
-     * Disposes a level
+     * Disposes a level.
      */
     private void disposeLevel() {
         myMap = null;
@@ -84,7 +81,7 @@ public class GameLoop extends AnimationTimer {
 
     /**
      * Calculate delta (time between current time and previous time when this method was called), sets the scene
-     * if neccessary, handle the level
+     * if neccessary, handle the level.
      * @param now current time in nanoseconds
      */
     @Override
@@ -114,55 +111,49 @@ public class GameLoop extends AnimationTimer {
     }
 
     /**
-     * Initialize mouse listeners on level buttons and load button to load level on click
+     * Initialize mouse listeners on level buttons and load button to load level on click.
      * @param buttons
      */
-    private void initializeMainSceneButtonListeners(ArrayList<MenuButton> buttons) {
+    private void initializeMainSceneButtonListeners(List<MenuButton> buttons) {
         for (int i = 0; i < buttons.size() - 1; ++i) {
             MenuButton b = buttons.get(i);
-            b.setOnMouseReleased(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    if (event.getButton().equals(MouseButton.PRIMARY)) {
-                        b.setButtonReleasedStyle();
-                        try {
-                            loadLevel("Levels/Level" + b.getText() + ".tmx", false);
-                            startScreen = false;
-                        } catch (Exception e) {
-                            LoggingUtils.logError("Error when loading level: " + "Level" + b.getText() + "\n" + ExceptionUtils.getStackTrace(e));
-                        }
-
+            b.setOnMouseReleased(event -> {
+                if (event.getButton().equals(MouseButton.PRIMARY)) {
+                    b.setButtonReleasedStyle();
+                    try {
+                        loadLevel("Levels/Level" + b.getText() + ".tmx", false);
+                        startScreen = false;
+                    } catch (Exception e) {
+                        System.err.println("Error when loading level: " + "Level" + b.getText() + "\n" + ExceptionUtils.getStackTrace(e));
                     }
+
                 }
             });
         }
 
         MenuButton loadLevelButton = buttons.get(buttons.size() - 1);
-        loadLevelButton.setOnMouseReleased(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                if (event.getButton().equals(MouseButton.PRIMARY)) {
-                    loadLevelButton.setButtonReleasedStyle();
+        loadLevelButton.setOnMouseReleased(event -> {
+            if (event.getButton().equals(MouseButton.PRIMARY)) {
+                loadLevelButton.setButtonReleasedStyle();
 
-                    FileDialog dialog = new FileDialog((Frame)null, "Select level file to Open");
-                    dialog.setMode(FileDialog.LOAD);
-                    dialog.setVisible(true);
-                    String file = dialog.getDirectory().replace("\\", "/") + dialog.getFile();
+                FileDialog dialog = new FileDialog((Frame)null, "Select level file to Open");
+                dialog.setMode(FileDialog.LOAD);
+                dialog.setVisible(true);
+                String file = dialog.getDirectory().replace("\\", "/") + dialog.getFile();
 
-                    try {
-                        loadLevel(file, true);
-                        startScreen = false;
-                    } catch (Exception e) {
-                        LoggingUtils.logError("Error when loading custom level: " + file + "\n" + ExceptionUtils.getStackTrace(e));
-                    }
-
+                try {
+                    loadLevel(file, true);
+                    startScreen = false;
+                } catch (Exception e) {
+                    System.err.println("Error when loading custom level: " + file + "\n" + ExceptionUtils.getStackTrace(e));
                 }
+
             }
         });
     }
 
     /**
-     * Initialize keyboard hooks for controlling heroes and other controls
+     * Initialize keyboard hooks for controlling heroes and other controls.
      */
     private void initializeGameSceneKeyboardListeners() {
         gameScene.setOnKeyPressed(e -> {

@@ -44,7 +44,7 @@ public class HUD {
     }
 
     /**
-     * Set a message to be displayed for specified time
+     * Set a message to be displayed for specified time.
      * @param msg message
      * @param time time (in second) how long the message will be displayed
      */
@@ -73,10 +73,19 @@ public class HUD {
     }
 
     /**
-     * Draw whole HUD
+     * Draw whole HUD.
      * @param delta how long it's been since the last call of the method
      */
     public void draw(double delta) {
+        drawHeroes();
+        drawScore();
+        drawMessage(delta);
+    }
+
+    /**
+     * Draw heroes with their lives in HUD.
+     */
+    private void drawHeroes() {
         // draw hero1 bar
         if (world.getHero1() != null) {
             gc.drawImage(hero1Small, 15, 8);
@@ -110,12 +119,16 @@ public class HUD {
                 currentHeart++;
             }
         }
+    }
 
+    /**
+     * Draw current/max number of stars in HUD.
+     */
+    private void drawScore() {
         // score
         int score = world.getScore();
         int maxScore = world.getMaxScore();
         String scoreToDisplay = score + "/" + maxScore;
-
 
         // get text width
         Text scoreText = new Text(scoreToDisplay);
@@ -123,13 +136,16 @@ public class HUD {
         double textWidth = scoreText.getLayoutBounds().getWidth();
 
         gc.setFill(textColor);
-        //gc.setImageSmoothing(true);
         gc.setFont(scoreFont);
         gc.fillText(scoreToDisplay, (Game.WIDTH - (textWidth + 12 + star.getWidth())) / 2, OBJECT_HEIGHT);
         gc.drawImage(star, (Game.WIDTH - (textWidth + 12 + star.getWidth())) / 2 + textWidth + 12, 10);
+    }
 
-
-        // message
+    /**
+     * Draw message in HUD if there is any current message to display.
+     * @param delta
+     */
+    private void drawMessage(double delta) {
         if (message != null && messageTimeLeft > 0) {
             messageTimeLeft -= delta;
 

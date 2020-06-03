@@ -26,16 +26,13 @@ public abstract class Enemy extends Creature {
      */
     protected abstract void doLogic(double delta);
 
-    /**
-     *
-     * @return name
-     */
+    @Override
     public String getName() {
         return "An enemy";
     }
 
     /**
-     * Do logic and update the position
+     * Do logic and update the position.
      * @param delta time in seconds since the last update
      * @param world world in which the creature is
      * @return death code

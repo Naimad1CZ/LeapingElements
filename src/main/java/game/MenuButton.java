@@ -62,7 +62,7 @@ public class MenuButton extends Button {
     }
 
     /**
-     * Set the style of the pressed button
+     * Set the style of the pressed button.
      */
     private void setButtonPressedStyle() {
         setStyle(buttonPressedStyle);
@@ -70,7 +70,7 @@ public class MenuButton extends Button {
     }
 
     /**
-     * Set the style of the released (normal) button
+     * Set the style of the released (normal) button.
      */
     protected void setButtonReleasedStyle() {
         setStyle(buttonReleasedStyle);
@@ -78,7 +78,7 @@ public class MenuButton extends Button {
     }
 
     /**
-     * Initialize behavior when the user hovers or clicks the button
+     * Initialize behavior when the user hovers or clicks the button.
      */
     private void initializeButtonListeners() {
         setOnMousePressed(new EventHandler<MouseEvent>() {

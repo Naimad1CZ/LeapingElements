@@ -8,7 +8,7 @@ public class DeathMessages {
      *
      * @param go GameObject that died
      * @param deathCode death code if the death
-     * @return The death message of the game object that died with provided death code
+     * @return the death message of the game object that died with provided death code
      */
     public static String getDeathMessage(GameObject go, int deathCode) {
         String start = go.getName() + " ";

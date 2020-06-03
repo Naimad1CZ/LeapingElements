@@ -1,11 +1,12 @@
 package game;
 
+import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import org.mapeditor.core.Map;
 import org.mapeditor.core.Tile;
 import org.mapeditor.core.TileLayer;
-import javafx.embed.swing.SwingFXUtils;
+import utils.Enums.TileType;
 
 import java.util.HashMap;
 
@@ -46,7 +47,7 @@ public class Terrain {
     }
 
     /**
-     * Draws a terrain in the speicfied coordinates
+     * Draws a terrain in the speicfied coordinates.
      * @param leftLabel X coordinate which is currently on the most left part of the screen
      * @param topLabel Y coordinate which is currently on the most top part of the screen
      */
@@ -67,13 +68,14 @@ public class Terrain {
      * @param y index Y (second index) of the Tile array
      * @return type of tile that lays in the specified position in Tile array
      */
-    public String getTileType(int x, int y) {
+    public TileType getTileType(int x, int y) {
         if (y >= tiles[0].length || y < -5 || x >= tiles.length + 5 || x < -5) {
-            return "out";
+            return TileType.out;
         } else if (y < 0 || x >= tiles.length || x < 0 || tiles[x][y] == null) {
-            return "air";
+            return TileType.air;
         } else {
-            return tiles[x][y].getProperties().getProperty("kind");
+            String kind = tiles[x][y].getProperties().getProperty("kind");
+            return TileType.valueOf(kind);
         }
     }
 }

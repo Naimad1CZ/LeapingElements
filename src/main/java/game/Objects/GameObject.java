@@ -27,8 +27,8 @@ public abstract class GameObject {
      * @param positionY default position Y
      */
     public GameObject(Image image, double positionX, double positionY) {
-        START_POS_X = positionX;
-        START_POS_Y = positionY;
+        startPosX = positionX;
+        startPosY = positionY;
         posX = positionX;
         posY = positionY;
         img = image;
@@ -38,7 +38,7 @@ public abstract class GameObject {
 
     /**
      * We get bounding boxes smaller than the actual object because objects usually doesn't have 100% of their size
-     * filled with skin
+     * filled with skin.
      *
      * @return hit box
      */
@@ -54,14 +54,10 @@ public abstract class GameObject {
         return new BoundingBox(posX, posY, width, height);
     }
 
-    /**
-     *
-     * @return name of the object
-     */
     public abstract String getName();
 
     /**
-     * Updates position according to various forces
+     * Updates position according to various forces.
      *
      * @param delta time in seconds since the last update
      * @param world world in which the object is
@@ -70,7 +66,7 @@ public abstract class GameObject {
     public abstract int updatePosition(double delta, World world);
 
     /**
-     * Interact with other objects
+     * Interact with other objects.
      *
      * @param world world in which the creature is
      * @return death code
@@ -78,7 +74,7 @@ public abstract class GameObject {
     public abstract int updateWithOtherObjects(World world);
 
     /**
-     * Draw the object
+     * Draw the object.
      * @param gc graphics context
      * @param leftLabel X coordinate which is currently on the most left part of the screen
      * @param topLabel Y coordinate which is currently on the most top part of the screen

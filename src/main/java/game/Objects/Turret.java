@@ -2,6 +2,7 @@ package game.Objects;
 
 import game.World;
 import javafx.scene.image.Image;
+import utils.Enums.TurretAndProjectileType;
 
 public class Turret extends GameObject {
     /**
@@ -12,7 +13,7 @@ public class Turret extends GameObject {
     protected double speed;
     protected double timeUntilShoot;
 
-    protected String type;
+    protected TurretAndProjectileType type;
     protected Image projectileImage;
 
     /**
@@ -26,7 +27,7 @@ public class Turret extends GameObject {
      * @param shootingSpeed speed of projectiles that the turret shoots
      * @param bulletImage skin of projectile
      */
-    public Turret(Image image, double positionX, double positionY, double shootingAngle, String turretType, double shootingInterval, double shootingSpeed, Image bulletImage) {
+    public Turret(Image image, double positionX, double positionY, double shootingAngle, TurretAndProjectileType turretType, double shootingInterval, double shootingSpeed, Image bulletImage) {
         super(image, positionX, positionY);
         angle = shootingAngle;
         type = turretType;
@@ -42,11 +43,11 @@ public class Turret extends GameObject {
      * @return name
      */
     public String getName() {
-        if (type.equals("fire")) {
+        if (type == TurretAndProjectileType.fire) {
             return "A fire turret";
-        } else if (type.equals("ice")) {
+        } else if (type == TurretAndProjectileType.ice) {
             return "An ice turret";
-        } else if (type.equals("combined")) {
+        } else if (type == TurretAndProjectileType.combined) {
             return "A combined turret";
         } else {
             return "A turret";
@@ -57,12 +58,12 @@ public class Turret extends GameObject {
      *
      * @return type of the turret
      */
-    public String getType() {
+    public TurretAndProjectileType getType() {
         return type;
     }
 
     /**
-     * Shoot a projectile
+     * Shoot a projectile.
      * @return a Projectile object that the turret just shot away
      */
     protected Projectile shoot() {
@@ -70,7 +71,7 @@ public class Turret extends GameObject {
     }
 
     /**
-     * Shoots if the time had came
+     * Shoots if the time had came.
      * @param delta time in seconds since the last update
      * @param world world in which the creature is
      * @return 0
@@ -86,7 +87,7 @@ public class Turret extends GameObject {
     }
 
     /**
-     * Turret doesn't interact with other objects, therefore don't do anything
+     * Turret doesn't interact with other objects, therefore don't do anything.
      * @param world world in which the creature is
      * @return 0
      */

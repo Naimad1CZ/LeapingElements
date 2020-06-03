@@ -5,10 +5,9 @@ import game.Objects.Hero;
 import javafx.scene.canvas.GraphicsContext;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.mapeditor.core.*;
-import utils.LoggingUtils;
 
 import java.awt.geom.Point2D;
-import java.util.ArrayList;
+import java.util.List;
 
 public class World {
     public static final double GRAVITY = 400;
@@ -46,24 +45,16 @@ public class World {
         hud = new HUD(gc, this);
     }
 
-    /**
-     *
-     * @return hero1
-     */
     public Hero getHero1() {
         return gameObjects.getHero1();
     }
 
-    /**
-     *
-     * @return hero2
-     */
     public Hero getHero2() {
         return gameObjects.getHero2();
     }
 
     /**
-     * Change camera mode
+     * Change camera mode.
      */
     public void changeCameraMode() {
         gameObjects.changeCameraMode();
@@ -100,7 +91,7 @@ public class World {
             gameObjects.draw(leftLabel, topLabel);
             hud.draw(delta);
         } catch (Exception e) {
-            LoggingUtils.logError("Error when updating and drawing:\n" + ExceptionUtils.getStackTrace(e));
+            System.err.println("Error when updating and drawing:\n" + ExceptionUtils.getStackTrace(e));
         }
     }
 
@@ -116,7 +107,7 @@ public class World {
      *
      * @return all game objects
      */
-    public ArrayList<GameObject> getGameObjects() {
+    public List<GameObject> getGameObjects() {
         return gameObjects.getGameObjects();
     }
 

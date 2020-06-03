@@ -3,6 +3,7 @@ package game.Objects;
 import game.Terrain;
 import game.World;
 import javafx.scene.image.Image;
+import utils.Enums.TileType;
 
 import java.awt.geom.Point2D;
 
@@ -40,7 +41,7 @@ public abstract class Creature extends GameObject {
     }
 
     /**
-     * Get creature position
+     * Get creature position.
      * @return creature position
      */
     public Point2D.Double getPosition() {
@@ -48,35 +49,35 @@ public abstract class Creature extends GameObject {
     }
 
     /**
-     * Start intentionally moving left
+     * Start intentionally moving left.
      */
     public void startMovingLeft() {
         moveLeft = true;
     }
 
     /**
-     * Stop intentionally moving left
+     * Stop intentionally moving left.
      */
     public void stopMovingLeft() {
         moveLeft = false;
     }
 
     /**
-     * Start intentionally moving right
+     * Start intentionally moving right.
      */
     public void startMovingRight() {
         moveRight = true;
     }
 
     /**
-     * Stop intentionally moving right
+     * Stop intentionally moving right.
      */
     public void stopMovingRight() {
         moveRight = false;
     }
 
     /**
-     * Start moving intentionally up, jump in on ground
+     * Start moving intentionally up, jump in on ground.
      */
     public void startMovingUp() {
         moveUp = true;
@@ -87,7 +88,7 @@ public abstract class Creature extends GameObject {
     }
 
     /**
-     * Stop intentionally moving up
+     * Stop intentionally moving up.
      */
     public void stopMovingUp() {
         moveUp = false;
@@ -96,28 +97,28 @@ public abstract class Creature extends GameObject {
 
     /**
      *
-     * @return if the creature is alive
+     * @return if the creature is alive.
      */
     public boolean isAlive() {
         return alive;
     }
 
     /**
-     * Kills the creature
+     * Kills the creature.
      */
     public void kill() {
         alive = false;
     }
 
     /**
-     * Respawns the player in the place of default position
+     * Respawns the player in the place of default position.
      */
     public void respawn() {
         alive = true;
         speedX = 0;
         speedY = 0;
-        posX = START_POS_X;
-        posY = START_POS_Y;
+        posX = startPosX;
+        posY = startPosY;
     }
 
     /**
@@ -149,15 +150,15 @@ public abstract class Creature extends GameObject {
         int rightXBlock = (intPosX + 5 * width / 6) / terrain.TILE_WIDTH;
         int righterXBlock = (intPosX + width - 1) / terrain.TILE_WIDTH;
 
-        String upperLeftType = terrain.getTileType(leftXBlock, upperYBlock);
-        String upperRightType = terrain.getTileType(rightXBlock, upperYBlock);
-        String lowerLeftType = terrain.getTileType(leftXBlock, lowerYBlock);
-        String lowerRightType = terrain.getTileType(rightXBlock, lowerYBlock);
+        TileType upperLeftType = terrain.getTileType(leftXBlock, upperYBlock);
+        TileType upperRightType = terrain.getTileType(rightXBlock, upperYBlock);
+        TileType lowerLeftType = terrain.getTileType(leftXBlock, lowerYBlock);
+        TileType lowerRightType = terrain.getTileType(rightXBlock, lowerYBlock);
 
-        String righterUpType = terrain.getTileType(righterXBlock, upYBlock);
-        String righterLowType = terrain.getTileType(righterXBlock, lowYBlock);
-        String lefterUpType = terrain.getTileType(lefterXBlock, upYBlock);
-        String lefterLowType = terrain.getTileType(lefterXBlock, lowYBlock);
+        TileType righterUpType = terrain.getTileType(righterXBlock, upYBlock);
+        TileType righterLowType = terrain.getTileType(righterXBlock, lowYBlock);
+        TileType lefterUpType = terrain.getTileType(lefterXBlock, upYBlock);
+        TileType lefterLowType = terrain.getTileType(lefterXBlock, lowYBlock);
 
         // if I'm in solid from both side, don't do right and left correction
         if (!(righterLowType.equals("solid") && lefterLowType.equals("solid"))) {
@@ -169,11 +170,11 @@ public abstract class Creature extends GameObject {
                 rightXBlock = (int) (posX + 5 * width / 6) / terrain.TILE_WIDTH;
                 upperRightType = terrain.getTileType(rightXBlock, upperYBlock);
                 lowerRightType = terrain.getTileType(rightXBlock, lowerYBlock);
-            } else if (righterUpType.equals("water") || righterLowType.equals("water")) {
+            } else if (righterUpType == TileType.water || righterLowType == TileType.water) {
                 inWater = true;
             }
 
-            if (speedX <= 0 && (lefterUpType.equals("solid") || lefterLowType.equals("solid"))) {
+            if (speedX <= 0 && (lefterUpType == TileType.solid || lefterLowType == TileType.solid)) {
                 posX = (lefterXBlock + 1) * terrain.TILE_WIDTH;
                 speedX = 0;
 
@@ -181,43 +182,43 @@ public abstract class Creature extends GameObject {
                 leftXBlock = (int) (posX + width / 6) / terrain.TILE_WIDTH;
                 upperLeftType = terrain.getTileType(leftXBlock, upperYBlock);
                 lowerLeftType = terrain.getTileType(leftXBlock, lowerYBlock);
-            } else if (lefterUpType.equals("water") || lefterLowType.equals("water")) {
+            } else if (lefterUpType == TileType.water || lefterLowType == TileType.water) {
                 inWater = true;
             }
         }
 
-        if (speedY >= 0 && (lowerLeftType.equals("solid") || lowerRightType.equals("solid"))) {
+        if (speedY >= 0 && (lowerLeftType == TileType.solid || lowerRightType == TileType.solid)) {
             // if we fall on solid, get up so we exactly stand on solid
             posY = lowerYBlock * terrain.TILE_HEIGHT - height;
             speedY = 0;
             onGround = true;
-        } else if (lowerLeftType.equals("water") || lowerRightType.equals("water")) {
+        } else if (lowerLeftType == TileType.water || lowerRightType == TileType.water) {
             inWater = true;
-        } else if (lowerLeftType.equals("out") || lowerRightType.equals("out")) {
+        } else if (lowerLeftType == TileType.out || lowerRightType == TileType.out) {
             // dieeeeeee (by falling out of the world)
             return 1;
         } else if (speedY > World.GRAVITY / 20 || speedY < 0) {
             onGround = false;
         }
 
-        if (speedY < 0 && (upperLeftType.equals("solid") || upperRightType.equals("solid"))) {
+        if (speedY < 0 && (upperLeftType == TileType.solid || upperRightType == TileType.solid)) {
             // if we hit some solid with out head, get down so we are not stuck inside
             posY = (upperYBlock + 1) * terrain.TILE_HEIGHT;
             speedY = 0;
-        } else if (upperLeftType.equals("water") || lowerRightType.equals("water")) {
+        } else if (upperLeftType == TileType.water || lowerRightType == TileType.water) {
             inWater = true;
         }
 
         if (inWater) {
             if (swimSpeed > 0) {
                 isSwimming = true;
-                if (upperLeftType.equals("water") || upperRightType.equals("water")) {
+                if (upperLeftType == TileType.water || upperRightType == TileType.water) {
                     // go up;
                     speedY = -swimSpeed * 3 / 4;
-                } else if (lefterUpType.equals("water") || righterUpType.equals("water")) {
+                } else if (lefterUpType == TileType.water || righterUpType == TileType.water) {
                     // stay floating
                     speedY = 0;
-                } else if (lefterLowType.equals("water") || righterLowType.equals("water")) {
+                } else if (lefterLowType == TileType.water || righterLowType == TileType.water) {
                     // go sligthly down
                     speedY = swimSpeed * 3 / 4;
                 } else {
@@ -225,7 +226,7 @@ public abstract class Creature extends GameObject {
                     speedY = swimSpeed * 1;
                 }
             } else {
-                if (lefterLowType.equals("water") || righterLowType.equals("water")) {
+                if (lefterLowType == TileType.water || righterLowType == TileType.water) {
                     // if not just touching the water slightly
                     // drooown
                     return 2;

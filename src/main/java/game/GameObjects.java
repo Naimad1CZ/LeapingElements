@@ -1,6 +1,7 @@
 package game;
 
 import game.Objects.*;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -8,11 +9,12 @@ import org.mapeditor.core.MapObject;
 import org.mapeditor.core.ObjectGroup;
 import org.mapeditor.core.Properties;
 import utils.DeathMessages;
-import utils.LoggingUtils;
-import javafx.embed.swing.SwingFXUtils;
+import utils.Enums.HeroType;
+import utils.Enums.TurretAndProjectileType;
 
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
+import java.util.List;
 
 import static java.lang.Double.parseDouble;
 import static java.lang.Integer.parseInt;
@@ -26,19 +28,19 @@ public class GameObjects {
     private Hero hero2;
 
     /**
-     * general properties of object tile
+     * General properties of object tile.
      */
     private Properties prop1;
     /**
-     * specific properties of object
+     * Specific properties of object.
      */
     private Properties prop2;
 
     /**
-     * cameraModes - works only when 2 players are alive.
-     * mode 0 - auto - put camera between players, if too big difference in their position, put camera on the player behind
-     * mode 1 - focus hero1
-     * mode 2 - focus hero2
+     * Camera modes - works only when 2 players are alive.
+     * Mode 0 - auto - put camera between players, if too big difference in their position, put camera on the player behind.
+     * Mode 1 - focus hero1.
+     * Mode 2 - focus hero2.
      */
     private int cameraMode = 0;
 
@@ -61,7 +63,7 @@ public class GameObjects {
 
                 String cls = getProperty("class");
                 if (cls.equals("Hero")) {
-                    String type = getProperty("type");
+                    String tp = getProperty("type");
                     String movementSpeed = getProperty("movementSpeed");
                     String jumpSpeed = getProperty("jumpSpeed");
                     String swimmingSpeed = getProperty("swimmingSpeed");
@@ -71,13 +73,14 @@ public class GameObjects {
                     double jmpSpeed;
                     double swimSpeed;
                     int liv;
-                    if (type.equals("fire")) {
+                    HeroType type = HeroType.valueOf(tp);
+                    if (type == HeroType.fire) {
                         movSpeed = movementSpeed == null ? 280 : parseDouble(movementSpeed);
                         jmpSpeed = jumpSpeed == null ? 410 : parseDouble(jumpSpeed);
                         swimSpeed = swimmingSpeed == null ? 0 : parseDouble(swimmingSpeed);
                         liv = lives == null ? 3 : parseInt(lives);
                         HUDImageSource = HUDImageSource == null ? "Objects/HeroFireSmall.png" : HUDImageSource;
-                    } else if (type.equals("ice")) {
+                    } else if (type == HeroType.ice) {
                         movSpeed = movementSpeed == null ? 250 : parseDouble(movementSpeed);
                         jmpSpeed = jumpSpeed == null ? 350 : parseDouble(jumpSpeed);
                         swimSpeed = swimmingSpeed == null ? 120 : parseDouble(swimmingSpeed);
@@ -96,7 +99,7 @@ public class GameObjects {
                         hero1 = h;
                     } else if (hero2 == null) {
                         hero2 = h;
-                        if (hero2.getType().equals("ice") && hero1.getType().equals("fire")) {
+                        if (hero2.getType() == HeroType.ice && hero1.getType() == HeroType.fire) {
                             // ice is the first hero if we have both ice and fire heroes
                             Hero tmp = hero2;
                             hero2 = hero1;
@@ -111,7 +114,7 @@ public class GameObjects {
                     gameObjects.add(se);
                 } else if (cls.equals("Turret")) {
                     String shootingAngle = getProperty("shootingAngle");
-                    String type = getProperty("type");
+                    String tp = getProperty("type");
                     String shootingInterval = getProperty("shootingInterval");
                     String shootingSpeed = getProperty("shootingSpeed");
                     String pathToBulletImage = getProperty("pathToBulletImage");
@@ -120,12 +123,13 @@ public class GameObjects {
                     double shAngle = parseDouble(shootingAngle);
                     double shInterval = shootingInterval == null ? 1.5d : parseDouble(shootingInterval);
                     double shSpeed = shootingSpeed == null ? 400 : parseDouble(shootingSpeed);
+                    TurretAndProjectileType type = TurretAndProjectileType.valueOf(tp);
 
-                    if (type.equals("fire")) {
+                    if (type == TurretAndProjectileType.fire) {
                         pathToBulletImage = pathToBulletImage == null ? "Objects/BulletFire.png" : pathToBulletImage;
-                    } else if (type.equals("ice")) {
+                    } else if (type == TurretAndProjectileType.ice) {
                         pathToBulletImage = pathToBulletImage == null ? "Objects/BulletIce.png" : pathToBulletImage;
-                    } else if (type.equals("combined")) {
+                    } else if (type == TurretAndProjectileType.combined) {
                         pathToBulletImage = pathToBulletImage == null ? "Objects/BulletCombined.png" : pathToBulletImage;
                     }
 
@@ -139,16 +143,16 @@ public class GameObjects {
                     Star s = new Star(img, x, y, val);
                     gameObjects.add(s);
                 } else {
-                    LoggingUtils.logInfo("Cannot recognize object with class " + cls);
+                    System.err.println("Cannot recognize object with class " + cls);
                 }
             } catch (Exception e) {
-                LoggingUtils.logError("Error while getting object:\n" + ExceptionUtils.getStackTrace(e));
+                System.err.println("Error while getting object:\n" + ExceptionUtils.getStackTrace(e));
             }
         }
     }
 
     /**
-     * Gets property of the object from the Tiled's ObjectGroup that we currently work with
+     * Gets property of the object from the Tiled's ObjectGroup that we currently work with.
      * @param name name of the property
      * @return value of the property
      */
@@ -162,39 +166,31 @@ public class GameObjects {
         }
     }
 
-    /**
-     *
-     * @return hero1
-     */
     public Hero getHero1() {
         return hero1;
     }
 
-    /**
-     *
-     * @return hero2
-     */
     public Hero getHero2() {
         return hero2;
     }
 
     /**
-     * Change camera mode
+     * Change camera mode.
      */
     public void changeCameraMode() {
         cameraMode = (cameraMode + 1) % 3;
     }
 
     /**
-     * Gets all game objects
+     * Gets all game objects.
      * @return all game objects
      */
-    public ArrayList<GameObject> getGameObjects() {
+    public List<GameObject> getGameObjects() {
         return gameObjects;
     }
 
     /**
-     * Adds a game object
+     * Adds a game object.
      * @param go a game object to be added
      */
     public void addGameObject(GameObject go) {
@@ -231,7 +227,7 @@ public class GameObjects {
     }
 
     /**
-     * Calculates optimal coordinates of the center of the screen based on heroes positions
+     * Calculates optimal coordinates of the center of the screen based on heroes positions.
      * @return coordinates of optimal center of the screen
      */
     public Point2D.Double getHeroPositionsOptimalCenter() {
@@ -338,7 +334,7 @@ public class GameObjects {
     }
 
     /**
-     * Draw all alive game objects
+     * Draw all alive game objects.
      * @param leftLabel X coordinate which is currently on the most left part of the screen
      * @param topLabel Y coordinate which is currently on the most top part of the screen
      */

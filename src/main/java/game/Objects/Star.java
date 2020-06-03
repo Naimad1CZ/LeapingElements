@@ -20,7 +20,7 @@ public class Star extends GameObject {
     }
 
     /**
-     * Claim the star
+     * Claim the star.
      * @return amount of score points to be added
      */
     public int claim() {
@@ -48,7 +48,7 @@ public class Star extends GameObject {
     }
 
     /**
-     * Don't do anything, but neede to be implemented
+     * Don't do anything, but neede to be implemented.
      * @param delta time in seconds since the last update
      * @param world world in which the creature is
      * @return 0
@@ -62,8 +62,9 @@ public class Star extends GameObject {
      * @param world world in which the creature is
      * @return 201 if got claimed
      */
+    @Override
     public int updateWithOtherObjects(World world) {
-        if (lives == false) {
+        if (!lives) {
             // getting claimed
             return 201;
         } else {
