@@ -36,7 +36,7 @@ public class Game extends Application {
      */
     @Override
     public void start(Stage stage) {
-        stage.setTitle("My Java Game");
+        stage.setTitle("Leaping Elements");
 
         Group mainSceneGroup = new Group();
         Scene mainScene = new Scene(mainSceneGroup, WIDTH, HEIGHT);
