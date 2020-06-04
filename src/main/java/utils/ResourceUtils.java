@@ -5,8 +5,18 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 public class ResourceUtils {
+    private static Locale locale;
+    private static ResourceBundle labels;
+
+    static {
+        locale = new Locale("en");
+        labels = ResourceBundle.getBundle("Locale/text", locale);
+    }
+
     public static InputStream getResource(String path) {
         URL url = ResourceUtils.class.getClassLoader().getResource(path);
         try {
@@ -16,5 +26,9 @@ public class ResourceUtils {
             System.err.println("Error when loading font in: " + path + "\n" + ExceptionUtils.getStackTrace(e));
             return null;
         }
+    }
+
+    public static String getLocalisedText(String text) {
+        return labels.getString(text);
     }
 }
