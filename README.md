@@ -13,11 +13,19 @@ jdk (if using openjdk, make sure that you have installed JavaFX libraries along)
 After launching the game, you will see the Main Menu. Here you can choose to play a level
 by clicking on it, load your own level from `.tmx` file, or see credits.
 
+<p align="center">
+ <img src="/screenshots/MainMenu.png" hight="auto" width="700">
+</p>
+
 ## Controls
 In the the levels itself, you control 2 characters – Ice hero (with arrows) and Fire hero (with
 keys A, W, D). You can change camera modes – automatic (tries to show both heroes if possible),
 focus Ice hero, focus Fire hero. – by pressing C. If you want to restart the level, press R. If you want to
 quit level, press Escape.
+
+<p align="center">
+ <img src="/screenshots/Game.png" hight="auto" width="700">
+</p>
 
 ## Goal
 The goal in each level is to collect all available stars.
