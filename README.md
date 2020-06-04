@@ -36,5 +36,4 @@ projectile).
 **Have fun! :)**
 
 # How to create your own level
-See `How to create your own level.pdf` for tutorial and specifications of what has .txm file include in order to be possible to load it as a game level.
-
+See `How to create your own level.pdf` for tutorial and specifications of what should be included in `.txm` file in order to be possible to load it as a game level.
