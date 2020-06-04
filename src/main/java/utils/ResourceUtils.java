@@ -13,7 +13,7 @@ public class ResourceUtils {
     private static ResourceBundle labels;
 
     static {
-        locale = new Locale("en");
+        locale = Locale.getDefault();
         labels = ResourceBundle.getBundle("text", locale);
     }
 

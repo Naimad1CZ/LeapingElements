@@ -13,7 +13,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import utils.ResourceUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,8 +66,8 @@ public class Game extends Application {
         MenuButton b3 = new MenuButton("3");
         MenuButton b4 = new MenuButton("4");
         MenuButton b5 = new MenuButton("5");
-        MenuButton loadLevelButton = new MenuButton(ResourceUtils.getLocalisedText("LoadLevel"));
-        MenuButton creditsButton = new MenuButton(ResourceUtils.getLocalisedText("Credits"));
+        MenuButton loadLevelButton = new MenuButton("Load Level");
+        MenuButton creditsButton = new MenuButton("Credits");
 
         // add buttons to their respective horizontal boxes
         HBox hBox1 = new HBox();

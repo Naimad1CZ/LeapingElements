@@ -26,11 +26,11 @@ public class MenuButton extends Button {
      * @param text Text to be displayed on the button
      */
     public MenuButton(String text) {
-        setText(text);
         setAlignment(Pos.CENTER);
         setFont(biggerFont);
 
         if (text.equals("Load Level")) {
+            setText(ResourceUtils.getLocalisedText("LoadLevel"));
             preferredWidth = 360;
             preferredHeight = 100;
             buttonReleasedStyle = buttonReleasedStyle.concat("-fx-background-image: url('Other/Load_level_button.png'); " +
@@ -38,6 +38,7 @@ public class MenuButton extends Button {
             buttonPressedStyle = buttonPressedStyle.concat("-fx-background-image: url('Other/Load_level_button_hover.png'); " +
                     "-fx-background-size: 360px 100px;");
         } else if (text.equals("Credits")) {
+            setText(ResourceUtils.getLocalisedText("Credits"));
             preferredWidth = 360;
             preferredHeight = 100;
             buttonReleasedStyle = buttonReleasedStyle.concat("-fx-background-image: url('Other/Credits_button.png'); " +
@@ -45,6 +46,7 @@ public class MenuButton extends Button {
             buttonPressedStyle = buttonPressedStyle.concat("-fx-background-image: url('Other/Credits_button_hover.png'); " +
                     "-fx-background-size: 360px 100px;");
         } else {
+            setText(text);
             // we have a level number
             preferredWidth = 100;
             preferredHeight = 100;
