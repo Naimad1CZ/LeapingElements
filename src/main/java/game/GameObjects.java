@@ -22,8 +22,8 @@ import static java.lang.Integer.parseInt;
 public class GameObjects {
     private final GraphicsContext gc;
 
-    private final ArrayList<GameObject> gameObjects = new ArrayList<>();
-    private final ArrayList<GameObject> objectsToAdd = new ArrayList<>();
+    private final List<GameObject> gameObjects = new ArrayList<>();
+    private final List<GameObject> objectsToAdd = new ArrayList<>();
     private Hero hero1;
     private Hero hero2;
 

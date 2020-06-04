@@ -38,7 +38,7 @@ public class GameLoop extends AnimationTimer {
      * @param game                game scene
      * @param buttonsToInitialize level buttons + load level button that needs to be initialized here
      */
-    public GameLoop(GraphicsContext gc, Stage stg, Scene main, Scene game, ArrayList<MenuButton> buttonsToInitialize) {
+    public GameLoop(GraphicsContext gc, Stage stg, Scene main, Scene game, List<MenuButton> buttonsToInitialize) {
         gameGC = gc;
         stage = stg;
         mainScene = main;

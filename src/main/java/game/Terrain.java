@@ -38,7 +38,7 @@ public class Terrain {
             for (int j = 0; j < map.getHeight(); ++j) {
                 Tile t = l.getTileAt(i, j);
                 tiles[i][j] = t;
-                if (!(t == null) && !images.containsKey(t)) {
+                if ((t != null) && !images.containsKey(t)) {
                     javafx.scene.image.Image img = SwingFXUtils.toFXImage(t.getImage(), null);
                     images.put(t, img);
                 }
@@ -55,7 +55,6 @@ public class Terrain {
         for (int i = leftLabel / TILE_WIDTH; i <= (leftLabel + Game.WIDTH) / TILE_WIDTH; ++i) {
             for (int j = topLabel / TILE_HEIGHT; j <= (topLabel + Game.HEIGHT) / TILE_HEIGHT; ++j) {
                 if (tiles.length > i && tiles[0].length > j && tiles[i][j] != null) {
-                    Image x = images.get(tiles[i][j]);
                     gc.drawImage(images.get(tiles[i][j]), i * TILE_WIDTH - leftLabel, j * TILE_HEIGHT - topLabel);
                 }
             }
