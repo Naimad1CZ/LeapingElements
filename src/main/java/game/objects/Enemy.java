@@ -2,6 +2,7 @@ package game.objects;
 
 import game.World;
 import javafx.scene.image.Image;
+import utils.Enums.Death;
 
 public abstract class Enemy extends Creature {
     protected int state = 0;
@@ -38,7 +39,7 @@ public abstract class Enemy extends Creature {
      * @return death code
      */
     @Override
-    public int updatePosition(double delta, World world) {
+    public Death updatePosition(double delta, World world) {
         doLogic(delta);
         return super.updatePosition(delta, world);
     }

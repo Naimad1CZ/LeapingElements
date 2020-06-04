@@ -3,6 +3,7 @@ package game.objects;
 import game.Terrain;
 import game.World;
 import javafx.scene.image.Image;
+import utils.Enums.Death;
 import utils.Enums.TileType;
 
 import java.awt.geom.Point2D;
@@ -125,9 +126,9 @@ public abstract class Creature extends GameObject {
      * Check collisions with terrain and corrects position of GameObject to not be inside solid terrain and to be integers.
      *
      * @param terrain terrain of the world
-     * @return cause of death, 0 if object didn't die
+     * @return cause of death, Death.none if object didn't die
      */
-    protected int collideWithTerrain(Terrain terrain) {
+    protected Death collideWithTerrain(Terrain terrain) {
         boolean inWater = false;
 
         int intPosX = (int) posX;
@@ -196,7 +197,7 @@ public abstract class Creature extends GameObject {
             inWater = true;
         } else if (lowerLeftType == TileType.out || lowerRightType == TileType.out) {
             // dieeeeeee (by falling out of the world)
-            return 1;
+            return Death.fallOut;
         } else if (speedY > World.GRAVITY / 20 || speedY < 0) {
             onGround = false;
         }
@@ -229,14 +230,14 @@ public abstract class Creature extends GameObject {
                 if (lefterLowType == TileType.water || righterLowType == TileType.water) {
                     // if not just touching the water slightly
                     // drooown
-                    return 2;
+                    return Death.drown;
                 }
             }
         } else {
             isSwimming = false;
         }
 
-        return 0;
+        return Death.none;
     }
 
     /**
@@ -247,7 +248,7 @@ public abstract class Creature extends GameObject {
      * @return death code
      */
     @Override
-    public int updatePosition(double delta, World world) {
+    public Death updatePosition(double delta, World world) {
         // change of position because of movement triggered by keyboard
         if (isSwimming) {
             if (moveUp) {

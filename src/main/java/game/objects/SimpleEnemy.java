@@ -2,6 +2,7 @@ package game.objects;
 
 import game.World;
 import javafx.scene.image.Image;
+import utils.Enums.Death;
 
 public class SimpleEnemy extends Enemy {
     private final double routeLength;
@@ -51,10 +52,10 @@ public class SimpleEnemy extends Enemy {
      * Simple enemy doesn't die or anything if it encounters anything.
      *
      * @param world world in which the creature is
-     * @return 0
+     * @return Death.none
      */
     @Override
-    public int updateWithOtherObjects(World world) {
-        return 0;
+    public Death updateWithOtherObjects(World world) {
+        return Death.none;
     }
 }

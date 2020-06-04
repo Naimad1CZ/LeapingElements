@@ -9,6 +9,7 @@ import org.mapeditor.core.MapObject;
 import org.mapeditor.core.ObjectGroup;
 import org.mapeditor.core.Properties;
 import utils.DeathMessages;
+import utils.Enums.Death;
 import utils.Enums.HeroType;
 import utils.Enums.TurretAndProjectileType;
 
@@ -292,11 +293,11 @@ public class GameObjects {
 
         for (GameObject go : gameObjects) {
             if (!(go instanceof Creature) || ((Creature) go).isAlive()) {
-                int deathCode = go.updatePosition(delta, world);
-                if (deathCode > 0) {
+                Death deathCause = go.updatePosition(delta, world);
+                if (deathCause != Death.none) {
                     toDelete.add(go);
                     if (go instanceof Hero) {
-                        deathMessage = DeathMessages.getDeathMessage(go, deathCode);
+                        deathMessage = DeathMessages.getDeathMessage(go, deathCause);
                     }
                 }
             }
@@ -304,11 +305,11 @@ public class GameObjects {
 
         for (GameObject go : gameObjects) {
             if (!(go instanceof Creature) || ((Creature) go).isAlive()) {
-                int deathCode = go.updateWithOtherObjects(world);
-                if (deathCode > 0) {
+                Death deathCause = go.updateWithOtherObjects(world);
+                if (deathCause != Death.none) {
                     toDelete.add(go);
                     if (go instanceof Hero) {
-                        deathMessage = DeathMessages.getDeathMessage(go, deathCode);
+                        deathMessage = DeathMessages.getDeathMessage(go, deathCause);
                     }
                 }
             }

@@ -2,6 +2,7 @@ package game.objects;
 
 import game.World;
 import javafx.scene.image.Image;
+import utils.Enums.Death;
 
 public class Star extends GameObject {
     protected boolean lives = true;
@@ -48,25 +49,25 @@ public class Star extends GameObject {
      * Don't do anything, but neede to be implemented.
      * @param delta time in seconds since the last update
      * @param world world in which the creature is
-     * @return 0
+     * @return Death.none
      */
     @Override
-    public int updatePosition(double delta, World world) {
-        return 0;
+    public Death updatePosition(double delta, World world) {
+        return Death.none;
     }
 
     /**
      *
      * @param world world in which the creature is
-     * @return 201 if got claimed
+     * @return Death.other if got claimed, else Death.none
      */
     @Override
-    public int updateWithOtherObjects(World world) {
+    public Death updateWithOtherObjects(World world) {
         if (!lives) {
             // getting claimed
-            return 201;
+            return Death.other;
         } else {
-            return 0;
+            return Death.none;
         }
     }
 }

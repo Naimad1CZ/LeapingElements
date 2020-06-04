@@ -2,6 +2,7 @@ package game.objects;
 
 import game.World;
 import javafx.scene.image.Image;
+import utils.Enums.Death;
 import utils.Enums.TurretAndProjectileType;
 
 public class Turret extends GameObject {
@@ -71,27 +72,27 @@ public class Turret extends GameObject {
      * Shoots if the time had came.
      * @param delta time in seconds since the last update
      * @param world world in which the creature is
-     * @return 0
+     * @return Death.none
      */
     @Override
-    public int updatePosition(double delta, World world) {
+    public Death updatePosition(double delta, World world) {
         timeUntilShoot -= delta;
         if (timeUntilShoot <= 0) {
             Projectile p = shoot();
             world.addGameObject(p);
             timeUntilShoot += interval;
         }
-        return 0;
+        return Death.none;
     }
 
     /**
      * Turret doesn't interact with other objects, therefore don't do anything.
      * @param world world in which the creature is
-     * @return 0
+     * @return Death.none
      */
     @Override
-    public int updateWithOtherObjects(World world) {
-        return 0;
+    public Death updateWithOtherObjects(World world) {
+        return Death.none;
     }
 
 }

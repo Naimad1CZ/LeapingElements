@@ -3,6 +3,7 @@ package game.objects;
 import game.Terrain;
 import game.World;
 import javafx.scene.image.Image;
+import utils.Enums.Death;
 import utils.Enums.TileType;
 import utils.Enums.TurretAndProjectileType;
 
@@ -59,7 +60,7 @@ public class Projectile extends GameObject {
      * @param terrain world's terrain
      * @return death code
      */
-    protected int collideWithTerrain(Terrain terrain) {
+    protected Death collideWithTerrain(Terrain terrain) {
         int upperYBlock = (int) posY / terrain.TILE_HEIGHT;
         int middleYBlock = (int) (posY + height / 2) / terrain.TILE_HEIGHT;
         int lowerYBlock = (int) (posY + height - 1) / terrain.TILE_HEIGHT;
@@ -75,13 +76,13 @@ public class Projectile extends GameObject {
 
         if (upType == TileType.out || lowType == TileType.out || leftType == TileType.out || rightType == TileType.out) {
             // fly out of the world
-            return 106;
+            return Death.other;
         } else if (upType != TileType.air || lowType != TileType.air || leftType != TileType.air || rightType != TileType.air) {
             // hit something and get destroyed by terrain
-            return 101;
+            return Death.other;
         }
 
-        return 0;
+        return Death.none;
     }
 
     /**
@@ -91,7 +92,7 @@ public class Projectile extends GameObject {
      * @return death code
      */
     @Override
-    public int updatePosition(double delta, World world) {
+    public Death updatePosition(double delta, World world) {
         posX += speedX * delta;
         posY += speedY * delta;
 
@@ -104,24 +105,22 @@ public class Projectile extends GameObject {
      * @return death code
      */
     @Override
-    public int updateWithOtherObjects(World world) {
+    public Death updateWithOtherObjects(World world) {
         List<GameObject> gameObjects = world.getGameObjects();
         for (GameObject gameObject : gameObjects) {
             if (gameObject != this && gameObject != creator) {
                 if (getBoundingBox().intersects(gameObject.getBoundingBox())) {
-                    if (gameObject instanceof Hero && ((Hero) gameObject).isAlive()) {
-                        return 102;
-                    } else if (gameObject instanceof Enemy && ((Enemy) gameObject).isAlive()) {
-                        return 103;
-                    } else if (gameObject instanceof Turret) {
-                        return 104;
-                    } else if (gameObject instanceof Projectile) {
-                        return 105;
+                    if (gameObject instanceof Creature) {
+                        if (((Creature) gameObject).isAlive()) {
+                            return Death.other;
+                        }
+                    } else if (!(gameObject instanceof Star)) {
+                        return Death.other;
                     }
                 }
             }
         }
 
-        return 0;
+        return Death.none;
     }
 }

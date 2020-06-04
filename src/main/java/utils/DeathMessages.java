@@ -1,78 +1,58 @@
 package utils;
 
 import game.objects.GameObject;
+import utils.Enums.Death;
 
 public class DeathMessages {
 
     /**
      *
      * @param go GameObject that died
-     * @param deathCode death code if the death
+     * @param deathCause death cause if the death
      * @return the death message of the game object that died with provided death code
      */
-    public static String getDeathMessage(GameObject go, int deathCode) {
+    public static String getDeathMessage(GameObject go, Death deathCause) {
         String start = go.getName() + " ";
         String end;
-        switch (deathCode) {
-            case 1:
+        switch (deathCause) {
+            case fallOut:
                 end = "fell out of the world";
                 break;
-            case 2:
+            case drown:
                 end = "drowned";
                 break;
-            case 11:
+            case melt:
                 end = "was melted by Fire hero";
                 break;
-            case 21:
+            case bySimpleEnemy:
                 end = "was killed by a simple enemy";
                 break;
-            case 22:
+            case byEnemy:
                 end = "was killed by enemy";
                 break;
-            case 41:
+            case byFireTurret:
                 end = "was killed by a fire turret";
                 break;
-            case 42:
+            case byIceTurret:
                 end = "was killed by an ice turret";
                 break;
-            case 43:
+            case byCombinedTurret:
                 end = "was killed by a combined turret";
                 break;
-            case 44:
+            case byTurret:
                 end = "was killed by a turret";
                 break;
-            case 51:
+            case byFireProjectile:
                 end = "was killed by a fire projectile";
                 break;
-            case 52:
+            case byIceProjectile:
                 end = "was killed by an ice projectile";
                 break;
-            case 53:
+            case byCombinedProjectile:
                 end = "was killed by a combined projectile";
                 break;
-            case 54:
+            case byProjectile:
                 end = "was killed by a projectile";
-                break;
-            case 101:
-                end = "smashed into a terrain";
-                break;
-            case 102:
-                end = "smashed into a hero";
-                break;
-            case 103:
-                end = "smashed into an enemy";
-                break;
-            case 104:
-                end = "smashed into a turret";
-                break;
-            case 105:
-                end = "collided with another projectile";
-                break;
-            case 106:
-                end = "flied out of the world";
-                break;
-            case 201:
-                end = "was claimed";
                 break;
             default:
                 end = "was killed by a and unidentified object";

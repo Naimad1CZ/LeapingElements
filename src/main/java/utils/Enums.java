@@ -18,4 +18,22 @@ public class Enums {
         solid,
         water
     }
+
+    public enum Death {
+        none,
+        fallOut,
+        drown,
+        melt,
+        bySimpleEnemy,
+        byEnemy,
+        byFireTurret,
+        byIceTurret,
+        byCombinedTurret,
+        byTurret,
+        byFireProjectile,
+        byIceProjectile,
+        byCombinedProjectile,
+        byProjectile,
+        other
+    }
 }

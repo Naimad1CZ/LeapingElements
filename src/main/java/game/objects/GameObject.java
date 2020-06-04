@@ -5,6 +5,7 @@ import game.World;
 import javafx.geometry.BoundingBox;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import utils.Enums.Death;
 
 public abstract class GameObject {
     protected final double startPosX;
@@ -63,7 +64,7 @@ public abstract class GameObject {
      * @param world world in which the object is
      * @return death code
      */
-    public abstract int updatePosition(double delta, World world);
+    public abstract Death updatePosition(double delta, World world);
 
     /**
      * Interact with other objects.
@@ -71,7 +72,7 @@ public abstract class GameObject {
      * @param world world in which the creature is
      * @return death code
      */
-    public abstract int updateWithOtherObjects(World world);
+    public abstract Death updateWithOtherObjects(World world);
 
     /**
      * Draw the object.

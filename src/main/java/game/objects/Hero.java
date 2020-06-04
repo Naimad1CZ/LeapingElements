@@ -2,6 +2,7 @@ package game.objects;
 
 import game.World;
 import javafx.scene.image.Image;
+import utils.Enums.Death;
 import utils.Enums.HeroType;
 import utils.Enums.TurretAndProjectileType;
 
@@ -96,7 +97,7 @@ public class Hero extends Creature {
      * @return death code
      */
     @Override
-    public int updateWithOtherObjects(World world) {
+    public Death updateWithOtherObjects(World world) {
         List<GameObject> gameObjects = world.getGameObjects();
 
         for (GameObject gameObject : gameObjects) {
@@ -105,29 +106,29 @@ public class Hero extends Creature {
                     if (gameObject instanceof Hero && ((Hero) gameObject).isAlive()) {
                         if (type == HeroType.ice && ((Hero) gameObject).getType() == HeroType.fire) {
                             // die by melting
-                            return 11;
+                            return Death.melt;
                         }
                     } else if (gameObject instanceof Enemy && ((Enemy) gameObject).isAlive()) {
                         if (gameObject instanceof SimpleEnemy) {
                             // get killed by simple enemy
-                            return 21;
+                            return Death.bySimpleEnemy;
                         } else {
                             // get killed by some other enemy
-                            return 22;
+                            return Death.byEnemy;
                         }
                     } else if (gameObject instanceof Turret) {
                         if (((Turret) gameObject).getType() == TurretAndProjectileType.fire) {
                             // get killed by fire turret
-                            return 41;
+                            return Death.byFireTurret;
                         } else if (((Turret) gameObject).getType() == TurretAndProjectileType.ice) {
                             // get killed by ice turret
-                            return 42;
+                            return Death.byIceTurret;
                         } else if (((Turret) gameObject).getType() == TurretAndProjectileType.combined) {
                             // get killed by combined turret
-                            return 43;
+                            return Death.byCombinedTurret;
                         } else {
                             // get killed by turret
-                            return 44;
+                            return Death.byTurret;
                         }
                     } else if (gameObject instanceof Projectile) {
                         if (((Projectile) gameObject).getType() == TurretAndProjectileType.fire) {
@@ -136,21 +137,21 @@ public class Hero extends Creature {
                                 continue;
                             }
                             // killed by fire bullet
-                            return 51;
+                            return Death.byFireProjectile;
                         } else if (((Projectile) gameObject).getType() == TurretAndProjectileType.ice) {
                             // ice heroes are resistant ti ice bullets
                             if (type == HeroType.ice) {
                                 continue;
                             }
                             // killed by ice bullet
-                            return 52;
+                            return Death.byIceProjectile;
                         } else if (((Projectile) gameObject).getType() == TurretAndProjectileType.combined) {
                             // nobody is resistant to combined bullets :(
                             // killed by combined bullet
-                            return 53;
+                            return Death.byCombinedProjectile;
                         } else {
                             // killed by some other bullet
-                            return 54;
+                            return Death.byProjectile;
                         }
                     } else if (gameObject instanceof Star) {
                         int plusScore = ((Star) gameObject).claim();
@@ -162,7 +163,7 @@ public class Hero extends Creature {
             }
         }
 
-        return 0;
+        return Death.none;
     }
 
 }
