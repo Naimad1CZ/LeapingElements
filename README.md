@@ -5,12 +5,15 @@ First of all, you need to extract the content of ZIP file to some folder and lau
 executable JAR file ‘LeapingElements.jar’. It requires Java 8, so download Java if you can’t open the
 file:
 https://www.java.com/en/download/
+
 Note: if you are a developer and have higher version of Java installed, make sure that you use java
-version 1.8.0_ 251 to open it (check by running ‘java -version’)
+version 1.8.0_ 251 to open it (check by running `java -version`)
+
+Note for Linux and Mac users: this game uses `Segoe Print`, `Segoe Script` and `Segoe Script Bold` fonts, so make sure you have them installed so you get better experience.
 
 ## Main Menu
 After launching the game, you will see the Main Menu. Here you can choose to play a level
-by clicking on it, load your own level from .tmx file, or see credits.
+by clicking on it, load your own level from `.tmx` file, or see credits.
 
 ## Controls
 In the the levels itself, you control 2 characters – Ice hero (with arrows) and Fire hero (with
