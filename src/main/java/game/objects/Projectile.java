@@ -1,4 +1,4 @@
-package game.Objects;
+package game.objects;
 
 import game.Terrain;
 import game.World;
@@ -41,12 +41,9 @@ public class Projectile extends GameObject {
         return type;
     }
 
-    /**
-     *
-     * @return name of projectile
-     */
+    @Override
     public String getName() {
-        if (type.equals("fire")) {
+        if (type == TurretAndProjectileType.fire) {
             return "A fire projectile";
         } else if (type == TurretAndProjectileType.ice) {
             return "An ice projectile";
@@ -93,6 +90,7 @@ public class Projectile extends GameObject {
      * @param world world in which the creature is
      * @return death code
      */
+    @Override
     public int updatePosition(double delta, World world) {
         posX += speedX * delta;
         posY += speedY * delta;
@@ -105,6 +103,7 @@ public class Projectile extends GameObject {
      * @param world world in which the creature is
      * @return death code
      */
+    @Override
     public int updateWithOtherObjects(World world) {
         List<GameObject> gameObjects = world.getGameObjects();
         for (GameObject gameObject : gameObjects) {

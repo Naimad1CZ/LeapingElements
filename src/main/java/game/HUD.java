@@ -5,6 +5,7 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import utils.ResourceUtils;
 
 public class HUD {
     private final int OBJECT_HEIGHT = 46;
@@ -17,15 +18,14 @@ public class HUD {
     private final Color textColor = Color.BLACK;
     private final Color messageOutlineColor = Color.rgb(89, 61, 37);
     private final Color messageBodyColor = Color.rgb(187, 200, 126);
-    private final Font scoreFont = new Font("Segoe Script Bold", OBJECT_HEIGHT);
-    private final Font messageFont = new Font("Segoe Script", 20);
+    private final Font scoreFont = Font.loadFont(ResourceUtils.getResource("Fonts/SegoeScriptBold.ttf"), OBJECT_HEIGHT);
+    private final Font messageFont = Font.loadFont(ResourceUtils.getResource("Fonts/SegoeScript.ttf"), 20);
     private Image hero1Small;
     private Image hero2Small;
     private String message;
     private double messageTimeLeft;
 
     /**
-     *
      * @param g Graphics context
      * @param w World in which the level happens
      */
@@ -143,7 +143,8 @@ public class HUD {
 
     /**
      * Draw message in HUD if there is any current message to display.
-     * @param delta
+     *
+     * @param delta time in seconds since the last update
      */
     private void drawMessage(double delta) {
         if (message != null && messageTimeLeft > 0) {

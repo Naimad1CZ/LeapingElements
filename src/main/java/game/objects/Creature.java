@@ -1,4 +1,4 @@
-package game.Objects;
+package game.objects;
 
 import game.Terrain;
 import game.World;
@@ -161,8 +161,8 @@ public abstract class Creature extends GameObject {
         TileType lefterLowType = terrain.getTileType(lefterXBlock, lowYBlock);
 
         // if I'm in solid from both side, don't do right and left correction
-        if (!(righterLowType.equals("solid") && lefterLowType.equals("solid"))) {
-            if (speedX >= 0 && (righterUpType.equals("solid") || righterLowType.equals("solid"))) {
+        if (!(righterLowType == TileType.solid && lefterLowType == TileType.solid)) {
+            if (speedX >= 0 && (righterUpType == TileType.solid || righterLowType == TileType.solid)) {
                 posX = righterXBlock * terrain.TILE_WIDTH - width;
                 speedX = 0;
 
@@ -246,6 +246,7 @@ public abstract class Creature extends GameObject {
      * @param world world in which the creature is
      * @return death code
      */
+    @Override
     public int updatePosition(double delta, World world) {
         // change of position because of movement triggered by keyboard
         if (isSwimming) {

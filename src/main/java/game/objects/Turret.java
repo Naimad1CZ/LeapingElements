@@ -1,4 +1,4 @@
-package game.Objects;
+package game.objects;
 
 import game.World;
 import javafx.scene.image.Image;
@@ -38,10 +38,7 @@ public class Turret extends GameObject {
         projectileImage = bulletImage;
     }
 
-    /**
-     *
-     * @return name
-     */
+    @Override
     public String getName() {
         if (type == TurretAndProjectileType.fire) {
             return "A fire turret";
@@ -76,6 +73,7 @@ public class Turret extends GameObject {
      * @param world world in which the creature is
      * @return 0
      */
+    @Override
     public int updatePosition(double delta, World world) {
         timeUntilShoot -= delta;
         if (timeUntilShoot <= 0) {
@@ -91,6 +89,7 @@ public class Turret extends GameObject {
      * @param world world in which the creature is
      * @return 0
      */
+    @Override
     public int updateWithOtherObjects(World world) {
         return 0;
     }

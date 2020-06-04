@@ -1,4 +1,4 @@
-package game.Objects;
+package game.objects;
 
 import game.World;
 import javafx.scene.image.Image;
@@ -21,6 +21,7 @@ public class SimpleEnemy extends Enemy {
      * Move right if not lengthOfRoute distance from original position Y.
      * @param delta time in seconds since the last update
      */
+    @Override
     protected void doLogic(double delta) {
         if (state == 0) {
             if (posX >= startPosX + routeLength) {
@@ -52,6 +53,7 @@ public class SimpleEnemy extends Enemy {
      * @param world world in which the creature is
      * @return 0
      */
+    @Override
     public int updateWithOtherObjects(World world) {
         return 0;
     }

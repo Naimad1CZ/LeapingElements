@@ -1,6 +1,6 @@
 package game;
 
-import game.Objects.Hero;
+import game.objects.Hero;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
@@ -31,10 +31,11 @@ public class GameLoop extends AnimationTimer {
 
     /**
      * Initialize stuff.
-     * @param gc Graphics Context of the canvas, on which the levels will be painted on
-     * @param stg game Stage
-     * @param main main scene
-     * @param game game scene
+     *
+     * @param gc                  Graphics Context of the canvas, on which the levels will be painted on
+     * @param stg                 game Stage
+     * @param main                main scene
+     * @param game                game scene
      * @param buttonsToInitialize level buttons + load level button that needs to be initialized here
      */
     public GameLoop(GraphicsContext gc, Stage stg, Scene main, Scene game, ArrayList<MenuButton> buttonsToInitialize) {
@@ -112,7 +113,8 @@ public class GameLoop extends AnimationTimer {
 
     /**
      * Initialize mouse listeners on level buttons and load button to load level on click.
-     * @param buttons
+     *
+     * @param buttons level buttons + load level button that needs to be initialized here
      */
     private void initializeMainSceneButtonListeners(List<MenuButton> buttons) {
         for (int i = 0; i < buttons.size() - 1; ++i) {

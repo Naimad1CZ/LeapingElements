@@ -1,18 +1,17 @@
 package game;
 
-import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Font;
+import utils.ResourceUtils;
 
 public class MenuButton extends Button {
     private int preferredWidth = 100;
     private int preferredHeight = 100;
 
-    private final Font biggerFont = new Font("Segoe Print", 35);
+    private final Font biggerFont = Font.loadFont(ResourceUtils.getResource("Fonts/SegoePrint.ttf"), 35);
 
     private String buttonReleasedStyle = "-fx-background-color: transparent;" +
             "-fx-background-repeat: no-repeat;" +
@@ -20,6 +19,7 @@ public class MenuButton extends Button {
     private String buttonPressedStyle = "-fx-background-color: transparent;" +
             "-fx-background-repeat: no-repeat;" +
             "-fx-background-position: center;";
+
 
     /**
      *
@@ -81,37 +81,21 @@ public class MenuButton extends Button {
      * Initialize behavior when the user hovers or clicks the button.
      */
     private void initializeButtonListeners() {
-        setOnMousePressed(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                if (event.getButton().equals(MouseButton.PRIMARY)) {
-                    setButtonPressedStyle();
-                }
+        setOnMousePressed(event -> {
+            if (event.getButton().equals(MouseButton.PRIMARY)) {
+                setButtonPressedStyle();
             }
         });
 
-        setOnMouseReleased(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                if (event.getButton().equals(MouseButton.PRIMARY)) {
-                    setButtonReleasedStyle();
-                }
+        setOnMouseReleased(event -> {
+            if (event.getButton().equals(MouseButton.PRIMARY)) {
+                setButtonReleasedStyle();
             }
         });
 
-        setOnMouseEntered(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                setEffect(new DropShadow());
-            }
-        });
+        setOnMouseEntered(event -> setEffect(new DropShadow()));
 
-        setOnMouseExited(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                setEffect(null);
-            }
-        });
+        setOnMouseExited(event -> setEffect(null));
     }
 
 }

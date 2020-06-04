@@ -1,4 +1,4 @@
-package game.Objects;
+package game.objects;
 
 import game.World;
 import javafx.scene.image.Image;
@@ -37,6 +37,7 @@ public abstract class Enemy extends Creature {
      * @param world world in which the creature is
      * @return death code
      */
+    @Override
     public int updatePosition(double delta, World world) {
         doLogic(delta);
         return super.updatePosition(delta, world);

@@ -1,4 +1,4 @@
-package game.Objects;
+package game.objects;
 
 import game.Game;
 import game.World;
@@ -7,8 +7,8 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 public abstract class GameObject {
-    protected final double START_POS_X;
-    protected final double START_POS_Y;
+    protected final double startPosX;
+    protected final double startPosY;
 
     protected double posX;
     protected double posY;

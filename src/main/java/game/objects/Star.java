@@ -1,4 +1,4 @@
-package game.Objects;
+package game.objects;
 
 import game.World;
 import javafx.scene.image.Image;
@@ -24,17 +24,14 @@ public class Star extends GameObject {
      * @return amount of score points to be added
      */
     public int claim() {
-        if (lives == false) {
+        if (!lives) {
             return 0;
         }
         lives = false;
         return value;
     }
 
-    /**
-     *
-     * @return name
-     */
+    @Override
     public String getName() {
         return "A star";
     }
@@ -53,6 +50,7 @@ public class Star extends GameObject {
      * @param world world in which the creature is
      * @return 0
      */
+    @Override
     public int updatePosition(double delta, World world) {
         return 0;
     }

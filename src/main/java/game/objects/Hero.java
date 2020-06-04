@@ -1,4 +1,4 @@
-package game.Objects;
+package game.objects;
 
 import game.World;
 import javafx.scene.image.Image;
@@ -95,6 +95,7 @@ public class Hero extends Creature {
      * @param world world in which the creature is
      * @return death code
      */
+    @Override
     public int updateWithOtherObjects(World world) {
         List<GameObject> gameObjects = world.getGameObjects();
 

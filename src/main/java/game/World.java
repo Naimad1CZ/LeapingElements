@@ -1,7 +1,7 @@
 package game;
 
-import game.Objects.GameObject;
-import game.Objects.Hero;
+import game.objects.GameObject;
+import game.objects.Hero;
 import javafx.scene.canvas.GraphicsContext;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.mapeditor.core.*;

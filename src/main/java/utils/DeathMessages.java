@@ -1,6 +1,6 @@
 package utils;
 
-import game.Objects.GameObject;
+import game.objects.GameObject;
 
 public class DeathMessages {
 
