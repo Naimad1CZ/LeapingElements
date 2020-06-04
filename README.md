@@ -45,4 +45,4 @@ projectile).
 **Have fun! :)**
 
 # How to create your own level
-See `How_to_create_your_own_level.pdf` for tutorial and specifications of what should be included in `.txm` file in order to be possible to load it as a game level.
+See [How to create your own level](https://github.com/Naimad1CZ/LeapingElements/wiki/How-to-create-your-own-level) for tutorial and specifications of what should be included in `.txm` file in order to be possible to load it as a game level.
