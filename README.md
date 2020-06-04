@@ -9,8 +9,6 @@ https://www.java.com/en/download/
 Note: if you are a developer and have higher version of Java installed, make sure that you use java
 version 1.8.0_ 251 to open it (check by running `java -version`)
 
-Note for Linux and Mac users: this game uses `Segoe Print`, `Segoe Script` and `Segoe Script Bold` fonts, so make sure you have them installed so you get better experience.
-
 ## Main Menu
 After launching the game, you will see the Main Menu. Here you can choose to play a level
 by clicking on it, load your own level from `.tmx` file, or see credits.
