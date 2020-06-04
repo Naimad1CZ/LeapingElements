@@ -7,7 +7,7 @@ file:
 https://www.java.com/en/download/
 
 Note: if you are a developer and have higher version of Java installed, make sure that you use java
-version 1.8.0_ 251 to open it (check by running `java -version`)
+jdk (not open jdk because it'S missing OpenFX library) 1.8.0_251 to open it (check by running `java -version`)
 
 ## Main Menu
 After launching the game, you will see the Main Menu. Here you can choose to play a level
