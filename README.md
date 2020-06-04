@@ -33,5 +33,8 @@ Both heroes die in the contact with enemies, turret blocks and all projectiles e
 of their own kind (so Fire hero dies to ice and combined projectiles, Ice hero to fire and combined
 projectile).
 
-## Have fun! :)
+**Have fun! :)**
+
+# How to create your own level
+See `How to create your own level.pdf` for tutorial and specifications of what has .txm file include in order to be possible to load it as a game level.
 
