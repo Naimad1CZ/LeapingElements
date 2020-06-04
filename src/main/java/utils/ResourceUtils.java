@@ -14,7 +14,7 @@ public class ResourceUtils {
 
     static {
         locale = new Locale("en");
-        labels = ResourceBundle.getBundle("Locale/text", locale);
+        labels = ResourceBundle.getBundle("text", locale);
     }
 
     public static InputStream getResource(String path) {
