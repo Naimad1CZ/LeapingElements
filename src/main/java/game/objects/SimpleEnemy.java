@@ -56,6 +56,6 @@ public class SimpleEnemy extends Enemy {
      */
     @Override
     public Death updateWithOtherObjects(World world) {
-        return Death.none;
+        return Death.NONE;
     }
 }

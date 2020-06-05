@@ -53,7 +53,7 @@ public class Star extends GameObject {
      */
     @Override
     public Death updatePosition(double delta, World world) {
-        return Death.none;
+        return Death.NONE;
     }
 
     /**
@@ -65,9 +65,9 @@ public class Star extends GameObject {
     public Death updateWithOtherObjects(World world) {
         if (!lives) {
             // getting claimed
-            return Death.other;
+            return Death.OTHER;
         } else {
-            return Death.none;
+            return Death.NONE;
         }
     }
 }

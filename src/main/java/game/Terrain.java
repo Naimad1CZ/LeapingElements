@@ -69,11 +69,11 @@ public class Terrain {
      */
     public TileType getTileType(int x, int y) {
         if (y >= tiles[0].length || y < -5 || x >= tiles.length + 5 || x < -5) {
-            return TileType.out;
+            return TileType.OUT;
         } else if (y < 0 || x >= tiles.length || x < 0 || tiles[x][y] == null) {
-            return TileType.air;
+            return TileType.AIR;
         } else {
-            String kind = tiles[x][y].getProperties().getProperty("kind");
+            String kind = tiles[x][y].getProperties().getProperty("kind").toUpperCase();
             return TileType.valueOf(kind);
         }
     }

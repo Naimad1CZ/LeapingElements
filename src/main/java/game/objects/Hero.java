@@ -82,9 +82,9 @@ public class Hero extends Creature {
 
     @Override
     public String getName() {
-        if (type == HeroType.fire) {
+        if (type == HeroType.FIRE) {
             return "Fire hero";
-        } else if (type == HeroType.ice) {
+        } else if (type == HeroType.ICE) {
             return "Ice hero";
         } else {
             return "Hero";
@@ -104,54 +104,54 @@ public class Hero extends Creature {
             if (gameObject != this) {
                 if (getBoundingBox().intersects(gameObject.getBoundingBox())) {
                     if (gameObject instanceof Hero && ((Hero) gameObject).isAlive()) {
-                        if (type == HeroType.ice && ((Hero) gameObject).getType() == HeroType.fire) {
+                        if (type == HeroType.ICE && ((Hero) gameObject).getType() == HeroType.FIRE) {
                             // die by melting
-                            return Death.melt;
+                            return Death.MELT;
                         }
                     } else if (gameObject instanceof Enemy && ((Enemy) gameObject).isAlive()) {
                         if (gameObject instanceof SimpleEnemy) {
                             // get killed by simple enemy
-                            return Death.bySimpleEnemy;
+                            return Death.BY_SIMPLE_ENEMY;
                         } else {
                             // get killed by some other enemy
-                            return Death.byEnemy;
+                            return Death.BY_ENEMY;
                         }
                     } else if (gameObject instanceof Turret) {
-                        if (((Turret) gameObject).getType() == TurretAndProjectileType.fire) {
+                        if (((Turret) gameObject).getType() == TurretAndProjectileType.FIRE) {
                             // get killed by fire turret
-                            return Death.byFireTurret;
-                        } else if (((Turret) gameObject).getType() == TurretAndProjectileType.ice) {
+                            return Death.BY_FIRE_TURRET;
+                        } else if (((Turret) gameObject).getType() == TurretAndProjectileType.ICE) {
                             // get killed by ice turret
-                            return Death.byIceTurret;
-                        } else if (((Turret) gameObject).getType() == TurretAndProjectileType.combined) {
+                            return Death.BY_ICE_TURRET;
+                        } else if (((Turret) gameObject).getType() == TurretAndProjectileType.COMBINED) {
                             // get killed by combined turret
-                            return Death.byCombinedTurret;
+                            return Death.BY_COMBINED_TURRET;
                         } else {
                             // get killed by turret
-                            return Death.byTurret;
+                            return Death.BY_TURRET;
                         }
                     } else if (gameObject instanceof Projectile) {
-                        if (((Projectile) gameObject).getType() == TurretAndProjectileType.fire) {
+                        if (((Projectile) gameObject).getType() == TurretAndProjectileType.FIRE) {
                             // fire heroes are resistant to fire bullets
-                            if (type == HeroType.fire) {
+                            if (type == HeroType.FIRE) {
                                 continue;
                             }
                             // killed by fire bullet
-                            return Death.byFireProjectile;
-                        } else if (((Projectile) gameObject).getType() == TurretAndProjectileType.ice) {
+                            return Death.BY_FIRE_PROJECTILE;
+                        } else if (((Projectile) gameObject).getType() == TurretAndProjectileType.ICE) {
                             // ice heroes are resistant ti ice bullets
-                            if (type == HeroType.ice) {
+                            if (type == HeroType.ICE) {
                                 continue;
                             }
                             // killed by ice bullet
-                            return Death.byIceProjectile;
-                        } else if (((Projectile) gameObject).getType() == TurretAndProjectileType.combined) {
+                            return Death.BY_ICE_PROJECTILE;
+                        } else if (((Projectile) gameObject).getType() == TurretAndProjectileType.COMBINED) {
                             // nobody is resistant to combined bullets :(
                             // killed by combined bullet
-                            return Death.byCombinedProjectile;
+                            return Death.BY_COMBINED_PROJECTILE;
                         } else {
                             // killed by some other bullet
-                            return Death.byProjectile;
+                            return Death.BY_PROJECTILE;
                         }
                     } else if (gameObject instanceof Star) {
                         int plusScore = ((Star) gameObject).claim();
@@ -163,7 +163,7 @@ public class Hero extends Creature {
             }
         }
 
-        return Death.none;
+        return Death.NONE;
     }
 
 }

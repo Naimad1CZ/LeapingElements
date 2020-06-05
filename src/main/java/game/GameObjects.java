@@ -64,7 +64,7 @@ public class GameObjects {
 
                 String cls = getProperty("class");
                 if (cls.equals("Hero")) {
-                    String tp = getProperty("type");
+                    String tp = getProperty("type").toUpperCase();
                     String movementSpeed = getProperty("movementSpeed");
                     String jumpSpeed = getProperty("jumpSpeed");
                     String swimmingSpeed = getProperty("swimmingSpeed");
@@ -75,13 +75,13 @@ public class GameObjects {
                     double swimSpeed;
                     int liv;
                     HeroType type = HeroType.valueOf(tp);
-                    if (type == HeroType.fire) {
+                    if (type == HeroType.FIRE) {
                         movSpeed = movementSpeed == null ? 280 : parseDouble(movementSpeed);
                         jmpSpeed = jumpSpeed == null ? 410 : parseDouble(jumpSpeed);
                         swimSpeed = swimmingSpeed == null ? 0 : parseDouble(swimmingSpeed);
                         liv = lives == null ? 3 : parseInt(lives);
                         HUDImageSource = HUDImageSource == null ? "Objects/HeroFireSmall.png" : HUDImageSource;
-                    } else if (type == HeroType.ice) {
+                    } else if (type == HeroType.ICE) {
                         movSpeed = movementSpeed == null ? 250 : parseDouble(movementSpeed);
                         jmpSpeed = jumpSpeed == null ? 350 : parseDouble(jumpSpeed);
                         swimSpeed = swimmingSpeed == null ? 120 : parseDouble(swimmingSpeed);
@@ -100,7 +100,7 @@ public class GameObjects {
                         hero1 = h;
                     } else if (hero2 == null) {
                         hero2 = h;
-                        if (hero2.getType() == HeroType.ice && hero1.getType() == HeroType.fire) {
+                        if (hero2.getType() == HeroType.ICE && hero1.getType() == HeroType.FIRE) {
                             // ice is the first hero if we have both ice and fire heroes
                             Hero tmp = hero2;
                             hero2 = hero1;
@@ -115,7 +115,7 @@ public class GameObjects {
                     gameObjects.add(se);
                 } else if (cls.equals("Turret")) {
                     String shootingAngle = getProperty("shootingAngle");
-                    String tp = getProperty("type");
+                    String tp = getProperty("type").toUpperCase();
                     String shootingInterval = getProperty("shootingInterval");
                     String shootingSpeed = getProperty("shootingSpeed");
                     String pathToBulletImage = getProperty("pathToBulletImage");
@@ -126,11 +126,11 @@ public class GameObjects {
                     double shSpeed = shootingSpeed == null ? 400 : parseDouble(shootingSpeed);
                     TurretAndProjectileType type = TurretAndProjectileType.valueOf(tp);
 
-                    if (type == TurretAndProjectileType.fire) {
+                    if (type == TurretAndProjectileType.FIRE) {
                         pathToBulletImage = pathToBulletImage == null ? "Objects/BulletFire.png" : pathToBulletImage;
-                    } else if (type == TurretAndProjectileType.ice) {
+                    } else if (type == TurretAndProjectileType.ICE) {
                         pathToBulletImage = pathToBulletImage == null ? "Objects/BulletIce.png" : pathToBulletImage;
-                    } else if (type == TurretAndProjectileType.combined) {
+                    } else if (type == TurretAndProjectileType.COMBINED) {
                         pathToBulletImage = pathToBulletImage == null ? "Objects/BulletCombined.png" : pathToBulletImage;
                     }
 
@@ -294,7 +294,7 @@ public class GameObjects {
         for (GameObject go : gameObjects) {
             if (!(go instanceof Creature) || ((Creature) go).isAlive()) {
                 Death deathCause = go.updatePosition(delta, world);
-                if (deathCause != Death.none) {
+                if (deathCause != Death.NONE) {
                     toDelete.add(go);
                     if (go instanceof Hero) {
                         deathMessage = DeathMessages.getDeathMessage(go, deathCause);
@@ -306,7 +306,7 @@ public class GameObjects {
         for (GameObject go : gameObjects) {
             if (!(go instanceof Creature) || ((Creature) go).isAlive()) {
                 Death deathCause = go.updateWithOtherObjects(world);
-                if (deathCause != Death.none) {
+                if (deathCause != Death.NONE) {
                     toDelete.add(go);
                     if (go instanceof Hero) {
                         deathMessage = DeathMessages.getDeathMessage(go, deathCause);

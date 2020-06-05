@@ -44,11 +44,11 @@ public class Projectile extends GameObject {
 
     @Override
     public String getName() {
-        if (type == TurretAndProjectileType.fire) {
+        if (type == TurretAndProjectileType.FIRE) {
             return "A fire projectile";
-        } else if (type == TurretAndProjectileType.ice) {
+        } else if (type == TurretAndProjectileType.ICE) {
             return "An ice projectile";
-        } else if (type == TurretAndProjectileType.combined) {
+        } else if (type == TurretAndProjectileType.COMBINED) {
             return "A combined projectile";
         } else {
             return "A projectile";
@@ -74,15 +74,15 @@ public class Projectile extends GameObject {
         TileType leftType = terrain.getTileType(lefterXBlock, middleYBlock);
         TileType rightType = terrain.getTileType(righterXBlock, middleYBlock);
 
-        if (upType == TileType.out || lowType == TileType.out || leftType == TileType.out || rightType == TileType.out) {
+        if (upType == TileType.OUT || lowType == TileType.OUT || leftType == TileType.OUT || rightType == TileType.OUT) {
             // fly out of the world
-            return Death.other;
-        } else if (upType != TileType.air || lowType != TileType.air || leftType != TileType.air || rightType != TileType.air) {
+            return Death.OTHER;
+        } else if (upType != TileType.AIR || lowType != TileType.AIR || leftType != TileType.AIR || rightType != TileType.AIR) {
             // hit something and get destroyed by terrain
-            return Death.other;
+            return Death.OTHER;
         }
 
-        return Death.none;
+        return Death.NONE;
     }
 
     /**
@@ -112,15 +112,15 @@ public class Projectile extends GameObject {
                 if (getBoundingBox().intersects(gameObject.getBoundingBox())) {
                     if (gameObject instanceof Creature) {
                         if (((Creature) gameObject).isAlive()) {
-                            return Death.other;
+                            return Death.OTHER;
                         }
                     } else if (!(gameObject instanceof Star)) {
-                        return Death.other;
+                        return Death.OTHER;
                     }
                 }
             }
         }
 
-        return Death.none;
+        return Death.NONE;
     }
 }

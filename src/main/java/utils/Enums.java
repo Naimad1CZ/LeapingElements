@@ -2,38 +2,38 @@ package utils;
 
 public class Enums {
     public enum HeroType {
-        fire,
-        ice
+        FIRE,
+        ICE
     }
 
     public enum TurretAndProjectileType {
-        fire,
-        ice,
-        combined
+        FIRE,
+        ICE,
+        COMBINED
     }
 
     public enum TileType {
-        out,
-        air,
-        solid,
-        water
+        OUT,
+        AIR,
+        SOLID,
+        WATER
     }
 
     public enum Death {
-        none,
-        fallOut,
-        drown,
-        melt,
-        bySimpleEnemy,
-        byEnemy,
-        byFireTurret,
-        byIceTurret,
-        byCombinedTurret,
-        byTurret,
-        byFireProjectile,
-        byIceProjectile,
-        byCombinedProjectile,
-        byProjectile,
-        other
+        NONE,
+        FALL_OUT,
+        DROWN,
+        MELT,
+        BY_SIMPLE_ENEMY,
+        BY_ENEMY,
+        BY_FIRE_TURRET,
+        BY_ICE_TURRET,
+        BY_COMBINED_TURRET,
+        BY_TURRET,
+        BY_FIRE_PROJECTILE,
+        BY_ICE_PROJECTILE,
+        BY_COMBINED_PROJECTILE,
+        BY_PROJECTILE,
+        OTHER
     }
 }

@@ -41,11 +41,11 @@ public class Turret extends GameObject {
 
     @Override
     public String getName() {
-        if (type == TurretAndProjectileType.fire) {
+        if (type == TurretAndProjectileType.FIRE) {
             return "A fire turret";
-        } else if (type == TurretAndProjectileType.ice) {
+        } else if (type == TurretAndProjectileType.ICE) {
             return "An ice turret";
-        } else if (type == TurretAndProjectileType.combined) {
+        } else if (type == TurretAndProjectileType.COMBINED) {
             return "A combined turret";
         } else {
             return "A turret";
@@ -82,7 +82,7 @@ public class Turret extends GameObject {
             world.addGameObject(p);
             timeUntilShoot += interval;
         }
-        return Death.none;
+        return Death.NONE;
     }
 
     /**
@@ -92,7 +92,7 @@ public class Turret extends GameObject {
      */
     @Override
     public Death updateWithOtherObjects(World world) {
-        return Death.none;
+        return Death.NONE;
     }
 
 }

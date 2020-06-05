@@ -162,8 +162,8 @@ public abstract class Creature extends GameObject {
         TileType lefterLowType = terrain.getTileType(lefterXBlock, lowYBlock);
 
         // if I'm in solid from both side, don't do right and left correction
-        if (!(righterLowType == TileType.solid && lefterLowType == TileType.solid)) {
-            if (speedX >= 0 && (righterUpType == TileType.solid || righterLowType == TileType.solid)) {
+        if (!(righterLowType == TileType.SOLID && lefterLowType == TileType.SOLID)) {
+            if (speedX >= 0 && (righterUpType == TileType.SOLID || righterLowType == TileType.SOLID)) {
                 posX = righterXBlock * terrain.TILE_WIDTH - width;
                 speedX = 0;
 
@@ -171,11 +171,11 @@ public abstract class Creature extends GameObject {
                 rightXBlock = (int) (posX + 5 * width / 6) / terrain.TILE_WIDTH;
                 upperRightType = terrain.getTileType(rightXBlock, upperYBlock);
                 lowerRightType = terrain.getTileType(rightXBlock, lowerYBlock);
-            } else if (righterUpType == TileType.water || righterLowType == TileType.water) {
+            } else if (righterUpType == TileType.WATER || righterLowType == TileType.WATER) {
                 inWater = true;
             }
 
-            if (speedX <= 0 && (lefterUpType == TileType.solid || lefterLowType == TileType.solid)) {
+            if (speedX <= 0 && (lefterUpType == TileType.SOLID || lefterLowType == TileType.SOLID)) {
                 posX = (lefterXBlock + 1) * terrain.TILE_WIDTH;
                 speedX = 0;
 
@@ -183,43 +183,43 @@ public abstract class Creature extends GameObject {
                 leftXBlock = (int) (posX + width / 6) / terrain.TILE_WIDTH;
                 upperLeftType = terrain.getTileType(leftXBlock, upperYBlock);
                 lowerLeftType = terrain.getTileType(leftXBlock, lowerYBlock);
-            } else if (lefterUpType == TileType.water || lefterLowType == TileType.water) {
+            } else if (lefterUpType == TileType.WATER || lefterLowType == TileType.WATER) {
                 inWater = true;
             }
         }
 
-        if (speedY >= 0 && (lowerLeftType == TileType.solid || lowerRightType == TileType.solid)) {
+        if (speedY >= 0 && (lowerLeftType == TileType.SOLID || lowerRightType == TileType.SOLID)) {
             // if we fall on solid, get up so we exactly stand on solid
             posY = lowerYBlock * terrain.TILE_HEIGHT - height;
             speedY = 0;
             onGround = true;
-        } else if (lowerLeftType == TileType.water || lowerRightType == TileType.water) {
+        } else if (lowerLeftType == TileType.WATER || lowerRightType == TileType.WATER) {
             inWater = true;
-        } else if (lowerLeftType == TileType.out || lowerRightType == TileType.out) {
+        } else if (lowerLeftType == TileType.OUT || lowerRightType == TileType.OUT) {
             // dieeeeeee (by falling out of the world)
-            return Death.fallOut;
+            return Death.FALL_OUT;
         } else if (speedY > World.GRAVITY / 20 || speedY < 0) {
             onGround = false;
         }
 
-        if (speedY < 0 && (upperLeftType == TileType.solid || upperRightType == TileType.solid)) {
+        if (speedY < 0 && (upperLeftType == TileType.SOLID || upperRightType == TileType.SOLID)) {
             // if we hit some solid with out head, get down so we are not stuck inside
             posY = (upperYBlock + 1) * terrain.TILE_HEIGHT;
             speedY = 0;
-        } else if (upperLeftType == TileType.water || lowerRightType == TileType.water) {
+        } else if (upperLeftType == TileType.WATER || lowerRightType == TileType.WATER) {
             inWater = true;
         }
 
         if (inWater) {
             if (swimSpeed > 0) {
                 isSwimming = true;
-                if (upperLeftType == TileType.water || upperRightType == TileType.water) {
+                if (upperLeftType == TileType.WATER || upperRightType == TileType.WATER) {
                     // go up;
                     speedY = -swimSpeed * 3 / 4;
-                } else if (lefterUpType == TileType.water || righterUpType == TileType.water) {
+                } else if (lefterUpType == TileType.WATER || righterUpType == TileType.WATER) {
                     // stay floating
                     speedY = 0;
-                } else if (lefterLowType == TileType.water || righterLowType == TileType.water) {
+                } else if (lefterLowType == TileType.WATER || righterLowType == TileType.WATER) {
                     // go sligthly down
                     speedY = swimSpeed * 3 / 4;
                 } else {
@@ -227,17 +227,17 @@ public abstract class Creature extends GameObject {
                     speedY = swimSpeed * 1;
                 }
             } else {
-                if (lefterLowType == TileType.water || righterLowType == TileType.water) {
+                if (lefterLowType == TileType.WATER || righterLowType == TileType.WATER) {
                     // if not just touching the water slightly
                     // drooown
-                    return Death.drown;
+                    return Death.DROWN;
                 }
             }
         } else {
             isSwimming = false;
         }
 
-        return Death.none;
+        return Death.NONE;
     }
 
     /**
