@@ -23,8 +23,6 @@ public abstract class Creature extends GameObject {
 
     private boolean waitingForJump = false;
 
-    public Creature() {}
-
     /**
      * Get creature position.
      * @return creature position
