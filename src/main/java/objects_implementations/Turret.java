@@ -1,11 +1,14 @@
-package game.objects;
+package objects_implementations;
 
 import game.World;
+import game.objects.AbstractProjectile;
+import game.objects.AbstractTurret;
 import javafx.scene.image.Image;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import utils.Enums.Death;
 import utils.Enums.TurretAndProjectileType;
 
-public class Turret extends GameObject {
+public class Turret extends AbstractTurret {
     /**
      * angle 0 - 360 at which the tower shoots
      */
@@ -16,6 +19,7 @@ public class Turret extends GameObject {
 
     protected TurretAndProjectileType type;
     protected Image projectileImage;
+    protected AbstractProjectile defaultProjectileInstance;
 
     /**
      *
@@ -28,8 +32,18 @@ public class Turret extends GameObject {
      * @param shootingSpeed speed of projectiles that the turret shoots
      * @param bulletImage skin of projectile
      */
-    public Turret(Image image, double positionX, double positionY, double shootingAngle, TurretAndProjectileType turretType, double shootingInterval, double shootingSpeed, Image bulletImage) {
-        super(image, positionX, positionY);
+    @Override
+    public void loadData(Image image, double positionX, double positionY, double shootingAngle,
+                         TurretAndProjectileType turretType, double shootingInterval, double shootingSpeed,
+                         Image bulletImage, AbstractProjectile defaultProjectile) {
+        startPosX = positionX;
+        startPosY = positionY;
+        posX = positionX;
+        posY = positionY;
+        img = image;
+        width = (int) image.getWidth();
+        height = (int) image.getHeight();
+
         angle = shootingAngle;
         type = turretType;
         interval = shootingInterval;
@@ -37,6 +51,7 @@ public class Turret extends GameObject {
         speed = shootingSpeed;
 
         projectileImage = bulletImage;
+        defaultProjectileInstance = defaultProjectile;
     }
 
     @Override
@@ -64,8 +79,16 @@ public class Turret extends GameObject {
      * Shoot a projectile.
      * @return a Projectile object that the turret just shot away
      */
-    protected Projectile shoot() {
-        return new Projectile(projectileImage, posX + width / 2 - projectileImage.getWidth() / 2, posY + height / 2 - projectileImage.getHeight() / 2, angle, speed, type, this);
+    protected AbstractProjectile shoot() {
+        try {
+            AbstractProjectile p = defaultProjectileInstance.getClass().newInstance();
+            p.loadData(projectileImage, posX + width / 2 - projectileImage.getWidth() / 2,
+                    posY + height / 2 - projectileImage.getHeight() / 2, angle, speed, type, this);
+            return p;
+        } catch (Exception e) {
+            System.err.println("Error while creating new projectile instance:\n" + ExceptionUtils.getStackTrace(e));
+            return null;
+        }
     }
 
     /**
@@ -78,7 +101,7 @@ public class Turret extends GameObject {
     public Death updatePosition(double delta, World world) {
         timeUntilShoot -= delta;
         if (timeUntilShoot <= 0) {
-            Projectile p = shoot();
+            AbstractProjectile p = shoot();
             world.addGameObject(p);
             timeUntilShoot += interval;
         }

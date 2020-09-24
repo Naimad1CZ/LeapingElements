@@ -16,6 +16,7 @@ import utils.Enums.TurretAndProjectileType;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ServiceLoader;
 
 import static java.lang.Double.parseDouble;
 import static java.lang.Integer.parseInt;
@@ -23,10 +24,16 @@ import static java.lang.Integer.parseInt;
 public class GameObjects {
     private final GraphicsContext gc;
 
+    private final AbstractEnemy defaultEnemy;
+    private final AbstractHero defaultHero;
+    private final AbstractProjectile defaultProjectile;
+    private final AbstractStar defaultStar;
+    private final AbstractTurret defaultTurret;
+
     private final List<GameObject> gameObjects = new ArrayList<>();
     private final List<GameObject> objectsToAdd = new ArrayList<>();
-    private Hero hero1;
-    private Hero hero2;
+    private AbstractHero hero1;
+    private AbstractHero hero2;
 
     /**
      * General properties of object tile.
@@ -51,6 +58,12 @@ public class GameObjects {
      * @param og Tiled's ObjectGroup with all objects that will be processed and converted to (programming) objects
      */
     public GameObjects(GraphicsContext g, ObjectGroup og) {
+        defaultEnemy = ServiceLoader.load(AbstractEnemy.class).iterator().next();
+        defaultHero = ServiceLoader.load(AbstractHero.class).iterator().next();
+        defaultProjectile = ServiceLoader.load(AbstractProjectile.class).iterator().next();
+        defaultStar = ServiceLoader.load(AbstractStar.class).iterator().next();
+        defaultTurret = ServiceLoader.load(AbstractTurret.class).iterator().next();
+
         gc = g;
         for (MapObject o : og) {
             try {
@@ -94,7 +107,8 @@ public class GameObjects {
                         liv = lives == null ? 3 : parseInt(lives);
                     }
 
-                    Hero h = new Hero(img, x, y, type, movSpeed, jmpSpeed, swimSpeed, liv, HUDImageSource);
+                    AbstractHero h = defaultHero.getClass().newInstance();
+                    h.loadData(img, x, y, type, movSpeed, jmpSpeed, swimSpeed, liv, HUDImageSource);
                     gameObjects.add(h);
                     if (hero1 == null) {
                         hero1 = h;
@@ -102,7 +116,7 @@ public class GameObjects {
                         hero2 = h;
                         if (hero2.getType() == HeroType.ICE && hero1.getType() == HeroType.FIRE) {
                             // ice is the first hero if we have both ice and fire heroes
-                            Hero tmp = hero2;
+                            AbstractHero tmp = hero2;
                             hero2 = hero1;
                             hero1 = tmp;
                         }
@@ -111,7 +125,9 @@ public class GameObjects {
                     String routeLength = getProperty("routeLength");
                     double rtLength = parseDouble(routeLength);
 
-                    SimpleEnemy se = new SimpleEnemy(img, x, y, rtLength);
+                    AbstractEnemy se = defaultEnemy.getClass().newInstance();
+                    se.loadData(img, x, y, rtLength);
+
                     gameObjects.add(se);
                 } else if (cls.equals("Turret")) {
                     String shootingAngle = getProperty("shootingAngle");
@@ -135,13 +151,16 @@ public class GameObjects {
                     }
 
                     Image bulletImage = new Image(GameObjects.class.getClassLoader().getResourceAsStream(pathToBulletImage));
-                    Turret t = new Turret(img, x, y, shAngle, type, shInterval, shSpeed, bulletImage);
+                    AbstractTurret t = defaultTurret.getClass().newInstance();
+                    t.loadData(img, x, y, shAngle, type, shInterval, shSpeed, bulletImage, defaultProjectile);
+
                     gameObjects.add(t);
                 } else if (cls.equals("Star")) {
                     String value = getProperty("value");
                     int val = value == null ? 1 : parseInt(value);
 
-                    Star s = new Star(img, x, y, val);
+                    AbstractStar s = defaultStar.getClass().newInstance();
+                    s.loadData(img, x, y, val);
                     gameObjects.add(s);
                 } else {
                     System.err.println("Cannot recognize object with class " + cls);
@@ -167,11 +186,11 @@ public class GameObjects {
         }
     }
 
-    public Hero getHero1() {
+    public AbstractHero getHero1() {
         return hero1;
     }
 
-    public Hero getHero2() {
+    public AbstractHero getHero2() {
         return hero2;
     }
 
@@ -205,8 +224,8 @@ public class GameObjects {
     public int getCurrentObtainableScore() {
         int res = 0;
         for (GameObject go : gameObjects) {
-            if (go instanceof Star) {
-                res += ((Star) go).getValue();
+            if (go instanceof AbstractStar) {
+                res += ((AbstractStar) go).getValue();
             }
         }
         return res;
@@ -296,7 +315,7 @@ public class GameObjects {
                 Death deathCause = go.updatePosition(delta, world);
                 if (deathCause != Death.NONE) {
                     toDelete.add(go);
-                    if (go instanceof Hero) {
+                    if (go instanceof AbstractHero) {
                         deathMessage = DeathMessages.getDeathMessage(go, deathCause);
                     }
                 }
@@ -308,7 +327,7 @@ public class GameObjects {
                 Death deathCause = go.updateWithOtherObjects(world);
                 if (deathCause != Death.NONE) {
                     toDelete.add(go);
-                    if (go instanceof Hero) {
+                    if (go instanceof AbstractHero) {
                         deathMessage = DeathMessages.getDeathMessage(go, deathCause);
                     }
                 }
@@ -318,10 +337,10 @@ public class GameObjects {
         for (GameObject item : toDelete) {
             if (item instanceof Creature) {
                 ((Creature) item).kill();
-                if (item instanceof Hero) {
-                    ((Hero) item).looseLife();
-                    if (((Hero) item).getCurrentLives() > 0) {
-                        ((Hero) item).respawn();
+                if (item instanceof AbstractHero) {
+                    ((AbstractHero) item).looseLife();
+                    if (((AbstractHero) item).getCurrentLives() > 0) {
+                        ((AbstractHero) item).respawn();
                         continue;
                     }
                 }

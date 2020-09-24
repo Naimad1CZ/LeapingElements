@@ -1,7 +1,7 @@
 package game;
 
+import game.objects.AbstractHero;
 import game.objects.GameObject;
-import game.objects.Hero;
 import javafx.scene.canvas.GraphicsContext;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.mapeditor.core.*;
@@ -45,11 +45,11 @@ public class World {
         hud = new HUD(gc, this);
     }
 
-    public Hero getHero1() {
+    public AbstractHero getHero1() {
         return gameObjects.getHero1();
     }
 
-    public Hero getHero2() {
+    public AbstractHero getHero2() {
         return gameObjects.getHero2();
     }
 

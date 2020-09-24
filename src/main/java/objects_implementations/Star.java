@@ -1,10 +1,11 @@
-package game.objects;
+package objects_implementations;
 
 import game.World;
+import game.objects.AbstractStar;
 import javafx.scene.image.Image;
 import utils.Enums.Death;
 
-public class Star extends GameObject {
+public class Star extends AbstractStar {
     protected boolean lives = true;
     protected int value;
 
@@ -15,8 +16,16 @@ public class Star extends GameObject {
      * @param positionY default position Y
      * @param score how much score points is got when claiming the star
      */
-    public Star(Image image, double positionX, double positionY, int score) {
-        super(image, positionX, positionY);
+    @Override
+    public void loadData(Image image, double positionX, double positionY, int score) {
+        startPosX = positionX;
+        startPosY = positionY;
+        posX = positionX;
+        posY = positionY;
+        img = image;
+        width = (int) image.getWidth();
+        height = (int) image.getHeight();
+
         value = score;
     }
 

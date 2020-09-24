@@ -8,8 +8,8 @@ import javafx.scene.image.Image;
 import utils.Enums.Death;
 
 public abstract class GameObject {
-    protected final double startPosX;
-    protected final double startPosY;
+    protected double startPosX;
+    protected double startPosY;
 
     protected double posX;
     protected double posY;
@@ -21,21 +21,6 @@ public abstract class GameObject {
 
     protected int width;
     protected int height;
-
-    /**
-     * @param image skin of the object
-     * @param positionX default position X
-     * @param positionY default position Y
-     */
-    public GameObject(Image image, double positionX, double positionY) {
-        startPosX = positionX;
-        startPosY = positionY;
-        posX = positionX;
-        posY = positionY;
-        img = image;
-        width = (int) image.getWidth();
-        height = (int) image.getHeight();
-    }
 
     /**
      * We get bounding boxes smaller than the actual object because objects usually doesn't have 100% of their size

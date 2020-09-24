@@ -1,7 +1,11 @@
-package game.objects;
+package objects_implementations;
 
 import game.Terrain;
 import game.World;
+import game.objects.AbstractProjectile;
+import game.objects.AbstractStar;
+import game.objects.Creature;
+import game.objects.GameObject;
 import javafx.scene.image.Image;
 import utils.Enums.Death;
 import utils.Enums.TileType;
@@ -9,7 +13,7 @@ import utils.Enums.TurretAndProjectileType;
 
 import java.util.List;
 
-public class Projectile extends GameObject {
+public class Projectile extends AbstractProjectile {
     protected double speedX;
     protected double speedY;
 
@@ -26,8 +30,16 @@ public class Projectile extends GameObject {
      * @param projectileType type of projectile
      * @param source turret that shot this projectile
      */
-    public Projectile(Image image, double positionX, double positionY, double angle, double speed, TurretAndProjectileType projectileType, GameObject source) {
-        super(image, positionX, positionY);
+    @Override
+    public void loadData(Image image, double positionX, double positionY, double angle, double speed, TurretAndProjectileType projectileType, GameObject source) {
+        startPosX = positionX;
+        startPosY = positionY;
+        posX = positionX;
+        posY = positionY;
+        img = image;
+        width = (int) image.getWidth();
+        height = (int) image.getHeight();
+
         speedX = Math.sin(Math.toRadians(angle)) * speed;
         speedY = Math.cos(Math.toRadians(angle)) * speed;
         type = projectileType;
@@ -114,7 +126,7 @@ public class Projectile extends GameObject {
                         if (((Creature) gameObject).isAlive()) {
                             return Death.OTHER;
                         }
-                    } else if (!(gameObject instanceof Star)) {
+                    } else if (!(gameObject instanceof AbstractStar)) {
                         return Death.OTHER;
                     }
                 }

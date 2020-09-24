@@ -1,6 +1,6 @@
 package game;
 
-import game.objects.Hero;
+import game.objects.AbstractHero;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
@@ -26,8 +26,8 @@ public class GameLoop extends AnimationTimer {
 
     private MyMap myMap;
     private World myWorld;
-    private Hero hero1;
-    private Hero hero2;
+    private AbstractHero hero1;
+    private AbstractHero hero2;
 
     /**
      * Initialize stuff.
@@ -141,13 +141,14 @@ public class GameLoop extends AnimationTimer {
                 FileDialog dialog = new FileDialog((Frame)null, "Select level file to Open");
                 dialog.setMode(FileDialog.LOAD);
                 dialog.setVisible(true);
-                String file = dialog.getDirectory().replace("\\", "/") + dialog.getFile();
+                String file = "no file";
 
                 try {
+                    file = dialog.getDirectory().replace("\\", "/") + dialog.getFile();
                     loadLevel(file, true);
                     startScreen = false;
                 } catch (Exception e) {
-                    System.err.println("Error when loading custom level: " + file + "\n" + ExceptionUtils.getStackTrace(e));
+                    System.err.println("Error when loading custom level: " + file + ":\n" + ExceptionUtils.getStackTrace(e));
                 }
 
             }

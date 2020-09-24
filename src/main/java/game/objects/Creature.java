@@ -2,7 +2,6 @@ package game.objects;
 
 import game.Terrain;
 import game.World;
-import javafx.scene.image.Image;
 import utils.Enums.Death;
 import utils.Enums.TileType;
 
@@ -24,22 +23,7 @@ public abstract class Creature extends GameObject {
 
     private boolean waitingForJump = false;
 
-    /**
-     *
-     * @param image skin of creature
-     * @param positionX default position X
-     * @param positionY default position Y
-     * @param movSpeed movement speed
-     * @param jumpSpeed jumping force
-     * @param swimmingSpeed swimming speed
-     */
-    public Creature(Image image, double positionX, double positionY, double movSpeed, double jumpSpeed, double swimmingSpeed) {
-        super(image, positionX, positionY);
-
-        movementSpeed = movSpeed;
-        jumpForce = jumpSpeed;
-        swimSpeed = swimmingSpeed;
-    }
+    public Creature() {}
 
     /**
      * Get creature position.
