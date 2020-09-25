@@ -105,6 +105,7 @@ public class FearfulEnemy extends AbstractEnemy {
 
     protected void behaveLikeAFailure(double delta) {
         if (state == 0) {
+            movementSpeed = baseMovementSpeed;
             if (posX >= startPosX + routeLength) {
                 stopMovingRight();
                 state = 1;
@@ -113,6 +114,7 @@ public class FearfulEnemy extends AbstractEnemy {
                 startMovingRight();
             }
         } else if (state == 1) {
+            movementSpeed = baseMovementSpeed;
             if (posX <= startPosX) {
                 stopMovingLeft();
                 state = 0;
@@ -121,9 +123,11 @@ public class FearfulEnemy extends AbstractEnemy {
                 startMovingLeft();
             }
         } else if (state == 2) {
+            movementSpeed = fleeingMovementSpeed;
             stopMovingLeft();
             startMovingRight();
         } else if (state == 3) {
+            movementSpeed = fleeingMovementSpeed;
             stopMovingRight();
             startMovingLeft();
         }
