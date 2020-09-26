@@ -65,6 +65,9 @@ public class GameLoop extends AnimationTimer {
      * @param absolutePath if the path is absolute
      */
     private void loadLevel(String path, boolean absolutePath) {
+        if (defaultTurret == null || defaultStar == null || defaultProjectile == null || defaultEnemy == null || defaultHero == null) {
+            loadPlugin(System.getProperty("user.dir").replace("\\", "/") + "/plugins/BasicPlugin.jar");
+        }
         myMap = new MyMap(path, absolutePath);
         reloadLevel();
     }
