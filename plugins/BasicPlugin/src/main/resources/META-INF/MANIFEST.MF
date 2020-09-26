@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Main-Class: 
+Class-Path: commons-lang3-3.10.jar
+AbstractEnemy: objects_implementations.SimpleEnemy
+AbstractHero: objects_implementations.Hero
+AbstractProjectile: objects_implementations.Projectile
+AbstractStar: objects_implementations.Star
+AbstractTurret: objects_implementations.Turret

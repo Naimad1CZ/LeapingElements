@@ -7,50 +7,31 @@
     <groupId>damian.myjavagame</groupId>
     <artifactId>MyJavaGame</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>PluginAPI</module>
+        <module>Game</module>
+        <module>plugins/BasicPlugin</module>
+        <module>plugins/FeafulEnemyPlugin</module>
+    </modules>
+    <packaging>pom</packaging>
+    <name>game_parent</name>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.mapeditor</groupId>
-            <artifactId>libtiled</artifactId>
-            <version>1.2.3</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-            <version>3.10</version>
-        </dependency>
-    </dependencies>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.mapeditor</groupId>
+                <artifactId>libtiled</artifactId>
+                <version>1.2.3</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>3.10</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
-    <build>
-        <plugins>
-            <plugin>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <version>3.3.0</version>
-                <configuration>
-                    <finalName>Leaping Elements</finalName>
-                    <appendAssemblyId>false</appendAssemblyId>
-                    <archive>
-                        <manifest>
-                            <mainClass>game.Game</mainClass>
-                        </manifest>
-                    </archive>
-                    <descriptorRefs>
-                        <descriptorRef>jar-with-dependencies</descriptorRef>
-                    </descriptorRefs>
-                </configuration>
 
-                <executions>
-                    <execution>
-                        <id>make-assembly</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>single</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
 
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
