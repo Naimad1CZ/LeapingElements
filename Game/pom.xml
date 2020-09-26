@@ -11,7 +11,7 @@
 
     <artifactId>Game</artifactId>
     <packaging>jar</packaging>
-    <name>game</name>
+    <name>damian.myjavagame.game</name>
 
     <dependencies>
         <dependency>
@@ -30,6 +30,18 @@
             <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>damian.myjavagame</groupId>
+            <artifactId>BasicPlugin</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>damian.myjavagame</groupId>
+            <artifactId>FeafulEnemyPlugin</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>runtime</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -43,7 +55,7 @@
                         <appendAssemblyId>false</appendAssemblyId>
                         <archive>
                             <manifest>
-                                <mainClass>game.Game</mainClass>
+                                <mainClass>damian.myjavagame.game.Game</mainClass>
                             </manifest>
                         </archive>
                         <descriptorRefs>

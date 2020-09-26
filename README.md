@@ -1,6 +1,6 @@
 # How to play Leaping Elements
 
-## Launch the game
+## Launch the damian.myjavagame.game
 First of all, you need to extract the content of ZIP file to some folder and launch the
 executable JAR file ‘LeapingElements.jar’. It requires Java 8, so download Java if you can’t open the
 file:
@@ -10,7 +10,7 @@ Note: if you are a developer and have higher version of Java installed, make sur
 jdk (if using openjdk, make sure that you have installed JavaFX libraries along) 1.8.0_251 to open it (check by running `java -version`)
 
 ## Main Menu
-After launching the game, you will see the Main Menu. Here you can choose to play a level
+After launching the damian.myjavagame.game, you will see the Main Menu. Here you can choose to play a level
 by clicking on it, load your own level from `.tmx` file, or see credits.
 
 <p align="center">
@@ -30,7 +30,7 @@ quit level, press Escape.
 ## Goal
 The goal in each level is to collect all available stars.
 
-## Heroes specifics & game mechanics
+## Heroes specifics & damian.myjavagame.game mechanics
 Ice hero is more bulky, therefore moves slower and jumps lower (only around 2 blocks up),
 but has 4 lives and can swim in the water. Ice hero also melts in the contact with Fire hero, so don’t
 get too close!
@@ -45,4 +45,4 @@ projectile).
 **Have fun! :)**
 
 # How to create your own level
-See [How to create your own level](https://github.com/Naimad1CZ/LeapingElements/wiki/How-to-create-your-own-level) for tutorial and specifications of what should be included in `.txm` file in order to be possible to load it as a game level.
+See [How to create your own level](https://github.com/Naimad1CZ/LeapingElements/wiki/How-to-create-your-own-level) for tutorial and specifications of what should be included in `.txm` file in order to be possible to load it as a damian.myjavagame.game level.
