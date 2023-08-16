@@ -1,7 +1,7 @@
 # How to play Leaping Elements
 
 ## Launch the damian.myjavagame.game
-First of all, you need to extract the content of ZIP file to some folder and launch the
+First of all, you need to extract the content of ZIP file (of some Release) to some folder and launch the
 executable JAR file ‘LeapingElements.jar’. It requires Java 8, so download Java if you can’t open the
 file:
 https://www.java.com/en/download/
